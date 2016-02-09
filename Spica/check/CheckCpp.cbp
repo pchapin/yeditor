@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="CheckCpp" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/CheckCpp" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="../bin/Debug/libSpicaCpp.a" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/CheckCpp" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../bin/Release/libSpicaCpp.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory=".." />
+		</Compiler>
+		<Linker>
+			<Add library="boost_regex" />
+			<Add directory="$(#boost.lib)" />
+		</Linker>
+		<Unit filename="BinomialHeap_tests.cpp" />
+		<Unit filename="BoundedList_tests.cpp" />
+		<Unit filename="Graph_tests.cpp" />
+		<Unit filename="Timer_tests.cpp" />
+		<Unit filename="sort_tests.cpp" />
+		<Unit filename="str_tests.cpp" />
+		<Unit filename="string_utilities_tests.cpp" />
+		<Unit filename="u_tests.cpp" />
+		<Unit filename="u_tests.hpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+
+<!-- FILE        : windebug.htm
+     AUTHOR      : Peter Chapin
+     LAST REVISED: February 14, 2001
+     SUBJECT     : Documentation on WinDebug -->
+
+<HEAD>
+<TITLE>WinDebug</TITLE>
+</HEAD>
+
+<BODY>
+<CENTER>
+<H1>WinDebug</H1>
+</CENTER>
+<HR>
+<H2>Introduction</H2>
+
+Source level debuggers are wonderful tools. I use them myself. However,
+sometimes it is necessary to debug an application when such a tool can't
+be used. One such time is when an application malfunctions in the field
+but works perfectly on the developer's station. How can the developer
+get at information about a program's internal state when the program is
+running on a machine without software development tools on hand? What if
+the program only malfunctions when certain, specialized hardware is
+connected to the machine that the developer can't access during
+development?<P>
+
+To handle cases like this, WinDebug allows the developer to embed a
+small, simple debugging tool into the shipping application. If the
+application malfunctions in the field, the developer can work with the
+end user, for example over the phone, to get insight about the program's
+operation. The developer can arrange for WinDebug to activate when
+certain, perhaps undocumented, options are selected. Then the end user
+can relay WinDebug's output to the developer and the developer can
+instruct the end user in how to manipulate WinDebug.<P>
+
+Although such a debugging environment is crude, if the developer plans
+carefully it can be effective enough to give the information that is
+required. This is the purpose of WinDebug. It is not intended to replace
+traditional debuggers. It is intended to supplement them.<P>
+
+<HR>
+<H2>Installing WinDebug</H2>
+
+WinDebug must be compiled into your application like any other module.
+You need to include the file <TT>windebug.rc</TT> in your application's
+resource script and you need to include the file <TT>windebug.cpp</TT>
+in your application's project. You also need to have the files
+<TT>windebug.rh</TT> and <TT>windebug.ico</TT> on hand. They are brought
+into the application during the build process.<P>
+
+To use WinDebug interactively, your application must call
+<TT>create_debugWindow()</TT>. This function causes the debugging
+window, a child of the desktop, to appear on the display. The debugging
+window shows the log of debug messages. The end user can interact with
+WinDebug by selecting menu items in the debugging window.<P>
+
+The debugging system is active internally even when the debugging window
+is not being displayed. The window only gives the end user a way to
+inspect the debug messages and adjust WinDebug's settings. When the
+window is closed, debugging information will continue to be
+collected.<P>
+
+<HR>
+<H2>Instrumenting Your Program</H2>
+
+To gain any useful information from WinDebug, you need to include
+debugging calls throughout your application. These calls are very
+similar in concept to the age-old method of sprinkling debugging
+<TT>printf()</TT> statements in a program. Except, unlike
+<TT>printf()</TT> statements, the output of WinDebug's debugging calls
+is collected in the log displayed in the debugging window. Such material
+does not interfere with the normal output of the program and can thus
+remain in the shipping version of the application.<P>
+
+There are only a few ways to instrument your program using the current
+version of WinDebug.<P>
+
+<DL>
+
+<DT><B><TT>void Tracer(int level, char *message);</TT></B><P>
+
+<DD>Although I show <TT>Tracer</TT> as a function above, it is actually
+implemented as a function-like macro. It creates an object of type
+Tracer and passes its parameters to that object. In addition, it also
+uses the <TT>__FILE__</TT> and <TT>__LINE__</TT> macros to pass the file
+name and line number to the underlying Tracer object.<P>
+
+The constructor of the Tracer object logs the provided information to
+the debugging window. The message can be any string that is meaningful
+to you. The level is intended to represent the "detail level" of this
+trace point. A level of one is shallow. A level of, for example, 5 would
+be very detailed. You can assign whatever meaning you like to the
+different detail levels. For example<P>
+
+<PRE>
+void some_function(int X, int Y)
+{
+  Tracer(2, "Entered some_function()");
+
+  // etc...
+}
+</PRE><P>
+
+This would log a message to the debug window that looks like<P>
+
+<PRE>
+TP: (2) Entered some_function() FILE=xyz.cpp LINE=245
+</PRE><P>
+
+The "TP" at the start of the line indicates that the message comes from
+a trace point. The FILE and LINE values at the end of the message
+represent the location in the source code where the Tracer object was
+created.<P>
+
+<DT><B><TT>class debugstream</TT></B><P>
+
+<DD>Class debugstream is derived from class ostringstring and supports
+all of ostringstream's behavior. In particular you can print the values
+of variables into it. However, this class also supports a <TT>say()</TT>
+function that causes the formatted message to be logged to the debug
+window. For example<P>
+
+<PRE>
+debugstream Message;
+
+Message &lt;&lt; "count = " &lt;&lt; count;
+Message.say(1);
+</PRE><P>
+
+This would log a message to the debug window that looks like
+
+<PRE>
+  : (1) count = 12
+</PRE><P>
+
+Here I'm assuming the value of the variable <TT>count</TT> was 12. This
+class gives you the functionality of debugging <TT>printf()</TT> in a
+traditional application. Note that <TT>say()</TT>'s parameter is the
+detail level of the message.<P>
+
+<DT><B><TT>class notifystream</TT></B><P>
+
+<DD>Class notifystream is basically the same as class debugstream. It is
+also derived from ostringstring and supports all of ostringstream's
+behavior. It also has a <TT>say()</TT> function (that takes no
+parameters) that causes the message formated into it to be logged to the
+debug window.<P>
+
+However, a notifystream is intended to process messages in exception
+handlers. It logs all messages to the debug window with an "EX" prefix
+and a detail level of zero. In addition, it displays a message box with
+the caption "Exception Notification" and containing the formatted
+message. In short, notifystreams give you an easy to way to display an
+exception notification to the user and log it to the debug window in a
+single step.<P>
+
+</DL>
+
+<HR>
+<H2>Using the Debug Window</H2>
+
+Only 250 messages are shown in the debug window. If more messages
+arrive, old ones are discarded. In the current version of WinDebug, the
+number of messages buffered is not configurable. Each message is
+prefixed with a line number. This makes it easier to refer to a specific
+message and to notice new (perhaps identical) messages as they appear.
+The line numbers always advance and might go well beyond 250 during the
+life of the program.<P>
+
+Several debugging operations are supported on the debug window's menus.
+Some of the menu items are currently not implemented, but will be in a
+future version of the WinDebug.<P>
+
+<DL>
+
+<DT><B><TT>File|Configure</TT></B> (Not implemented)<P>
+
+<DD>This menu item brings up a dialog box that allows the user to set
+the desired detail level. Debug messages that are deeper than the
+current detail level are ignored. This allows you to get a general
+overview of the program's operation without getting lost in the details.<P>
+
+In addition, the configuration dialog allows you to set a "start point"
+and "stop point" that defines when debug messages will be collected.
+This allows you to focus your attention on the section of the program
+that seems to be malfunctioning.<P>
+
+<DT><B><TT>File|Save Buffer</TT></B><P>
+
+<DD>This option saves the current collection of debug messages to the
+file you specify. You can use this option to make a "snapshot" of the
+debug log. End users can send developers such snapshots for detailed
+analysis.<P>
+
+<DT><B><TT>File|Start Saving Log</TT></B><P>
+
+<DD>This option allows the user to open a file on disk where debugging
+messages will be logged from then on. Unlike the "Save Buffer" option,
+current messages are not put into the disk log. However, all future
+messages are added to the disk log. Be careful when you use this option.
+There is no limit to the number of messages that can be saved to
+disk.<P>
+
+<DT><B><TT>File|Stop Saving Log</TT></B><P>
+
+<DD>This option turns off the disk log file feature and closes the file.<P>
+
+<DT><B><TT>File|Exit Application</TT></B> (Not implemented)<P>
+
+<DD>This option <B>exits the entire application</B>! It is useful if the
+program is in a confused state and stopped on a WinDebug break point
+(break points are not yet implemented). Keep in mind that it is normally
+better to close the application using whatever method it defines for
+that purpose. To close the debug window, use the close box in the upper
+right corner of the window.<P>
+
+</DL>
+
+<HR>
+<H2>Multithread Support</H2>
+
+WinDebug is designed to function correctly in a multithreaded program.
+If you are building a multithreaded program, be sure to #define the
+symbol pMULTITHREADED when compiling WinDebug. See the <A
+HREF="overview.htm">overview document</A> for more information.<P>
+
+Multiple threads can add debug messages to the log with no danger of
+data corruption. Access to the log is synchronized between all threads
+that need it -- including the thread that paints the debug window
+itself.<P>
+
+<!-- BEGIN signature block -->
+<HR>
+<P>&copy; Copyright 2001 by Peter Chapin &lt;<A
+HREF="mailto:pchapin@sover.net">pchapin@sover.net</A>&gt;. All rights
+reserved.</P>
+
+<P><I>Permission is granted to copy, distribute and/or modify this
+document under the terms of the <A HREF="GFDL.txt">GNU Free
+Documentation License</A>, Version 1.1 or any later version published by
+the Free Software Foundation; with no Invariant Sections, no Front-Cover
+Texts, and no Back-Cover Texts.</I></P>
+
+<P>Last Revised: <B>June 24, 2001</B></P>
+<!-- END signature block -->
+</BODY>
+
+</HTML>
+

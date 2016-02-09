@@ -1,0 +1,159 @@
+From pchapin@ecet.vtc.edu Wed Jan 29 07:12:25 2003
+Date: Wed, 29 Jan 2003 07:09:02 -0500 (EST)
+From: Peter C. Chapin <pchapin@ecet.vtc.edu>
+To: Theodor Augustin Floare <teoctist@hotmail.com>
+Subject: Re: thread-safe
+
+
+On Sun, 26 Jan 2003, Theodor Augustin Floare wrote:
+
+> Yesterday, I was looking on the Internet over some articles on how to
+> develop thread-safe libraries (right now I'm working at a map container
+> component). In this way I reached your String class implementation. In
+> my opinion, the String class is not thread-safe and I'm going to tell
+> you why.  To explain, the following excerpt is needed:
+
+Hello! Thanks for your note. It does not surprise me at all to learn that
+my String class has problems in the multithreaded case. It has not been
+extensively tested (hardly tested at all would be more accurate) under
+those conditions. In any case, it appears that you are correct: there is a
+race condition between when I measure the size of the other string's
+workspace and when I copy that workspace into my own buffer. If during
+that time the other string's workspace changes (for example, due to
+assignment) there will be problems.
+
+I'll need to reflect some on how to best address this; it's been a while
+since I've looked at this code. Of course I'm interested making things as
+parallel as feasible although, obviously, correctness is a priority. In
+any event, thanks for pointing out the problem for me. I appreciate it.
+
+Peter
+
+>
+> String &String::append(const String &other)
+>   {
+>     int count =
+>       std::strlen(rep->workspace) + std::strlen(other.rep->workspace);
+>     std::auto_ptr<string_node> new_node(new string_node);
+>     new_node->workspace = new char[count + 1];
+>
+>     std::strcpy(new_node->workspace, rep->workspace);
+>     std::strcat(new_node->workspace, other.rep->workspace);
+>
+>     // Make sure we are the only ones touching this string's representation.
+>     #if defined(pMULTITHREADED)
+>     mutex_sem::grabber lock(string_sync);
+>     #endif
+>
+>     if (rep->count > 1) rep->count--;
+>     else {
+>       delete [] rep->workspace;
+>       delete    rep;
+>     }
+>     rep = new_node.get();
+>     new_node.release();
+>     return *this;
+>   }
+
+====> Message sent 2003-05-18
+
+Hello! Some time ago (January) you sent me a note pointing out 
+an error in my String class. In particular my class was not 
+thread safe despite the claim in the documentation that it 
+was.
+
+I believe I have fixed the immediate issue although in doing 
+so I introduced a couple of other issues. For your information 
+I'm attaching a ZIP archive of the new version to this 
+message. Included in the archive are also a couple of test 
+programs, supporting files, and a copy of your original note.
+
+In reviewing my code I found a large number of problems 
+similar to the one you mentioned in your original note. In 
+general I needed to lock the strings when reading their values 
+to insure that their representations were not being updated at 
+the same time. Thus even the methods that were "read only" (I 
+call them "non-mutating" in the new documentation) needed 
+locks.
+
+The issues that now exist in the class are
+
+1. There is virtually no opportunity for parallelism when 
+manipulating strings. There is a single lock for all strings 
+so if any thread touches any string no other thread can touch 
+a string. I looked into fixing this but it seems hard because 
+of the way I'm using reference counting. To illustrate the 
+problem consider:
+
+	A = B;  // Thread 1
+
+	B = A;  // Thread 2
+
+Operator=() would have to acquire locks in both A and B. The 
+obvious implementation would do so in the same order (for 
+example, left operand followed by righ operand). If the timing 
+is wrong the code above could easily deadlock. Ordinarly I 
+might say that this is the application's problem and not the 
+class's problem. However, because strings can share 
+representations the following example might have the same 
+issue
+
+	A = B;  // Thread 1
+
+	C = D;  // Thread 2
+
+In particular if A and D share their representations and B and 
+C also share their representations the potential for deadlock 
+still exists. However, programmer can't easily know which 
+strings share representations and thus can't be expected to 
+avoid the problem.
+
+To avoid deadlock I could attempt to acquire locks in a 
+consistent order. This would seem to imply that each lock 
+needs an ID number. However testing the ID numbers and then 
+locking in an appropriate order introduces a race condition. 
+For example if after checking ID numbers, one of the 
+representations changes the results of the check would be 
+invalid. Avoiding that race condition would require locking 
+the ID numbers but since there would be on ID number for each 
+string node this introduces the possibility of deadlock... 
+etc, etc.
+
+The problem largely goes away if strings don't share 
+representations (I would just push the responsibility for 
+avoiding deadlock to the programmer). The problem also goes 
+away if there is only one lock for the entire class.
+
+2. The second problem with the current implementation is that 
+I assume locking a pcc::mutex_sem is recursive. This is 
+important in the methods that return a new string. Such 
+methods hold the "Big String Lock" and try to execute the 
+pcc::String copy constructor when they return. If recursive 
+locking is not supported this will cause a thread to deadlock 
+on itself (or worse). I note that under Windows, 
+pcc::mutex_sem uses CRITICAL_SECTIONs and seems to be 
+recursive. I'm not sure how well this will work on Unix or 
+OS/2.
+
+3. Because the destructor now locks the Big String Lock (as 
+required to insure that there is no memory leak if two strings 
+that share a representation are destroyed at the same time) 
+you can't declare any global strings reliably. This is because 
+C++ does not define the order in which global data is 
+initialized across translation units. The pcc::String 
+destructor now depends on the Big String Lock still being 
+initialized so every string must have a lifetime that is 
+enclosed in the lifetime of that lock. This is an issue 
+because any thread-safe type is likely to be used globally so 
+that it can be shared by multiple threads. The workaround is 
+to declare global pointers to pcc::String objects and 
+initalize those pointers with the addresses of strings that 
+are allocated dynamically after main() has been entered. My 
+quick and dirty test program, str_MTtest.cpp, illustrates 
+this.
+
+Anyway, thanks for your input on my code. Although it still 
+has issues, I think it is much closer to being correct, at 
+least, than before.
+
+Peter

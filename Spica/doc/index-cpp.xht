@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC
+  "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<!-- FILE   : index-cpp.html
+     AUTHOR : Peter C. Chapin
+     SUBJECT: Index of C++ library components. -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+  <head>
+    <title>C++ Components</title>
+
+    <meta name="Author" content="Peter C. Chapin" />
+    <meta name="ROBOTS" content="NOARCHIVE" />
+    <link rel="stylesheet" href="../../default.css" type="text/css" />
+  </head>
+
+  <body>
+    <h1>C++ Components</h1>
+    <hr />
+
+    <p>Please read the <a href="overview.xht">overview document</a> for general information
+    about the Spica C++ library, how it is organized, and its design goals. I've recently
+    started to document this library using embedded comments and <a
+    href="http://www.doxygen.org/">doxygen</a>. The documentation in this form is currently very
+    incomplete but eventually it will be the primary way this library is documented. <a
+    href="../api/index.html">Here is what I have so far</a>.</p>
+
+    <p>One of the design goals of this library is to keep the individual components as
+    independent as possible. You shouldn't have to commit yourself to the entire library just to
+    use a single component. Each component has an associated list of required files. To use a
+    component you only need the files mentioned in the list.</p>
+
+    <p>Some of the components use platform specific code. The library detects various platforms
+    at compile time using preprocessor macros in <b>environ.h</b>. Then, depending on what is
+    found, various macros specific to the library are set to appropriate values. Any component
+    that uses platform specific techniques includes environ.h and uses these macros to verify
+    the platform or conditionally compile the proper code. By using this approach all platform
+    specific macros are managed in a single file. Should the library come to support a new
+    platform it might only be necessary, in some cases, to edit environ.h.</p>
+
+    <hr />
+    <h2>Menu</h2>
+
+    <ul>
+      <li><a href="#containers">Containers</a></li>
+      <li><a href="#abstract">Abstract Types</a></li>
+    </ul>
+
+    <hr />
+    <h2><a name="containers">Containers</a></h2>
+
+    <p>It is my intention for all containers to have a style that is consistent with the
+    containers in the C++ standard library. This will make the Spica containers easier to learn
+    and use in combination with standard library algorithms and other "well known" techniques.
+    Alas, not all of the containers are equally evolved in this regard.</p>
+
+    <ul>
+
+      <li>
+        <p><b>class template BinomialHeap</b></p>
+
+        <p>A binomial heap is a data structure that offers fast insertion, lookup of the minimum
+        item, <em>and</em> fast merging of two heaps. See the documentation for more
+        information.</p>
+
+        <p>Files: BinomialHeap.hpp. A very minimal test program is in BinomialHeap_tests.cpp.
+        This test program is in need of much enhancement.</p>
+      </li>
+
+      <li>
+        <p><b><a href="FileVector.xht">class template FileVector</a></b></p>
+
+        <p>A FileVector is a vector-like object that allows you to treat the contents of a file
+        like a vector. This implementation is a template so that file vector elements can be of
+        various types (with some restrictions). The current implementation only works for Win32,
+        but it should be possible to implement this template on any system that supports memory
+        mapped files.</p>
+
+        <p>Files: FileVector.hpp. A very lame test program is in FileVector_tests.cpp. It should
+        be enhanced into a general purpose vector testing template.</p>
+
+      </li>
+
+      <li>
+        <p><b>class String</b></p>
+
+        <p>The Spica string class implements strings in a manner similar to that supported by
+        the Rexx programming language. The implementation uses reference counting (copy on
+        demand) to support fast effective copying. This class is exception safe in the sense
+        that an operation either works correctly or leaves its String operands unchanged. This
+        class is also thread safe in the sense described in the documentation (see the comments
+        in the source file).</p>
+
+        <p>Files: str.hpp and str.cpp. If you need to use this component in a multithreaded
+        program you will also need synchronize.hpp, synchronize.cpp, and environ.hpp. I have
+        created a test program named str_tests.cpp that you can use to exercise this class. I
+        suggest at least compiling the test program and running all the tests before trying to
+        use this class in your own programs. The file str_testsMT.cpp attempts to exercise this
+        class in a multithreaded environment. The multithreaded testing that is done is
+        currently quite minimal.</p>
+
+      </li>
+
+      <li>
+        <p><b>class template WorkQueue</b></p>
+
+        <p>This class template is a solution to the classic producer/consumer problem for
+        multiple threads in a single process. One (or more) producer threads can add items to a
+        WorkQueue while one (or more) consumer threads remove those items. This template
+        synchronizes those operations so that race conditions are prevented. It is exception
+        safe in that if a queue operation throws an exception, the counters and locks maintained
+        by the queue are left in a correct state. It also differs from low level IPC systems
+        offered by most operating systems in that it knows how to properly copy C++ objects.</p>
+
+        <p>This template supports all platforms supported by the sychronize component.</p>
+
+        <p>Files: WorkQueue.hpp, synchronize.hpp, synchronize.cpp, and environ.hpp.</p>
+
+      </li>
+
+    </ul>
+
+    <hr />
+    <h2><a name="abstract">Abstract Types</a></h2>
+
+    <p>I define an abstract type as a class that is intended to model something from the real
+    world or an encapsulation of a common software concept. Some of these abstract types use
+    platform specific functions but they attempt to offer a platform independent interface and
+    can thus be considered "general purpose" classes. In fact, the very point of some of these
+    classes is to hide system dependency behind a uniform interface.</p>
+
+    <ul>
+      <li>
+        <p><b>Semaphore Classes</b></p>
+
+        <p>These classes implement several different semaphore types with an interface that is
+        uniform across Win32, OS/2, and POSIX. Currently only the classes mutex_sem and
+        counting_sem are implemented. I use the word "semaphore" loosely in this context to
+        refer to a variety of flag-like objects that can be used for thread synchronization.
+        There is no formal documentation at this time, but the comments in sem.h and sem.cpp are
+        reasonably good.</p>
+
+        <p>Files: synchronize.hpp, synchronize.cpp, and environ.hpp.</p>
+
+      </li>
+
+      <li>
+        <p><b>class Timer</b></p>
+
+        <p>This class implements a simple timer object that can be used to keep track of elapsed
+        clock time. It is implemented for DOS, Win32 and Posix. It offers subsecond resolution;
+        the exact resolution depends on the abilities of the platform.</p>
+
+        <p>Files: Timer.hpp, Timer.cpp, and environ.hpp. I have created a test program named
+        Timer_tests.cpp that you can use to exercise this class. I suggest at least compiling
+        the test program and running all the tests before trying to use this class in your own
+        programs.</p>
+      </li>
+
+    </ul>
+
+    <!-- BEGIN signature block -->
+    <hr />
+    <p>&copy; Copyright 2013 by Peter C. Chapin</p>
+
+    <p>
+      <i>Permission is granted to copy, distribute and/or modify this document under the terms
+      of the GNU Free Documentation License, Version 1.1 or any later version published by the
+      Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no
+      Back-Cover Texts.</i>
+    </p>
+
+    <p>Last Revised: <b>November 2, 2013</b></p>
+    <!-- END signature block -->
+  </body>
+
+</html>

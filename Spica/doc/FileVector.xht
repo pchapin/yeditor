@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC
+  "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+  <!-- FILE   : FileVector.xht
+       AUTHOR : Peter C. Chapin
+       SUBJECT: Documentation for the FileVector template class.  -->
+
+  <head>
+    <title>class template FileVector</title>
+
+    <meta name="Author" content="Peter C. Chapin" />
+    <meta name="ROBOTS" content="NOARCHIVE" />
+    <link rel="stylesheet" href="../../default.css" type="text/css" />
+  </head>
+
+  <body>
+    <center>
+      <h1>class template FileVector</h1>
+    </center>
+
+    <hr />
+    <h2>Usage</h2>
+
+    <p>A FileVector is a template container, written in the same style as the standard
+    containers, that allows you to treat the contents of a file as a vector. It is my intention
+    for FileVector to provide all the same operations with exactly the same semantics as are
+    provided by <tt>std::vector</tt>. Refer to any reference on <tt>std::vector</tt> for more
+    information. At the time of this writing, not all vector operations have been implemented,
+    but most of the commonly used ones have been.</p>
+
+    <p>In order to properly support vector semantics this implementation uses memory mapped
+    files. Currently only Win32 is supported, but in theory it could be modified to support any
+    system that provides memory mapped files. A Unix implementation should be made some
+    time.</p>
+
+    <p>The reason memory mapped files are necessary has to do with the way vector's users expect
+    to be able to access the elements of a vector. Consider the following example</p>
+
+    <pre>
+FileVector&lt;int&gt; my_vector("somefile.dat");
+int         *p = &amp;my_vector[25];
+
+...
+
+  *p = 10; // This stores 10 into a vector element.
+p[1] = 20; // This stores 20 into the next vector element.
+</pre>
+
+    <p>Provided no operations have been done to the vector that would invalidate its iterators,
+    users will expect <tt>*p = 10</tt> and <tt>p[1] = 20</tt> to work as they would for ordinary
+    arrays. Since p is a plain pointer and not some sort of class object with potentially
+    complicated internal workings, the only way to support such usage is to keep the entire
+    vector in memory all the time. It would not be possible to implement FileVector using
+    ordinary file I/O functions to bring bits and pieces of the vector into memory on
+    demand.</p>
+
+    <p>I considered declaring such usage illegal and then providing the necessary intelligence
+    in operator[]() and FileVector's iterators to make using the ordinary file I/O functions
+    feasible. This would have the advantage of letting FileVector manage files that are larger
+    than the processor's address space. With memory mapped files that is not possible. (Win32
+    file mapping allows you to map "views" of a very large file, but that creates the same
+    problem as I described above). However, I decided that, for now, I would support vector's
+    expected semantics. Furthermore, my understanding is that the standard is due to be
+    clarified in such a way as to require the semantics that most users expect.</p>
+
+    <p>Since FileVector uses memory mapped files, a large FileVector will still consume a large
+    amount of address space. This leads to the question: is FileVector really any more useful
+    than <tt>std::vector</tt>? Under certain conditions it is. Suppose you had a large file of
+    POD structures and that you wanted to randomly access a relatively small subset of those
+    structures. You could use ordinary file I/O functions to do so, but that is syntatically
+    awkward and error prone. Also since FileVector provides random access iterators, using an
+    FileVector to access the file makes it easy to apply library algorithms to a file's
+    contents. Normal stream iterators are in the input/output catagories and are thus far weaker
+    than FileVector's iterators.</p>
+
+    <p>Alternatively you could just rely on virtual memory and read the entire file into a
+    <tt>std::vector</tt>, perform the access you need, and then write the results back out to
+    the file. If the file is very large, this operation essentially entails copying the (large)
+    file into the swap device, manipulating it via virtual memory, and then copying the file out
+    of the swap device again. Using FileVector allows you to skip those two potentially time
+    consuming copy operations and instead access the file via virtual memory directly. If you
+    only plan to access a small subset of elements, the savings in time will be particularly
+    dramatic. Using FileVector also prevents you from filling up the swap device
+    unnecessarily.</p>
+
+    <p>It is true that many operating systems allow you to create files that are larger than the
+    address space supported by the processor. Such files can't be manipulated by FileVector (if
+    you try you will get a <tt>std::bad_alloc</tt> exception). In practice this will put an
+    upper limit on FileVector's size at about 1 or 2 GBytes (or so) on many systems. This is a
+    shame because easy manipulation of such large files would be a nice feature of FileVector if
+    it could handle it. The fact that such large files can't be managed by FileVector detracts
+    considerably from its appeal. Furthermore, for very small files just reading the entire file
+    into an ordinary vector might be a better choice because it would be more portable. Thus
+    FileVector is really only useful for files that are large enough to be awkward to read into
+    an ordinary vector, yet small enough to fit into the virtual address space.</p>
+
+    <p>Since FileVectors are presistent and since the template (for speed reasons) currenty
+    treats its elements as raw bytes, there are some restrictions on the type of object you can
+    put into an FileVector. Here are the rules for what is acceptable</p>
+
+    <ol>
+      <li><p>Any of the built in arithmetic types or any enumeration type.</p> </li>
+
+      <li><p>Structures composed of (1) or arrays of (1) or containing structures as in (2). (In
+      short, any POD type).</p></li>
+    </ol>
+
+    <p>Many useful types won't work. Here are some examples</p>
+
+    <ol>
+      <li><p>Objects with a logical size that varies (like std::strings).</p></li>
+
+      <li><p>Objects containing virtual functions or virtual base classes.</p></li>
+
+      <li><p>Objects with non-trivial assignment operators or destructors.</p></li>
+
+      <li><p>Objects containing pointers or other "handles" to outside resources.</p></li>
+
+    </ol>
+
+    <p>The last restriction is due to the persistant nature of FileVectors. Normally pointers in
+    one process are invalid in another so storing raw pointers in a file is typically quite
+    useless. However, if you are using an FileVector as a large temporary storage area in a
+    single process, restriction number four can be lifted.</p>
+
+    <p>Note also that in the current implementation, objects in an FileVector are copied using
+    low level memory copying functions. Thus objects with non-trivial assignment operators can't
+    be used. In addition objects in an FileVector are not destroyed. When they are erased only
+    their memory is reclaimed. These restrictions were implemented to enhance speed, but they
+    may be lifted in a future version of FileVector if experience indicates that they need to
+    be.</p>
+
+    <p>Finally, I strongly suggest that you don't put any objects in an FileVector that have a
+    private section even if you "know" those objects obey the restrictions above. Since the
+    private section of an object is subject to change without notice, a future version of those
+    objects might violate the restrictions above and cause FileVector to malfunction.</p>
+
+    <p>Although <tt>std::vector</tt> doesn't suffer from any of these restrictions, the
+    semantics of FileVector should be correct when types that obey the restrictions above are
+    used. While obviously these restrictions further limit the usefulness of FileVector, I
+    believe that there are many important cases where the restrictions will not cause any
+    problems.</p>
+
+    <hr />
+    <h2>Member Functions</h2>
+
+    <p>Since FileVector is intended to support the same operations as <tt>std::vector</tt>, you
+    can refer to <tt>std::vector</tt>'s operations for more information on how FileVector
+    behaves. Keep in mind that at the time of this writing, FileVector does not yet implement
+    all the operations that it should. See the header file for more information.</p>
+
+    <p>The list below contains information on FileVector's members that are unique to FileVector
+    or that have properties that are different than <tt>std::vector</tt>. Notice that all of
+    FileVector's constructors require a file name as their first argument.</p>
+
+    <dl>
+
+      <dt><b>FileVector(const char *file_name)</b></dt>
+      <dd>
+        <p>This constructor creates an FileVector wrapper around the named file. If the file
+        does not exist, it will be created with a size of 0. If the file does exist, it will be
+        taken to contain the initial contents of the vector; the size will be set accordingly.
+        Note that the semantics of this function is different than that of
+        <tt>std::vector</tt>'s corresponding constructor because the default constructor of
+        <tt>std::vector</tt> never creates a vector with any initial contents. This difference
+        is a reflection of the persistant nature of FileVector.</p>
+      </dd>
+
+      <dt><b>FileVector(const char *file_name, size_type n, const T &amp;initial = T())</b></dt>
+
+      <dd>
+        <p>This constructor creates a new FileVector under the given file name. The vector will
+        be initialized with n copies of initial. If the given file already exists, its existing
+        contents are lost.</p>
+      </dd>
+
+    </dl>
+
+    <hr />
+    <h2>Exceptions</h2>
+
+    <p>A FileVector throws <tt>std::bad_alloc</tt> in situations where is is asked to allocate
+    more space than is logically possible. It throws <tt>spica::Win32::API_Error</tt> if one of
+    the underlying calls to the Win32 API fail. This occurs if the backing file can't be opened
+    or mapped. This might occur if the size of the mapping is too large to fit into the
+    available address space (in which case <tt>std::bad_alloc</tt> should probably be thrown
+    instead), or it might occur for some other unknown reason.</p>
+
+    <p>After a FileVector throws an exception, you should consider it unusuable. The data
+    already stored in the vector should be preserved in the file normally, but the FileVector
+    object should be thrown away.</p>
+
+    <!-- BEGIN signature block -->
+    <hr />
+    <p>&copy; Copyright 2013 by Peter C. Chapin</p>
+
+    <p>
+      <i>Permission is granted to copy, distribute and/or modify this document under the terms
+      of the GNU Free Documentation License, Version 1.1 or any later version published by the
+      Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no
+      Back-Cover Texts.</i>
+    </p>
+
+    <p>Last Revised: <b>November 2, 2013</b></p>
+    <!-- END signature block -->
+  </body>
+
+</html>

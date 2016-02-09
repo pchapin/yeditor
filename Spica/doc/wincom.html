@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+
+<!-- FILE        : wincom.htm
+     AUTHOR      : Peter Chapin
+     LAST REVISED: May 20, 2000
+     SUBJECT     : Documentation on the WinCom componet. -->
+
+<HEAD>
+<TITLE>WinCom</TITLE>
+</HEAD>
+
+<BODY>
+<CENTER>
+<H1>WinCom</H1>
+</CENTER>
+<HR>
+
+<H2>Introduction</H2>
+
+This component is intended to simplify using serial ports on a Win32
+machine. It is currently rather rough and suffers from a number of
+important limitations. It is my hope that eventually some of these
+limitations will be removed. If you find this component close to what
+you need, but not exactly what you need, I invite you to improve it! Be
+sure to let me know if you do so that I can incorporate your changes
+into my official version.<P>
+
+WinCom requires multiple threads. For this reason you must #define the
+symbol pMULTITHREADED before you compile WinCom. You should also #define
+this symbol for any of my other components that you might be using in
+your program. Note that in some cases, WinCom can autodetect the fact
+that you are building a multithreaded program. See the file environ.h
+and the <A HREF="overview.htm">overview document</A> for more
+information.<P>
+
+For each port object created, WinCom creates a helper thread that reads
+the port. That thread calls a client-defined function for every
+character that it receives. In this way, you can process input from the
+port asynchronously to your program's other activities. In particular,
+you can process unsolicited input whenever it appears.<P>
+
+WinCom is known to work properly under Windows 95. However, I have heard
+that it is necessary to use a Win32 feature called "overlapped I/O" to
+get WinCom's asynchronous reads to work properly under Windows NT. I am
+not currently using that feature in WinCom so it is possible that it
+will fail on a Windows NT machine. This is one area that needs more
+work.<P>
+
+<HR>
+<H2>The Read Processor Function</H2>
+
+Before you can use a port, you need to prepare a function that will
+process the characters read by that port. This function should have the
+signature<P>
+
+<TT>void Read_Processor(char);</TT><P>
+
+You may name the function whatever you like. The name
+<TT>Read_Processor</TT> above is just for illustration. Each character
+read from the port will be passed to this function for processing. When
+this function returns, the next character will be read from the port.
+This function need not return "quickly." WinCom will buffer the data as
+necessary.<P>
+
+<I>However, there may be a problem with the way WinCom is handling that
+buffering. It may be that only 256 characters will be buffered. Although
+additional characters shouldn't be lost, WinCom might not give them to
+your function until long after they have arrived. This problem will
+exist if WaitCommEvent() does not notice characters that have
+accumulated in the serial port's buffer before it is called. I'm not
+sure of how that Win32 function behaves in this case. This is another
+area where more work is necessary.</I><P>
+
+Your function will be called with the value '\000' (the null character)
+when WinCom has no more data available "immediately." This does
+<EM>not</EM> mean the end of input has been reached. It only means that
+no characters have arrived at the input port during the last 50 mS. Your
+function can use this information to detect the end of the current
+transaction (line, record, etc) and respond accordingly.<P>
+
+If your function throws an exception, it will be caught by WinCom and an
+exception notification message box will be displayed. In addition, the
+exception will be logged to WinDebug. The bad_alloc exception, and the
+pcc::Win32::API_Error exception are treated separately. All other
+exceptions are handled generically.<P>
+
+<CENTER>
+<B>Warning!</B>
+</CENTER><P>
+
+Be advised that your function will be called in the context of the
+port's helper thread. Processing of input characters occurs
+asynchronously to all other threads in the program. If you want your
+input to be sychronized to the activities of some other thread, then it
+is up to you to handle that.<P>
+
+<HR>
+<H2>class Com_Port</H2>
+
+To use WinCom, you must create an object of type Com_Port for each
+serial port you want to use. Here I will describe the member functions
+for this class.<P>
+
+<DL>
+
+<DT><B><TT>Com_Port(bool Testing = false);</TT></B><P>
+
+<DD>The constructor initailizes a few internal data objects in the
+Com_Port object. It does <EM>not</EM> initalize the port itself. You can
+construct a Com_Port object without knowing yet what parameters you want
+to use for the port. If the flag <TT>Testing</TT> is "true", the
+Com_Port object is created in testing mode. In that mode all writes to
+the port are ignored and reads are taken from a source of simulated
+input. This allows you to test the behavior of your program without a
+working device connected to the real serial port. You can submit
+simulated input to the Com_Port object before you start using it to
+simulate the responses sent to you by a real (but not present)
+device.<P>
+
+<DT><B><TT>~Com_Port();</TT></B><P>
+
+<DD>The destructor stops the helper thread and resets the port to the
+state that it had before it was set. If the helper thread is not running
+or the port not set, this function correctly does nothing.<P>
+
+<DT><B><TT>void Set(const char *Name, int Baud, void (*Read)(char));</TT></B><P>
+
+<DD>This function sets the port's parameters. The given name is the name
+of the pseudo file representing the port. In most cases it will be
+something like "COM1" or "COM2." However, more elaborate file names are
+possible in the usual manner supported by your Win32 machine. The baud
+rate given is a value such as 9600. The parameter <TT>Read</TT> is a
+pointer to your read processing function that will be called by the
+helper thread as I described above.<P>
+
+This function will set the port to 8 data bits, 1 stop bit, activiate
+RTS/CTS flow control, and set both read and write timeouts to
+"reasonable" values. It would probably be nice if you were allowed to
+control some of these settings. However, in the interest of simplicity
+(for you) I decided that the settings above would be appropriate in most
+cases. A future version of WinCom may allow you more control over the
+port's configuration.<P>
+
+This function will remember the port's original state so that it can be
+reset to that state later. It also logs several messages to WinDebug to
+inform you of the port's status.<P>
+
+<DT><B><TT>void Set_Input(const string &Input);</TT></B><P>
+
+<DD>This function allows you to configure simulated input that will be
+later returned by the reading operation. It is useful only if you
+construct the port in testing mode.<P>
+
+After each line of simulated input, the Com_Port's helper thread will
+send a '\000' to your read processor function. This will cause your
+function to conclude that line is a complete transaction (see above). If
+there is no simulated input left, the Com_Port's helper thread will
+block. At a later time, you can submit more simulated input to unblock
+that thread. For example:<P>
+
+<PRE>
+My_Port.Write("Hello, World!\r");
+#if defined(TESTING_MODE)
+My_Port.Set_Input("This is a simulated response.\r");
+#endif
+</PRE><P>
+
+In this way you can exercise your read function without having a real
+device attached to the serial port.<P>
+
+<DT><B><TT>void Start_Reading();</TT></B><P>
+
+<DD>This function starts the port's helper thread. If you do not call
+this function, no data will ever be read from the port. It is not an
+error to call this function more than once. If the helper thread is
+already started, the call will be ignored. This function logs a message
+to WinDebug.<P>
+
+<DT><B><TT>void Write(const char *);</TT></B><P>
+
+<DD>This function writes a null terminated string to the port. The null
+byte is not written. Because there is no facility for writing arbitrary
+blocks of data to the port, WinCom is really only suitable for plain
+text transactions with remote devices. A future version of WinCom might
+lift this restriction.<P>
+
+If the write operation fails, WinCom will throw a pcc::Win32::API_Error
+exception. The most likely reason for this to happen is because the
+write operation timed out waiting for an appropriate hardware handshake.
+Be sure the remote device supports RTS/CTS flow control and is
+configured to use it.<P>
+
+<DT><B><TT>void Stop_Reading();</TT></B><P>
+
+<DD>This function kills the port's helper thread, but does not otherwise
+reconfigure the port. You can use it to temporarily stop the helper
+thread from delivering characters to you. You can restart the thread
+later by calling <TT>Start_Reading()</TT> at any time. If the helper
+thread is already stopped when you call <TT>Stop_Reading()</TT>, there
+is no effect.<P>
+
+This function will immediately and abruptly kill the helper thread. If
+the helper thread is actually in your read processor function at the
+time it may leave resources unreleased (depending on how your function
+is written). It is best to be sure that the reader thread is blocked
+waiting for input -- that no more input will be forthcoming -- before
+you try to stop it. A future version of WinCom may improve the handling
+of this function so that a clean stop is possible at any time.<P>
+
+<DT><B><TT>void Unset();</TT></B><P>
+
+<DD>This function unsets the port and restores it to the same state that
+it had before <TT>Set()</TT> was called. After calling this function you
+can call <TT>Set()</TT> again to give the Com_Port object new
+parameters. You should avoid calling <TT>Set()</TT> twice in a row.<P>
+
+This function will stop the helper thread if it is running. The same
+warnings apply here as to the function <TT>Stop_Reading()</TT> above.<P>
+
+</DL>
+
+<!-- BEGIN signature block -->
+<HR>
+<P>&copy; Copyright 2001 by Peter Chapin &lt;<A
+HREF="mailto:pchapin@sover.net">pchapin@sover.net</A>&gt;. All rights
+reserved.</P>
+
+<P><I>Permission is granted to copy, distribute and/or modify this
+document under the terms of the <A HREF="GFDL.txt">GNU Free
+Documentation License</A>, Version 1.1 or any later version published by
+the Free Software Foundation; with no Invariant Sections, no Front-Cover
+Texts, and no Back-Cover Texts.</I></P>
+
+<P>Last Revised: <B>June 24, 2001</B></P>
+<!-- END signature block -->
+</BODY>
+
+</HTML>
+

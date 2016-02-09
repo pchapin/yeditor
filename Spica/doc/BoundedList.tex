@@ -1,0 +1,516 @@
+%
+% Slides on the BoundedList template.
+%
+
+\documentclass[landscape]{slides}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage[pdftex]{graphicx}
+\usepackage{listings}
+\usepackage{times}
+\usepackage{url}
+
+\input{slide-macros}
+
+% Default settings for code listings.
+\lstset{
+  language=C++,
+  basicstyle=\ttfamily,
+  stringstyle=\ttfamily,
+  commentstyle=\ttfamily,
+  xleftmargin=0.25in,
+  showstringspaces=false}
+
+\lstMakeShortInline[basicstyle=\ttfamily]!
+
+\title{\color{titlecolor}BoundedList Template}
+\author{
+  \begin{tabular}{c}
+  \\[3mm]
+  \Large{Peter C. Chapin} \\[2mm]
+  \normalsize{Computer Information Systems}\\[5mm]
+  \includegraphics[scale=0.80]{VermontTech_stack_361.jpg}\\[16mm]
+  \end{tabular}
+}
+\date{November 4, 2013}
+
+\begin{document}
+
+\color{Black}
+\pagecolor{Background}
+
+\maketitle
+
+%%%%%
+
+\startslide{Standard List}
+The C++ standard provides a list template !std::list<T>!.
+\begin{citemize}
+\item Can hold elements of any type.
+\item Can grow (and shrink) dynamically to any size.
+\item Provides $O(1)$ access to \emph{both} ends.
+\item Provides $O(1)$ insert and erase operations.
+\end{citemize}
+Does not provide operations for random access. They would be $O(n)$.
+\stopslide
+
+%%%%%
+
+\startslide{Standard List Iterators}
+The type !std::list<T>::iterator! is a \cemph{bidirectional iterator} type.
+\vspace{5mm}
+{\small
+\begin{lstlisting}
+template<typename Bidirectional>
+void reverse( Bidirectional first, Bidirectional last )
+{
+  if( first == last ) return;
+  --last;
+  while( first != last ) {
+    swap( *first, *last );
+    ++first;
+    if( first == last ) break;
+    --last;
+  }
+}
+
+std::list<int> my_list { 1, 2, 3, 4 };
+reverse( my_list.begin( ), my_list.end( ) );
+\end{lstlisting}
+}
+\stopslide
+
+%%%%%
+
+\startslide{Constant Time Insert}
+Lists excel at insert (and erase) operations in the middle of the list.
+\vspace{5mm}
+{\small
+\begin{lstlisting}
+void insert_before_dot( list<string> &lst,
+                        const string &incoming )
+{
+  list<string>::iterator dot =
+    std::find( lst.begin( ), lst.end( ), "." ); // O(n)
+
+  if( dot != lst.end( ) ) {
+    lst.insert( dot, incoming );                // O(1)
+  }
+}
+\end{lstlisting}
+}
+The !std::find! algorithm searches a sequence for a particular item and returns an iterator to
+the first occurrence or, if the item is not found, an iterator just past the sequence.
+
+The !insert! method inserts a new item into the list before the position indicated by the given
+iterator.
+\stopslide
+
+%%%%%
+
+\startslide{BoundedList}
+BoundedLists pre-allocate space for a fixed number of items.
+\begin{citemize}
+\item Maximum number of items given as constructor parameter.
+\item Space can't grow or shrink.
+\item List uses allocated space\ldots\ can grow and shrink inside bound.
+\item Otherwise behaves similarly to the standard list.
+\end{citemize}
+The type !BoundedList<T>! is a bounded list holding items of type !T!.
+
+The type !BoundedList<T>::iterator! is a bidirectional iterator type.
+\stopslide
+
+%%%%%
+
+\startslide{BoundedList Sample}
+Behaves like !std::list<T>!.
+\vspace{5mm}
+{\small
+\begin{lstlisting}
+// Specify maximum element count during construction.
+BoundedList<int> my_list( 16 );
+
+// Assignment of an initializer list supported.
+my_list = { 1, 2, 3, 4 };
+
+// BoundedList iterators are bidirectional.
+reverse( my_list.begin( ), my_list.end( ) );
+\end{lstlisting}
+}
+
+Initializer list constructor not supported; its size would also fix the upper bound on the list
+(not appropriate).
+
+The !reverse! algorithm is the same as presented earlier; works fine with !BoundedList!.
+\stopslide
+
+%%%%%
+
+\startslide{Why Bother?}
+What's the point of BoundedList?
+\begin{citemize}
+\item Memory sensitive applications can't allow one data structure to take memory away from
+  others.
+\item If all memory is pre-allocated a careful accounting of memory can be made.
+\item Runaway growth is likely a sign of error and should not be supported.
+\end{citemize}
+However, there are obvious disadvantages.
+\begin{citemize}
+\item Application might consume more memory than it really needs.
+\item ``Out of memory'' errors still possible (if BoundedList fills up)\ldots\ even with free
+  memory available.
+\end{citemize}
+BoundedList is a \emph{speciality} data structure.
+\stopslide
+
+%%%%%
+
+\startslide{Out of Memory}
+From the C++ 2011 standard:
+\begin{quote}
+  \color{magenta}{``The class \texttt{length\_error} defines the type of objects thrown as
+    exceptions to report an attempt to produce an object whose length exceeds its maximum
+    allowable size.''}
+\end{quote}
+
+\vspace{5.0mm}
+{\small
+\begin{lstlisting}
+BoundedList<int> my_list( 4 );
+
+try {
+  my_list = { 1, 2, 3, 4 };
+  my_list.push_back( 5 );
+  // Other operations on my_list...
+}
+catch( const std::length_error &ex ) {
+  std::cout << "Caught length_error: " << ex.what( ); << "\n";
+}
+\end{lstlisting}
+}
+\stopslide
+
+%%%%%
+
+\startslide{Implementation Notes}
+\centerline{\cemph{Use the style of the standard library.}}
+
+\begin{citemize}
+\item Provide ``the usual nested types.''
+\item Provide a nested iterator class named !iterator!.
+\item Provide !begin! and !end! methods.
+\item Provide the same supporting methods (like !insert!).
+\end{citemize}
+Advantages:
+\begin{citemize}
+\item Plays well with standard algorithms.
+\item Plays well with standard template adaptors.
+\item Plays well with third party code.
+\item Very low learning curve.
+\end{citemize}
+\stopslide
+
+%%%%%
+
+\startslide{The Usual Types}
+{\small
+\begin{lstlisting}
+template< typename T >
+class BoundedList {
+public:
+  typedef       T  value_type;
+  typedef       T *pointer;
+  typedef const T *const_pointer;
+  typedef       T &reference;
+  typedef const T &const_reference;
+  typedef std::size_t    size_type;
+  typedef std::ptrdiff_t difference_type;
+
+  // ...
+\end{lstlisting}
+}
+All library containers define nested types like above. Some algorithms depend on it. \cemph{Thus
+  we should define these types also so we play well with the library.}
+\stopslide
+
+%%%%%
+
+\startslide{The Usual Types}
+\begin{citemize}
+\item !BoundedList<T>::value_type! is the list element type.
+\item !BoundedList<T>::size_type! is a type suitable for measuring the size of a BoundedList.
+\item !BoundedList<T>::difference_type! is a type suitable for holding the difference between
+  two iterators.
+\end{citemize}
+{\small
+\begin{lstlisting}
+BoundedList<int> my_list( 16 );
+...
+BoundedList<int>::size_type list_size = my_list.size( );
+\end{lstlisting}
+}
+The type !size_type! is some kind of unsigned integer; probably the same as !std::size_t! for
+most containers. Some ``exotic'' containers might use a larger unsigned integer.
+\stopslide
+
+\startslide{Representation}
+{\small
+\begin{lstlisting}
+template< typename T >
+class BoundedList {
+private:
+  T         *raw;       // Pre-allocated block of raw memory.
+  size_type *next;      // Array of "next" indicies.
+  size_type *previous;  // Array of "previous" indicies.
+  size_type  count;     // Number of items in list.
+  size_type  capacity;  // Size of pre-allocated block.
+  size_type  free;      // Front of the free list.
+
+  // ...
+\end{lstlisting}
+}
+Three parallel arrays: one containing the list elements and two others containing the ``next''
+and ``previous'' index values for each element.
+
+Element zero of the arrays is for the \cemph{sentinel} node (used to mark both ends of the
+list). The sentinel is not part of the list data.
+\stopslide
+
+%%%%%
+
+\startslide{Memory Layout}
+\begin{center}
+\includegraphics[scale=2.0]{BoundedList-Representation.pdf}
+\end{center}
+\stopslide
+
+%%%%%
+
+\startslide{Memory Trickery}
+\cemph{Only certain slots in the raw array are really constructed \texttt{T} objects.} It is
+necessary to manage construction and destruction manually.
+\vspace{5mm}
+{\small
+\begin{lstlisting}
+template< typename T >
+BoundedList<T>::BoundedList( size_type max_count )
+{
+  raw =
+    reinterpret_cast<T *>(new char[(max_count + 1)*sizeof(T)]);
+ 
+  next     = new size_type[max_count + 1];
+  previous = new size_type[max_count + 1];
+  count    = 0;
+  capacity = max_count;
+  free     = 0;
+  // ...
+\end{lstlisting}
+}
+Constructor allocates raw memory as an appropriately sized block of characters to avoid
+constructing unnecessary !T! objects. The cast changes interpretation of the resulting pointer.
+
+Space for !max_count + 1! items allocated to account for sentinel node.
+\stopslide
+
+%%%%%
+
+\startslide{Wire the Free List}
+{\small
+\begin{lstlisting}
+template< typename T >
+BoundedList<T>::BoundedList( size_type max_count )
+{
+  // ...
+
+  // Prepare the free list.
+  for( size_type i = 1; i <= capacity; ++i ) {
+    next[i] = i + 1;
+  }
+  if( capacity > 0 ) {
+    next[capacity] = 0;
+    free = 1;
+  }
+
+  // Configure the sentinel.
+  next[0] = 0;
+  previous[0] = 0;
+}
+\end{lstlisting}
+}
+The sentinel's !next! and !previous! pointers (indicies) point at itself.
+\stopslide
+
+%%%%
+
+\startslide{Destructor Destroys Active List Elements}
+{\small
+\begin{lstlisting}[escapechar=@]
+template< typename T >
+BoundedList<T>::~BoundedList( )
+{
+  // Destroy all the active items.
+  size_type current = next[0];
+  while( current != 0 ) {
+    @\color{red}{raw[current].\textasciitilde T( );}@
+    current = next[current];
+  }
+
+  // Release the memory.
+  delete [] previous;
+  delete [] next;
+  delete [] reinterpret_cast< char * >( raw );
+}
+\end{lstlisting}
+}
+Red line shows explicit invocation of destructor. \cemph{Very unusual technique.}
+\stopslide
+
+%%%%%
+
+\startslide{Implementation of push\_back}
+{\small
+\begin{lstlisting}[escapechar=@]
+template< typename T >
+void BoundedList<T>::push_back( const T &item )
+{
+    if( free == 0 )
+      throw std::length_error( "BoundedList: full" );
+
+    // Pull a slot off the free list.
+    size_type new_item = free;
+    free = next[free];
+
+    // Construct a copy of the item in the desired slot.
+    @\color{red}{new ( \&raw[new\_item] ) T( item );}@
+
+    next[previous[0]]  = new_item;
+    previous[new_item] = previous[0];
+    next[new_item]     = 0;
+    previous[0]        = new_item;
+
+    ++count;
+}
+\end{lstlisting}
+}
+Red line shows ``placement new.'' \cemph{Very unusual technique.}
+\stopslide
+
+%%%%%
+
+\startslide{Implementation of pop\_back}
+{\small
+\begin{lstlisting}[escapechar=@]
+template< typename T >
+void BoundedList<T>::pop_back( )
+{
+  // Remove the last item (I assume one is present).
+  size_type p = previous[previous[0]];
+  @\color{red}{raw[previous[0]].\textasciitilde T( );}@
+  next[previous[0]] = free;
+  free = previous[0];
+
+  previous[0] = p;
+  next[p] = 0;
+  count--;
+}
+\end{lstlisting}
+}
+Red line shows explicit invocation of destructor.
+\stopslide
+
+%%%%%
+
+\startslide{\texttt{BoundedList<T>::iterator}}
+{\small
+\begin{lstlisting}
+template< typename T >
+class BoundedList {
+public:
+  class iterator :
+    public std::iterator<std::bidirectional_iterator_tag, T> {
+  public:
+    iterator( );
+    iterator( BoundedList *list, size_type index );
+    iterator &operator++( );
+    iterator &operator--( );
+    bool      operator==( const iterator &other );
+    bool      operator!=( const iterator &other );
+    reference operator* ( );
+    pointer   operator->( );
+  };
+    // ...
+\end{lstlisting}
+}
+\begin{citemize}
+\item Deriving from !std::iterator! template inherits certain types.
+\item An iterator knows which BoundedList it points into.
+\item The !operator->! is only useful if list elements are structures/classes.
+\end{citemize}
+\stopslide
+
+%%%%%
+
+\startslide{Implementation of Iterator Inc/Dec}
+{\small
+\begin{lstlisting}
+template< typename T >
+BoundedList<T>::iterator &
+  BoundedList<T>::iterator::operator++( )
+{
+  my_node = my_list->next[my_node];
+  return( *this );
+}
+
+template< typename T >
+BoundedList<T>::iterator &
+  BoundedList<T>::iterator::operator--( )
+{
+  my_node = my_list->previous[my_node];
+  return( *this );
+}
+\end{lstlisting}
+}
+An iterator knows its current list and node. It must be a !friend! of BoundedList to access the
+private section of the list.
+\stopslide
+
+%%%%%
+
+\startslide{Implementation of begin/end}
+{\small
+\begin{lstlisting}
+template< typename T >
+BoundedList<T>::iterator BoundedList<T>::begin( )
+{
+  return iterator( this, next[0] );
+}
+
+
+template< typename T >
+BoundedList<T>::iterator BoundedList<T>::end( )
+{
+  return iterator( this, 0 );
+}
+\end{lstlisting}
+}
+These methods return an appropriate iterator from !this! object.
+\stopslide
+
+%%%%%
+
+\startslide{Full Details}
+\begin{citemize}
+\item Complete implementation in \texttt{BoundedList.hpp}.
+\item Test program in \texttt{check/BoundedList\_tests.cpp}.
+\end{citemize}
+\centerline{Questions?}
+\makeatletter
+\centerline{PChapin@vtc.vsc.edu}
+\makeatother
+\stopslide
+
+\end{document}

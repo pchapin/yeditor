@@ -1,0 +1,60 @@
+/****************************************************************************
+FILE          : windebug.rh
+LAST REVISED  : February 14, 2001
+SUBJECT       : Identifiers for the WinDebug resources.
+PROGRAMMER    : (C) Copyright 2001 by Peter Chapin
+
+The file contains identifiers used by the WinDebug resources. See
+windebug.rc. This file need not be referenced by application code
+outside of WinDebug, but it must be present before WinDebug can be
+compiled.
+
+
+REVISION HISTORY
+
++ Feb 14, 2001: Changed modification date for consistency with the .cpp file.
+
++ Jan 22, 2000: Some cosmetic changes.
+
++ Mar 22, 1999: First official release.
+
+
+LICENSE
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2 of the License, or (at your
+option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANT-
+ABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+Please send comments or bug reports pertaining to this file to
+
+     Peter Chapin
+     P.O. Box 317
+     Randolph Center, VT 05061
+     pchapin@sover.net
+****************************************************************************/
+
+/* How can I be sure these will always be unique across the application? */
+#define DEBUG_ICON              1000
+#define DEBUG_MENU              1001
+
+/* Debug menu identifiers. These need only be unique in the debug window. */
+#define DEBUG_ABOUT             2000
+#define DEBUG_CONFIGURE         2001
+#define DEBUG_COPY              2002
+#define DEBUG_CUT               2003
+#define DEBUG_EXIT              2004
+#define DEBUG_HELPTOPICS        2005
+#define DEBUG_SAVEBUFFER        2006
+#define DEBUG_STARTSAVE         2007
+#define DEBUG_STOPSAVE          2008
+
