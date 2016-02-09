@@ -1,0 +1,121 @@
+\chapter{Introduction}
+
+\textit{This document is very incomplete. Furthermore some of the information presented here
+  about Y version 2.0 may not yet be implemented. While I hope you find this document useful, at
+  the current time you may need to refer to Y's source code for definitive information about Y's
+  behavior.}
+
+Y is a macro driven programmer's text editor. This document describes Y 2.0. Version 2.0 is a
+major upgrade from the previous version 1.1 that is documented elsewhere. A short section of
+this document discusses some of the important ways that version 2.0 is different than version
+1.1.
+
+Y was designed with the following criteria in mind:
+
+\begin{enumerate}
+
+\item It had to be useful in the programming classes at Vermont Technical College (VTC). It had
+  to be simple enough for the beginning student to learn quickly yet powerful enough for the
+  more advanced student to use on complex programming tasks.
+
+\item It had to be cross platform. In some classes at VTC we use embedded versions of DOS where
+  a powerful yet relatively compact text editor is necessary. In addition many VTC classes use
+  Windows or Linux as their platform of choice and students, like anyone else, want to be able
+  to use the same editor everywhere.
+
+\item It had to run satisfactorily on an 80386 class machine and be usable on ``dumb''
+  terminals.
+
+\item It had to be open source and extremely easy to install. VTC students would be encouraged
+  to make copies and they had to be able to do so with minimal legal or technical complications.
+
+\item It had to be small enough to load quickly from an embedded hard drive or from a busy
+  network drive.
+
+\item It had to allow the editing of about 200,000 bytes (or more) of source code at once, even
+  in the memory limited DOS environment.
+
+\end{enumerate}
+
+Here is what Y does:
+
+\begin{enumerate}
+
+\item Y operates on text files in a natural way for manipulating the source code of programs.
+  Many commonly used operations (such as deleting a line or switching to a new file) can be done
+  with one keystroke.
+
+\item Y can load and manipulate many files at the same time.
+
+\item Y can use external programs or Perl scripts to manipulate the files (or portions of the
+  files) you are editing. You can effectively extend Y by writing external programs to do
+  complex tasks that are not built into the editor.
+
+  This is an extremely powerful feature. Y does not, for example, support a sorting option
+  because you can use an external sorting utility (such as the one that comes with your
+  operating system) to sort text in Y. Similarly, Y does not need to support regular expression
+  search and replaces because you can use a Perl script to perform such operations.
+
+\item Y supports a full featured macro language that allows you to implement new, non-trivial,
+  interactive features. For example, you can implement a line-draw mode, new command line
+  options, special formating features, and many other things using the macro language. Y does
+  not need all these features built in because you can add exactly what you need yourself and
+  put your new features into a macro library file.
+
+  In addition, Y will read a startup macro when it is first invoked. The startup macro can be
+  used to change the editor's personality by associating arbitrary macro commands with any key
+  on the keyboard. You can also perform arbitrary text editing and even terminate Y in the
+  startup macro. Thus you can think of the startup macro as a program interpreted by Y. This
+  allows you to use Y non-interactively as a scripting language for doing complex batch editing
+  tasks.
+
+\item Y supports features that make it useful in a variety of unusual environments. You can use
+  ANSI escape sequences to do the screen redrawing and plain ASCII keystrokes for all the
+  commands. This allows Y to be used in contexts where all special keys and graphic features may
+  not be available such as through a BBS door, over a plain terminal, or via a telnet client.
+
+\end{enumerate}
+
+Here is what Y does \emph{not} do:
+
+\begin{enumerate}
+
+\item Y does not do word processing. Y is a programmer's editor. While it can do rudimentary
+  word processing (especially with the right macros) Y is not, and never will be suited for the
+  construction of large text documents without the aid of a separate document processor such as
+  troff or \TeX.
+
+\item Y does not do disk swapping. This is not an issue on virtual memory operating systems such
+  as Windows, OS/2, or Unix. However in the DOS environment Y's lack of disk swapping support
+  puts an upper limit on the amount of text that can be edited. Y is designed to allow for a
+  useful amount of text in this context but how true that is will depend on your application.
+
+\item Y does not do backups. Editors that making backup files or that ask for confirmation
+  before they save anything are annoying. Those extra backup files merely fill the disk with
+  something to delete. Those "pretty" dialog boxes merely serve to interrupt one's
+  concentration. I agree that good backup practices are important, but making backups is not
+  something you can do with a text editor. Use a backup program.
+
+\end{enumerate}
+
+This document contains three parts: a tutorial on using Y effectively, a reference manual for Y,
+and a description of Y's internal architecture and design. These parts are intended to address,
+respectively, the needs of new and casual Y users, power users, and developers wishing to
+contribute to Y.
+
+I designed the tutorial for both beginning and advanced users. It starts by describing how to
+load files and do simple editing tasks. In later sections, I describe how you can write special
+purpose programs to extend Y using either a traditional programming language, Perl, or custom
+macros.
+
+I recommend that you try out the steps being discussed as you read the tutorial. You should
+prepare an empty directory or disk to use as you work through the tutorial.
+
+Comments, bug reports, etc are welcome. Please send them to
+
+\begin{verbatim}
+     Peter C. Chapin
+     Vermont Technical College
+     Williston, VT 05495
+     PChapin@vtc.vsc.edu
+\end{verbatim}

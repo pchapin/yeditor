@@ -1,0 +1,26 @@
+\chapter{To Y v1.1 Users}
+
+Y version 2.0 is radically different than Y version 1.1 because of its macro language. Some
+features of version 1.1 have actually been deleted from the editor. Instead they can be
+implemented as macros. In the long run this is a more flexible approach than implementing every
+possible feature in the editor itself. The file \filename{y11.ymy} (distributed with Y) is a
+start-up macro that causes Y to emulate version 1.1. If you arrange for Y to use
+\filename{y11.ymy}, all that you know about version 1.1 should apply. You can then modify
+\filename{y11.ymy} as you wish for additional effects.
+
+Here are some features of Y version 1.1 that are no longer part of the editor, but that are
+implemented as macros in \filename{y11.ymy}:
+
+\begin{enumerate}
+\item The handling of \filename{filelist.yfy}.
+\item The paragraph reformatting feature.
+\item The /L and /C command line options.
+\item The special handling of `\{' and `\}' in C language files.
+\item Auto-indentation.
+\end{enumerate}
+
+You can add some of the demonstration macros distributed with Y to \filename{y11.ymy} to extend
+the abilities of the editor without throwing out version 1.1 compatibility.
+
+Y has dropped the mouse support that existed in version 1.1. This was done because version 1.1's
+mouse support was not very useful and caused some problems.

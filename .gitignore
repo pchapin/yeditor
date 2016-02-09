@@ -1,0 +1,45 @@
+# Open Watcom generated files.
+*.bak
+*.err
+*.obj
+*.lib
+*.exe
+*.map
+
+# Visual Studio generated files.
+*.sdf
+.vs
+Debug
+Release
+
+# Code::Blocks generated files.
+*.layout
+*.depend
+bin
+obj
+
+# LLVM/clang generated files.
+*.bc
+*.bc1
+*.bc2
+*.o
+
+# depend generated files.
+*.out
+
+# Doxygen generated files.
+internal
+
+# PC-Lint generated files.
+_LINT.TMP
+
+# Y documentation generated files.
+doc/y20.aux
+doc/y20.log
+doc/y20.out
+doc/y20.pdf
+doc/y20.toc
+
+# Executables
+src/Y
+src/check/check

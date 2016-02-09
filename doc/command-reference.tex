@@ -1,0 +1,1066 @@
+
+\chapter{Command Reference}
+
+In this chapter I will describe all of Y's commands and built-in features in a methodical and
+complete manner. This chapter is not tutorial in nature; consult this chapter if you need to
+understand all of the features and options that Y supports.
+
+\section{Invoking and Terminating}
+
+Y can be invoked by simply typing its name at the keyboard as in
+
+\begin{verbatim}
+A:\> y
+\end{verbatim}
+
+In this case, Y does the following:
+
+\begin{enumerate}
+
+\item Searches the current directory for the file \filename{filelist.yfy}. If Y finds the file,
+  Y will reload all the files indicated in \filename{filelist.yfy} and adjust all their
+  attributes accordingly.
+
+\item If Y cannot find \filename{filelist.yfy} or if \filename{filelist.yfy} was produced by a
+  different version of Y, the editor will prompt you for a filename in the manner of the
+  find\_file command. If you attempt to ESC out of the initial prompt, Y will abort with an
+  error message. Y must have a filename before it will allow you to edit.
+
+\end{enumerate}
+
+You can specify one or more filenames on the command line when you invoke Y. In this case, Y
+ignores \filename{filelist.yfy}. For example,
+
+\begin{verbatim}
+A:\> y first.c second.c third.c
+\end{verbatim}
+
+Y will load all the named files (or create them if they don't exist) and then display the first
+file in the list before accepting your commands. The order in which you specify files on the
+command line will be the same order used by the next\_file command.
+
+Wildcard characters are legal on the command line. Y will load all matching files in the order
+that they appear in the physical directory listing. If no files match the wild card
+specification, Y will produce a warning message. For example,
+
+\begin{verbatim}
+A:\> y *.c x??.doc afile.txt
+\end{verbatim}
+
+This command will cause Y to load all \filename{.c} files, all files that match the pattern
+\filename{x??.doc}, and the file \filename{afile.txt}. If, for example, there are no files that
+match the pattern \filename{x??.doc}, Y will produce a warning message and then proceed to load
+\filename{afile.txt}. If \filename{afile.txt} does not exist, Y assumes it is a new file.
+
+If a filename starts with a '.' character, Y assumes you want to use the base part of the
+previous filename or wildcard sequence. For example
+
+\begin{verbatim}
+A:\> y foobar.c .h .asm example.c .h
+\end{verbatim}
+
+This command will cause Y to load \filename{foobar.c}, \filename{foobar.h},
+\filename{foobar.asm}, \filename{example.c}, and \filename{example.h} (in that order).
+
+You can force Y to jump immediately to a certain line in the file by using the -L command line
+switch. For example,
+
+\begin{verbatim}
+A:\> y -L10 first.c second.c -L1 third.c
+\end{verbatim}
+
+Here, Y will position the cursor on line 10 for both the files \filename{first.c} and
+\filename{second.c}. Y will position the cursor on line 1 of \filename{third.c}. The -L switch
+affects all files that you name after it on the command line until overridden by another -L
+switch.
+
+You can force Y to jump immediately to a certain column in the file by using the -C command line
+switch. For example,
+
+\begin{verbatim}
+A:\> y -L10 -C40 first.c
+\end{verbatim}
+
+Here, Y will position the cursor on line 10, column 40 of \filename{first.c}. Similar rules as
+for the -L switch apply.
+
+You can use a `/' instead of a `-'. Y accepts both upper and lower case letters for switches.
+Illegal switches will produce warning messages.
+
+You can terminate Y using the \press{Alt+Y} command, the \press{Alt+X} command, or the
+\press{Alt+Q} command. \press{Alt+Y} is the normal way to terminate as it causes the editor to
+save all files that you have changed and rewrite the control file, \filename{filelist.yfy}. When
+you use \press{Alt+X}, Y does not write \filename{filelist.yfy} (although it saves changes).
+When you use \press{Alt+Q}, your changes will be lost and Y does not write
+\filename{filelist.yfy}.
+
+\section{Editor Model}
+
+To use Y effectively, you must understand its attitude. In this section, I will discuss my
+mental model of Y.
+
+\begin{itemize}
+
+\item Y does not have a configuration file. Similarly, Y does not have any separate help files.
+  The only file required to use Y is its executable. Furthermore, everybody's version of Y acts
+  the same way.
+
+\item Y does not do windows. Tiled windows are too small on the PC screen to be useful.
+  Overlapping windows just get in your way. Instead, Y allows you to set a bookmark and jump
+  back and forth between your working point and the bookmark.
+
+\item Y does not make backup files. Y will save changes whenever it exits or whenever you remove
+  a file from the list of active files. Furthermore, Y will refresh an active file if an
+  external command changes the disk version of that file. Thus when you change a file in Y, it
+  is as though Y made the change immediately to the disk version of that file.
+
+\item Y provides features that allow external programs access to the text you are editing. Thus
+  you can add custom features by writing your own programs and directing Y to use them at the
+  appropriate time. This makes Y powerful without making it ungainly in size.
+
+\item Y must have a file name before it will allow you to edit. It is possible to start Y
+  without specifying a file on the command line. However, in such a situation Y either reads a
+  previously saved list of filenames or it prompts you for a filename.
+
+\item Y is sensitive to the extension of the file you are editing. Certain file attributes vary
+  from file type to file type. Also certain commands operate differently depending on the file
+  type.
+
+\item Y only allows you to define blocks that are line oriented. It is not possible to define a
+  block that contains only part of a line. Many of the commands behave differently if block mode
+  is on. I document this behavior below.
+
+\end{itemize}
+
+\section{Messages}
+
+Y displays messages in a box in the center of the screen. There are several types of messages.
+
+Informational messages are unadorned. They are typically shown while Y is doing something else,
+and will go away when Y is done. For example ``Reading program.c...'' is an informational
+message that might be seen when you start editing a file. Y displays some informational messages
+only long enough for you to read them. They will disappear after a set time (typically 3/4
+second).
+
+Query messages are also unadorned. They do, however, require some kind of response from you. Any
+key will get rid of the message. However, only certain keys are likely to be special; all other
+keys represent a default value that is shown to you in square brackets. For example ``Are you
+sure? y/[n]'' is a query message with ``no'' as the default. Only `y' (or `Y') will trigger the
+``yes'' response. If a query message has `y' as the default, you can use the ESC key as an
+alternate way to say `n'.
+
+Warning messages have the line ``Warning'' above them. These messages wait for acknowledgment
+via the ESC key. They are shown when something funny happened that you should probably know
+about, but that does not represent a mistake on your part. For example, ``Problems writing
+program.c'' is a warning message.
+
+Error messages have the line ``Sorry'' above them. They occur when you ask Y to do something it
+can't deal with. Typically an error message implies that you requested an illegal operation. Y
+waits for acknowledgment via the ESC key.
+
+Internal error messages have the line ``Bug Found!'' above them. They occur when Y detects some
+internal inconsistency. The message itself refers to objects in the source code and won't make
+much sense until you look at the source code. Please let me know if you get any of these
+messages---they represent bugs.
+
+\section{File Attributes}
+
+Each file in the editor has certain attributes associated with it. Y maintains these attributes
+separately for each file. Furthermore, when Y saves its state in response to the \press{Alt+Y}
+command, it saves these attributes for each file. Y restores these attributes when reloading
+files based on a previously saved state.
+
+\begin{description}
+
+\item[Current Point] The current point of the file defines where the cursor is located in that
+  file. The cursor is just after the current point. This is the point where Y inserts new text,
+  etc. The current point does not need to be in the actual text portion of the file. You are
+  allowed to place the cursor, and insert text, anywhere you want. Y automatically extends lines
+  with spaces and adds blank lines as necessary.
+
+\item[Color Attribute] This is the color used for the display when you are editing the file.
+
+\item[Tab Stop] This is the number of columns between tabs for the file. Y uses spaces for
+  tabs. That is, Y inserts spaces whenever it encounters a tab character in a file during
+  loading or when you press the tab key during editing.
+
+  Be aware that when Y is reading a file from the disk, it will always expand tabs as if the tab
+  stop was set to 8. When Y writes a file to disk, it will save spaces; Y never writes tabs to
+  disk (unless you inserted a tab directly into the file using \textasciicircum Q).
+
+\item[Block Definition] This attribute defines whether or not block mode is on for the file and
+  if so, the starting line of the block. The ending point of the block is always on the line
+  containing the current point. Blocks are line oriented; you cannot split a line with a block
+  or form a block from part of a line.
+
+  Currently, Y does not save this attribute in \filename{filelist.yfy}.
+
+\item[Insert/Replace Mode] If the file is in replace mode, text that you enter will overwrite
+  existing text. The cursor is shown as a "big block" to indicate that this mode is active.
+  Insert mode is the default.
+
+  Note that the commands that destroy characters and move the cursor while in insert mode will
+  just move the cursor while in replace mode. For example, the Backspace command works in
+  replace mode much the same way as the Cursor\_Left command. Commands that destroy characters
+  without moving the cursor, such as Delete\_Char and Delete\_To\_EOL will destroy characters in
+  both modes, however.
+
+\end{description}
+
+\section{Keyboard Handler}
+
+The keyboard handler is a module of Y which performs the work of reading key strokes. You can
+send commands to the keyboard handler without the rest of the program knowing it. These commands
+always start with a control character. I describe all the keyboard commands below.
+
+\begin{description}
+
+\item[\textasciicircum R] You can prefix all Y commands with a repeat count. This is done by
+  first typing \textasciicircum R followed by the number of times you wish the command to
+  repeat. When you strike a command key (or letter), Y repeats that command (or letter) as
+  specified. Note that when you enter the repeat count, there is no indication of that fact on
+  the screen.
+
+  If you wish to repeat a digit character, you must prefix the digit with \textasciicircum Q
+  (see below) to distinguish it from the count.
+
+\item[\textasciicircum K] This command allows you to define a keyboard macro. After typing
+  \textasciicircum K, Y will remember all your keystrokes until you type a closing
+  \textasciicircum K. You can play these keystrokes back using \textasciicircum E (see below). Y
+  will remember all types of keystrokes; letter keys, function keys, etc will all be recorded.
+
+  The keyboard macro can contain up to 256 keystrokes; Y will warn you if you try to exceed this
+  limit.
+
+\item[\textasciicircum E] This command plays back a previously recorded keyboard macro. You will
+  see an error message if you try to play back a macro without having defined one via the
+  \textasciicircum K command. You also will see an error message if you try to use this command
+  while recording a keyboard macro. Keyboard macros cannot be recursive.
+
+\item[\textasciicircum Q] This command allows you to quote a keystroke. Y will place whatever
+  key you enter after this command literally into the file. For example, the sequence
+  \textasciicircum Q\textasciicircum [ will place a \textasciicircum [ character (an ESC) into
+  the file. This command works for all keys, however you must use it to enter \textasciicircum
+  E, \textasciicircum I (TAB), \textasciicircum J (LF), \textasciicircum K, \textasciicircum M
+  (CR), \textasciicircum Q, \textasciicircum R, or \textasciicircum [ (ESC) characters since
+  those characters are normally taken to be commands.
+
+  Note that Y will convert any \textasciicircum J characters that appear in your file into a
+  CR/LF pair when it writes the file to disk. Thus forcing a \textasciicircum J into the file
+  will produce a result similar to striking the RETURN key.
+
+\end{description}
+
+You can use the \textasciicircum R sequence together with the keyboard macro. For example, a
+keyboard macro which contained the sequence ``\textasciicircum R1000+'' (which prints one
+thousands `+' characters) is legal. In particular, Y uses only six keystrokes of the 256 allowed
+rather than overflowing the macro buffer with `+' characters.
+
+You can repeat the execution of the keyboard macro. For example, a sequence like
+"\textasciicircum R10\textasciicircum E," repeats the keyboard macro ten times. You can repeat a
+keyboard macro that contains a repeat sequence.
+
+You can repeatedly generate a quoted keystroke or place quoted keystrokes into the macro buffer.
+For example the sequence ``\textasciicircum R10\textasciicircum Q\textasciicircum [`` places 10
+ESCape characters into the active file. Note also that ``\textasciicircum R10\textasciicircum
+Q1'' prints 10 `1' digits rather than repeating the next keystroke 101 times.
+
+You may define only one keyboard macro at a time. When you start to define another keyboard
+macro, the previous macro, if any, is forgotten.
+
+\section{Parameter Handler}
+
+The parameter handler is the module of Y which is responsible for reading parameters for the
+commands that require them (for example file names, search patterns, etc). The parameter handler
+will open a box in the center of the screen into which you type the parameter.
+
+The parameter handler offers several features. These features apply to any command that takes a
+parameter.
+
+Each input box maintains a list of the last eight parameters that you entered into that box
+(some of the commands share input boxes). Whenever the parameter handler displays an input box,
+the most recent entry, if any, will be shown by default. You can simply type RETURN to accept
+that entry at once. Alternatively, you may use the up and down arrow keys to scroll through the
+list of previous entries. The up arrow key scrolls back in time, while the down arrow key
+scrolls forward in time.
+
+If the first key you type when viewing a parameter is a printable character, the parameter
+handler will erase whatever it's showing you and start accepting your keystrokes. If the first
+key you type is not a printable character, the parameter handler assumes you are trying to edit
+what it is showing you.
+
+Parameter editing works the same way editing works in the main file. The home key, end key, and
+arrow keys work. You can insert text into the parameter at any time by just typing. You use the
+INS key to toggle parameter editing between insert mode and replace mode (independently of the
+main file). You use the RETURN key to accept the parameter. You can strike RETURN with the
+cursor at any position.
+
+You may enter parameters that are longer than the input box. The parameter handler will scroll
+the text horizontally in the input box as necessary. The parameter handler allows parameters
+with 64k characters although most of the commands would not deal well with such large
+parameters.
+
+If you start editing a parameter and then decide to scroll through the list of saved parameters
+with the up and down arrow keys, you will loose your changes. You only commit to a parameter
+when you strike the RETURN key.
+
+When you do strike the RETURN key, Y puts the new parameter on the head of the list associated
+with that input box. If there are already eight items on the list, Y removes the last item. If
+the new parameter is the same as what is already at the head of the list, Y does not change the
+list. 
+
+The ESC key will abort whatever command invoked the parameter handler and leave the list of
+saved parameters unchanged.
+
+The parameter handler and keyboard handler are independent. Thus typing ``\textasciicircum
+R5\press{F1}'', will allow you to load five files rather than try to load one file with a name
+given by four F1 keystrokes. Furthermore, if \press{F1} is part of a keyboard macro, Y will ask
+you as the macro executes to enter a filename. You cannot embed parameters inside the macro.
+
+\section{Commands}
+
+This section discusses all of Y's commands. In addition to the key combination required to
+invoke it, all the commands have names that are enclosed in {...}. These names make talking
+about the commands easier. In addition they will become important when (and if) I add a macro
+language to Y.
+
+I organized the keystrokes used to invoke the commands using the following scheme:
+
+\begin{itemize}
+\item Numeric keypad keys: Cursor movement.
+\item Standard Function keys: Commonly used commands.
+\item Alt+Function keys: Related to corresponding Fkey.
+\item Ctrl+Function keys: Other commands.
+\item Shift+Function keys: Informational commands.
+\item Alt+Letter keys: Uncommonly used commands.
+\end{itemize}
+
+In addition, I grouped the function key commands into sets based on the type of operation
+involved. For example, file manipulation is done with \press{F1}--\press{F4}, bookmarks are
+handled with \press{F5}--\press{F6}, and external programs are invoked with \press{F10},
+\press{Alt+F10}, \press{Ctrl+F10}, or \press{Shft+F10}. The groupings make the most sense on
+keyboards where the function keys are across the top. They are not bad on the older style
+keyboards, however.
+
+Note that many of the commands refer to the "active file." This is the file that is currently
+visible to the user of Y. In the current version of Y, you can only manipulate the active file.
+
+\subsection{Text Creation and Destruction}
+
+\begin{description}
+
+\item[Printable \{Print\_Char\}] When you strike any printable character (ie normal key), Y
+  inserts that character into the active file at the current point. Y moves the current point to
+  the right. Y allows insertions anywhere---even off the end of a line or off the end of the
+  file. Y extends the line or file as necessary.
+
+  If the active file is in replace mode (shown by the big block cursor), Y replaces the
+  character under the cursor by the new character and moves the current point as described
+  above.
+
+  Y will accept any characters, including control characters and IBM extended ascii characters.
+  The one exception is the null character, \^\@. Y uses this character internally at the end of
+  each line and it will become confused if you enter these characters manually. The control
+  characters which Y uses for commands can be forced into the file by prefixing them with \^Q.
+
+  If block mode is active, Y inserts (or replaces) the letter in every line in the block at the
+  same column position.
+
+  For C/C++ files, Y handles the characters '\{' and '\}' in a special way. If the '\{' is the
+  last character on the line, striking the RETURN key will cause Y to autoindent one extra tab
+  stop. Also, if you enter a '\}' character as the only character on the current line, Y
+  immediately outdents it by one tab stop to line up with an outer block. This behavior does not
+  occur if the file is in replace mode.
+
+\item[Delete \{Delete\_Char\}] This command deletes the character under the cursor. If the
+  current point is at or past the end of the line, Y joins the current line with the next line.
+  Y does not move the cursor.
+
+  If block mode is active, Y deletes a character from every line in the block. Y does not join
+  lines.
+
+  This behavior is the same when the active file is in either insert mode or replace mode. This
+  is unusual. Most commands that destroy text act differently when the file is in replace mode.
+
+\item[Backspace \{Backspace\}] This command deletes the character to the left of the cursor. If
+  the current point is at the beginning of the line, Y joins the current line with the previous
+  line. Y moves the cursor to the left.
+
+  If block mode is active, Y deletes a character from every line in the block.
+
+  If the active file is in replace mode, Y just moves the current point. No character is
+  deleted.
+
+\item[Return \{New\_Line\}] This command inserts a new line after the line the current point is
+  on. Y moves the current point to the start of the new line. If there were characters on the
+  original line to the right of the current point, those characters become the part of the next
+  line.
+
+  Y also does an autoindentation of the new line. Y adds spaces to move the current point under
+  the first non blank character of the line above the new line. If you did not want this to
+  occur you can undo the autoindentation with Ctrl+Backspace.
+
+  If the active file is in replace mode, Y just moves the current point (with autoindent), but
+  does not create a new line and does not move any text.
+
+  Y handles C/C++ files in a special way with regard to \{New\_Line\} and the '\{' character.
+  See \{Print\_Char\} for more information.
+
+\item[Ctrl+RETURN \{Delete\_To\_EOL\}] This command deletes from the current point to the end of
+  the line. Y erases the current point, and whatever is to the right of the current point. If
+  block mode is on, Y deletes the tail of all lines in the block. Y does not move the cursor.
+
+  This behavior is the same when the active file is in either insert mode or replace mode. This
+  is unusual. Most commands that destroy text act differently when the file is in replace mode.
+
+\item[Ctrl+Backspace \{Delete\_To\_SOL\}] This command deletes from the current point to the
+  start of the line. Y moves the current point, and whatever is to the right of the current
+  point over. If block mode is on, Y deletes the first part of all lines in the block.
+
+  Y allows you to undo easily the autoindentation when desired. If you strike the return key and
+  get unwanted autoindentation, just strike Ctrl+Backspace to remove it.
+
+  If the active file is in replace mode, Y just moves the current point, but no text is deleted.
+
+\item[Insert \{Toggle\_Replace\}] This command toggles the active file between insert mode and
+  replace mode. Y shows the cursor as a big block for replace mode and as a line for insert
+  mode. Remember that each file has an independent mode flag. Thus, you may be in insert mode
+  for some files and replace mode for others.
+
+\end{description}
+
+\subsection{Cursor Movement}
+
+\begin{description}
+
+\item[Right arrow \{Cursor\_Right\}] This command moves the current point to the right. The
+  screen will scroll horizontally if necessary.
+
+\item[Left arrow \{Cursor\_Left\}] This command moves the current point to the left. The screen
+  will scroll horizontally if necessary.
+
+\item[Ctrl+Right arrow \{Word\_Right\}] This command moves the current point to the start of
+  the next word on the current line (or the end of the current line if there are no more words).
+  Words are alphanumeric strings. Thus ``Variable\_Name'' contains two words. Also ``23.14''
+  contains two words.
+
+\item[Ctrl+Left arrow \{Word\_Left\}] This command moves the current point to the start of the
+  previous word on the current line (or the start of the current line if there are no more
+  words).
+
+\item[Up arrow \{Cursor\_Up\}] This command moves the current point up. The screen will scroll
+  vertically if necessary. The vertical scrolling is done 4 lines at a time.
+
+  In block mode, Y moves the current point as before and changes the size of the block.
+
+\item[Down arrow \{Cursor\_Down\}] This command works the same way as the \{Cursor\_Up\}
+  command.
+
+\item[Home \{Start\_Of\_Line\}] This command moves the current point to the start of the current
+  line.
+
+\item[End \{End\_Of\_Line\}] This command moves the current point to the end of the current
+  line.
+
+\item[Ctrl+Home \{Top\_Of\_File\}] This command moves the current point to the top line of the
+  file. The column position of the current point is set to the start of the line.
+
+\item[Ctrl+End \{End\_Of\_File\}] This command moves the current point to the first line just
+  past the end of the file. The column position of the current point is set to the start of the
+  line.
+
+\item[Ctrl+PgDn \{Next\_Procedure\}] This command moves the current point to the start of the
+  next function or procedure in the file. Y adjusts the screen so the cursor is on the second
+  line from the top.
+
+  The exact method Y uses to find the next procedure depends on the extension of the active file
+  (see Appendix 3 for details). Y currently understands how to find procedures in Assembly
+  language (8086), C, C++, Pascal, Ada, and Modula-2 files. If you attempt to find a procedure
+  in a different file type, Y produces an error message.
+
+  The methods Y uses to find procedures are fairly simplistic and are easily fooled. Thus,
+  depending on the exact text in your file and your style of programming, you may get either
+  some spurious cursor positionings or missed procedures. Completely correct handling of this
+  command is simply not worth the cost in program size and execution speed.
+
+\item[Ctrl+PgUp \{Previous\_Procedure\}] This command moves the current point to the start of
+  the previous function or procedure in the file. Y adjusts the screen so the cursor is on the
+  second line from the top.
+
+\end{description}
+
+\subsection{Standard Function Keys}
+
+Several of the commands below involve reading and writing files. Y follows several rules in that
+regard.
+
+When Y reads files from disk, it converts tabs to spaces assuming that tab stops are every 8
+characters (regardless of the tab stop setting for the file type). While editing, Y does not
+normally deal with tab characters. When Y writes files to disk, it removes trailing spaces from
+each line. In addition, Y terminates all lines in the file with a CR/LF pair as it writes the
+file to disk. Y does NOT introduce tabs into the file during disk writes.
+
+These rules apply for all commands that manipulate disk files. Also, these rules apply when Y
+reads or writes blocks as well.
+
+\begin{description}
+
+\item[F1 \{Find\_File\}] Use this command when you want to edit another file. Y will prompt you
+  for a file name. If the file has already been loaded into Y, Y will switch you to it.
+  Otherwise, Y tries to load the file from disk. If Y fails, it assumes you want to edit a new
+  file.
+
+  When Y loads (or creates) a file it goes into Y's list of loaded files immediately after the
+  active file. Thus using the \{Previous\_File\} command \press{Alt+F3} allows you to return to
+  the file you were working with immediately before invoking this command. If the new file is
+  one which you have previously loaded during the current editing session but removed, or if it
+  was described in FILELIST.YFY, Y will restore the old attributes.
+
+  You may use several file names or wildcard specifications. In addition, you may use command
+  line switches. Finally, file names that begin with a `.' are handled as they are on the
+  command line.
+
+  If you load several files in one invocation of \{Find\_File\}, Y will insert them into Y's
+  file list in the same order that you specified. After the loading, Y will make the first file
+  you specified the active file.
+
+  If some of the specified files are already loaded into Y, Y will switch to them when it
+  processes their names. Y will load additional files after them.
+
+\item[F2 \{Save\_File\}] This command writes the currently active file to disk. You don't
+  normally need to use this command as Y will write files to disk automatically in most cases.
+
+  In block mode, Y will prompt you for a file name. Y will write only the lines specified in the
+  block to the file.
+
+\item[F3 \{Next\_File\}] This command switches you to the next file in Y's list of loaded files.
+  By repeated invocations of this command, you can cycle over all the files in the editor.
+
+\item[F4 \{Remove\_File\}] This command deletes the active file from Y's memory. If you have
+  changed the file, Y saves it first. If the save operation fails, Y does not remove the file.
+
+  Y also remembers the attributes of the removed file so that if you reload the file using the
+  \{Find\_File\} command, Y can restore those attributes. If you exit the editor with
+  \press{Alt+Y}, Y saves the attributes of all removed files in FILELIST.YFY with the attributes
+  of the actively loaded files.
+
+\item[F5 \{Block\_Toggle\}] This command toggles block mode. Blocks are line oriented; you
+  cannot divide a line with a block. At least one line will be in the block. Blocks are shown in
+  reverse video on the screen. Many of the commands act differently if block mode is active.
+
+  The ESC key will shut off block mode. You can often use it as a natural alternative to
+  \press{F5}.
+
+  \press{F6 \{Cut\}} This command deletes the current line. Y deletes the entire line regardless
+  of the cursor position. Y saves the line in a special clipboard buffer for a later Paste
+  command.
+
+  If block mode is active, Y deletes the entire block and saves it in the clipboard buffer.
+
+  Note that the clipboard can only hold one deletion at a time. Each time you use the \{Cut\}
+  command, the old clipboard contents are lost.
+
+\item[F7 \{Paste\}] This command inserts whatever is currently in the clipboard buffer into the
+  active file above the cursor. Since the contents of the clipboard buffer are line oriented
+  (from the \{Cut\} command), the insertion is also line oriented. Thus, Y does not consider the
+  current column position of the cursor.
+
+  Note that \{Cut\} and \{Paste\} allow you to quickly delete, copy, and move lines or blocks.
+  Since the clipboard buffer is a global entity, moving blocks from one file to another is
+  trivial.
+
+  If block mode is on, Y removes the block (forever) before the insertion. The command thus acts
+  more like a ``Replace'' command in that case.
+
+\item[F8 \{Insert\_File\}] This command prompts for a file name and inserts that file above the
+  cursor in a manner similar to that of the Paste command.
+
+  If block mode is on, Y removes the block (forever) before the insertion.
+
+\item [F9 \{Goto\_Line\}] This command will prompt you for a line number and then move the
+  cursor to the indicated line. The first line in the file is line 1.
+
+\item[F10 \{External\_Command\}] This command will prompt you for a legal DOS command. The
+  command can be any string understood by COMMAND.COM. Batch files, I/O redirection, and pipes
+  are all legal. Y saves any files that you changed and executes the external command. When the
+  command is finished, Y scans the disk to see if the external command changed any of the files
+  you are editing and, if so, refreshes the versions held in memory. Finally, Y allows you to
+  read the output of the command before returning you to the editor screen.
+
+  If you strike the return key when prompted for a command, Y will start a new copy of
+  COMMAND.COM for you to use. This allows you to enter as many commands as you like before
+  returning to Y by typing the ``EXIT'' command.
+
+  Any words in the external command that contain the string ``.awk'' or ``.AWK'' will have the
+  string ``AWK -f '' inserted in front of them. This is to facilitate the invocation of AWK
+  scripts.
+
+  If the external command begins with a `!', Y will write the command to a batch file named
+  YCOMMAND.BAT and terminate with the \{Y\_Exit\} command. This allows the driver program, Y.EXE
+  to run the command with YMAIN.EXE unloaded from memory. Thus, the command runs with more
+  extensive memory resources than would otherwise be the case. Y only supports this feature for
+  the \{External\_Command\} command (and not the other commands that use external programs).
+
+  A side effect of using the `!' feature is that all the parameter lists associated with input
+  boxes will be forgotten when Y reloads itself.
+
+  Be aware that Y uses date and time stamps to decide which files to reload. If the external
+  command changes the date or time, Y could get confused.
+
+\end{description}
+
+\subsection{Alt+Function Keys}
+
+\begin{description}
+
+\item[Alt+F1 \{Refresh\_File\}] This command reads the disk again to bring a fresh copy of a
+  file into the editor. If you have changed the file, the changes will be lost (Y will ask you
+  to confirm, however).
+
+  This command allows you to recover if you badly mangle a file. Be aware, however, that if you
+  do anything which causes Y to automatically save changes (remove the changed file or execute
+  an external program, for example), then this command will just read the most recently saved
+  version. This command will not necessarily read the version of the file that existed when you
+  started Y.
+
+\item[Alt+F2 \{Rename\_File\}] This command allows you to rename a file. Y marks the file as
+  changed so it will save the file under the new name when, for example, you exit the editor.
+
+  If block mode is on, Y will only retain the lines in the block in the new file. The other
+  lines are lost.
+
+  If a file with the new name exists, either in the editor or on disk, Y inserts the text of the
+  active file (or block) into the existing file in the manner of the \{File\_Insert\} command
+  (see below). This helps prevent accidental data loss.
+
+  If the new name has a new extension, Y adjusts its internal records so that extension
+  sensitive behavior is changed. This operation requires that Y rebuild certain internal data
+  structures. Thus renaming large files may cause memory overruns or surprising delays.
+
+\item[Alt+F3 \{Previous\_File\}] This command switches you to the previous file in Y's list of
+  loaded files. By repeated invocations of this command, you can cycle over all the files in the
+  editor.
+
+\item[Alt+F4 \{Kill\_File\}] This command removes the current file from the editor without
+  saving it if there were changes. Y will ask you to confirm the action if changes would be
+  lost.
+
+  In block mode, Y only removes the lines in the block. Y saves nothing. You cannot restore the
+  lines (as is possible when you use the \{Cut\} command).
+
+\item[Alt+F6 \{Copy\}] This command copies the currently active block (or line if there is no
+  block) to the clipboard for a later paste operation. This command differs from \{Cut\} in that
+  Y does not change the source file.
+
+  As with the \{Cut\} command, this command destroys the previous contents of the clipboard.
+
+\item[Alt+F8 \{File\_Insert\}] This command prompts you for a file name and inserts the current
+  file into the specified file. If the specified file does not exist, Y assumes that you wish to
+  create it. If the specified file does exist, Y will load that file and insert the active file
+  above the first line in the specified file. If the specified file is already loaded, Y will
+  insert the active file above the current line in the specified file.
+
+  If block mode is on, Y will insert only the lines in the block. Furthermore, Y deletes the
+  block (forever) from the active file.
+
+  In any case, the specified file becomes the active file.
+
+  Y does not use the clipboard. Material that has been saved on the clipboard will remain after
+  a \{File\_Insert\} command.
+
+\item[Alt+F9 \{Goto\_Column\}] This command allows you to jump to a specified column on the
+  current line. The first column is column 1.
+
+\item[Alt+F10 \{External\_Filter\}] This command will prompt you for an external filter command.
+  Y then writes the active file to a temporary file named STDIN\$.TMP and invokes the specified
+  filter command with ``<STDIN\$.TMP >STDOUT\$.TMP'' appended to the end of it. When the command
+  finishes, Y asks you if you wish replacement. If you answer ``yes,'' Y will replace the active
+  file with STDOUT\$.TMP. In any case, Y will finally remove the two temporary files.
+
+  As usual, Y will save all changed files before invoking the filter. Y also will reload any
+  files that the filter changes.
+
+  If block mode is on, Y only writes the block to STDIN\$.TMP and only the block is replaced
+  with STDOUT\$.TMP.
+
+  Y will abort the command if it encounters an error during the write of STDIN\$.TMP. Y depends
+  on you to tell it if STDOUT\$.TMP is ok or not. If the filter encounters errors, respond with
+  ``no'' to Y's request for doing replacement.
+
+  Any words in the external command that contain the string ``.awk'' or ``.AWK'' will have the
+  string ``AWK -f '' inserted in front of them. This is to facilitate the invocation of AWK
+  scripts.
+
+\end{description}
+
+\subsection{Ctrl+Function Keys}
+
+\begin{description}
+
+\item[Ctrl+F1 \{Search\_First\}] This command will prompt you for a search string. It will then
+  scan the text of the active file from the cursor forward looking for the first matching point
+  in the file. Y will position the cursor at the beginning of the match if there is one, or
+  display "Not found" if there is not.
+
+
+\item[Ctrl+F2 \{Search\_Next\}] This command searches for the next occurrence of the string
+  that you previously entered via the \{Search\_First\} command. Y will position the cursor at
+  the beginning of the next match if there is one, or display "Not found" if there is not.
+
+\item[Ctrl+F3 \{Search\_Replace\}] This command will prompt you for a search string and a
+  replace string. Y will then scan the text of the active file from the cursor forward looking
+  for the first matching point in the file. Y displays a message asking if you wish to do the
+  replacement. You have several options:
+
+  \begin{itemize}
+  \item `Y': YES. The default. Do replacement and continue.
+  \item `N': NO. Skip the replacement and continue.
+  \item `A': ALL. Do this replacement and all others.
+  \item ESC: ESCAPE.
+  \end{itemize}
+
+  The `A' option will do all replacements with no further queries. Use this option cautiously.
+
+  When a search and replace session is over, Y will return the cursor the point where it was
+  when you invoked this command. This allows you to do multiple search and replaces from the
+  same point without having to bother with a bookmark.
+
+  If block mode is on, the search and replace operation will only be done over the lines in the
+  block. This will be true regardless of the cursor position. That is, even if the cursor is on
+  the last line of the block or on the first line, but after the first match, Y will present all
+  matches in the block to you.
+
+\item[Ctrl+F5 \{Set\_Bookmark\}] This command causes Y to remember the current file, cursor
+  position, and screen layout. You can later jump to this bookmark position quickly---even from
+  another file. Y only allows one bookmark. Note that Y remembers bookmarks based on line
+  number; if you add text above a remembered bookmark, the bookmark will appear to move relative
+  to the text.
+
+  If you remove the file containing the bookmark, the bookmark is forgotten.
+
+
+\item[Ctrl+F6 \{Toggle\_Bookmark\}] This command exchanges the current point with that
+  remembered in the bookmark. Because this is an exchange, you can jump back to your original
+  position by simply typing \press{Ctrl+F6} again. There is no problem if the bookmark is in
+  another file or in the same file. You will get an error message if the file that contained the
+  bookmark was removed, renamed, or if you've never set the bookmark.
+
+\item[Ctrl+F10 \{Redirect\_From\}] This command will prompt you for an external command. Y
+  invokes the command with the string ``>STDOUT\$.TMP'' appended to the end of it. When the
+  command finishes, Y asks if you wish to do the insertion. If you answer ``yes,'' Y will insert
+  STDOUT\$.TMP into the active file in a manner similar to that used by the \{Insert\_File\}
+  command. Finally, Y will remove the temporary file.
+
+  As usual, Y will save all changed files before invoking the command. Y also will refresh any
+  files that the command changed.
+
+  If block mode is on, Y removes the block (forever) before any insertion takes place.
+
+  Any words in the external command that contain the string ``.awk'' or ``.AWK'' will have the
+  string ``AWK -f '' inserted in front of them. This is to facilitate the invocation of AWK
+  scripts.
+
+\end{description}
+
+\subsection{Shift+Function Keys}
+
+\begin{description}
+
+\item[Shft+F1 \{Help\}] The on-line help system is self contained. Y does not require any
+  supporting files to use. The first help screen shown gives an overview of help commands.
+
+
+\item[Shft+F2 \{Editor\_Info\}] This command simply displays some facts about Y that may or may
+  not be interesting to you. Acknowledgements are also shown here.
+
+\item[Shft+F3 \{Registration\_Info\}] This command shows text that explicitly grants permission
+  to make copies of Y and of this document. Also instructions for obtaining the source code of
+  Y, with a disclaimer of warranty are shown.
+
+\item[Shft+F10 \{Redirect\_To\}] This command will prompt you for an external command. Y then
+  writes the active file to a temporary file named STDIN\$.TMP and invokes the specified command
+  with ``<STDIN\$.TMP'' appended to the end of it. When the command finishes, you must strike a
+  key to return to Y. Finally, Y will remove the temporary file.
+
+  As usual, Y will save all changed files before invoking the command. Y also will reload any
+  files that the command changed.
+
+  Y will abort the command if it encounters an error during the write of STDIN\$.TMP.
+
+  If block mode is on, Y only writes the specified block to STDIN\$.TMP. When the command
+  finishes, Y does NOT turn block mode off. This allows you to apply this command several times
+  to the same block easily.
+
+  Any words in the external command that contain the string ``.awk'' or ``.AWK'' will have the
+  string ``AWK -f '' inserted in front of them. This is to facilitate the invocation of AWK
+  scripts.
+
+\end{description}
+
+\subsection{Alt+Letter Keys}
+
+\begin{description}
+
+\item[Alt+B \{Background\_Color\}] This command allows you to change the background color of the
+  current file. Each time you invoke this command, the color cycles to the next one in the list
+  of possible colors.
+
+\item[Alt+F \{Foreground\_Color\}] This command allows you to change the foreground color in a
+  manner similar to the \{Background\_Color\} command.
+
+\item[Alt+Q \{Quit\}] This command quits the editor in the emergency mode. Y does NOT save files
+  that you changed. If you have changed files, Y asks you to confirm the action.
+
+\item[Alt+R \{Reformat\_Paragraph\}] This command tidies lines in text paragraphs. If the first
+  line of the paragraph is indented at all, Y adjusts the indentation to 5 spaces. If the first
+  line is not indented, it will remain unindented. Y wraps long lines to the next line and fills
+  short lines. Y introduces extra lines as necessary.
+
+  The cursor can be anywhere in the paragraph when you invoke this command. Y adjusts the entire
+  paragraph. Block mode does not need to be on.
+
+  Paragraphs are blocks of text for which each line begins with a letter, a digit, or certain
+  punctuation marks. The first line of the paragraph may begin with a space.
+
+  This command is very useful for editing comments.
+
+\item[Alt+T \{Set\_Tab\}] This command allows you to set the distance between tab stops for the
+  active file.
+
+\item[Alt+X \{Exit\}] This command exits the editor. Y saves files that you have changed. If one
+  of the save operations fail, Y will try to do all the other save operations and then abort the
+  exit command. You can use Quit \press{Alt+Q} if you really need to quit in this case.
+
+\item[Alt+Y \{Y\_Exit\}] This command exits the editor. It performs all the operations of
+  \press{Alt+X} but it additionally saves FILELIST.YFY to reflect Y's current state. Note that Y
+  actually saves FILELIST.YFY before it saves any of the working files. This is significant if
+  you are editing FILELIST.YFY as one of the working files.
+
+\end{description}
+
+\section{Sorry, OUT OF MEMORY}
+
+If Y runs out of memory it tries to do the following
+
+\begin{enumerate}
+
+\item Tell you. Usually, you will see an OUT OF MEMORY message appear as soon as Y fails to
+  allocate the memory it needs. The message will contain some information about the consequences
+  of the lack of memory. For example, you may see, ``Can't extract entire block,'' if you attempt
+  to cut a block with no memory left.
+
+\item Not crash. Y should continue to run if it runs out of memory. Most editing operations
+  will, however, no longer work. In addition, the input boxes used by the parameter handler will
+  not appear (thus any command that takes a parameter will be disabled), external commands
+  cannot be used, and files cannot be saved.
+
+  On the other hand, you will still be able to page through the text, view the help screens,
+  delete text with the delete and backspace keys, and, most importantly, remove files.
+
+\item Avoid loss of data. If Y runs out of memory while in the middle of an operation which
+  normally deletes ``original'' data, it will abort the operation. This prevents it from
+  deleting data that it was unable to copy. This situation arises, for example, when you try to
+  rename a file, cut a block, or reformat a paragraph.
+
+\end{enumerate}
+
+If Y reports an out of memory error, you should immediately try to free up several tens of
+kilobytes of memory (or more) by removing one or more files via \{Remove\_File\} \press{F4} or
+\{Kill\_File\} \press{Alt+F4}. Y should resume normal operation (although you may not get back
+the ability to execute external programs until you exit and restart the editor).
+
+You may be able to do some limited editing after an out of memory error even if you don't free
+up any memory. This is because Y requests memory in different sized units depending on what it
+is doing. If a request fails, Y reports an error even though there may be enough memory left for
+more conservative requests. I DO NOT recommend trying to edit under such circumstances! The more
+operations you ask Y to attempt with little or no memory, the greater the likelihood that an
+unknown bug will manifest itself. I have not extensively tested Y's behavior with no memory!
+
+If Y runs out of memory while you are typing text, the line you are working on will vanish and
+be replaced on the screen with the blinking text ``*** ERROR OBJECT ***''. These error object
+lines will not automatically go away when Y gets more memory. Furthermore, most attempts to edit
+error object lines will stimulate an out of memory message---even if Y has plenty of memory. You
+can delete these objects, however, with the \{Cut\} command. Although this behavior is rather
+odd, I felt that it was better than letting the line vanish without a trace. For example, if Y
+runs out of memory while trying to indent a large block, it's nice to be able review the damage.
+
+\section{Format of FILELIST.YFY}
+
+Y uses FILELIST.YFY to save information about the files you are editing between editing
+sessions. Y automatically writes this file when you exit with the \press{Alt+Y} command. Y
+automatically reads it when you invoke Y with no arguments. As a result you do not normally need
+to manipulate FILELIST.YFY directly.
+
+In this section, I provide information as a service for users who are interested in using Y in
+exotic ways. For example, you might write a program that outputs an appropriate FILELIST.YFY as
+a way of jumping into Y from some kind of host environment. (Note, however, that Y will accept a
+cursor position on the command line.)
+
+FILELIST.YFY is a plain text file. The first line of the file is an identity line that tells Y
+which version of the program wrote the file. Y ignores FILELIST.YFY files that were written for
+an alien version. The format of the first line is
+
+Y Version MAJOR.MINOR
+
+Each additional line describes one file. The order of the file descriptions matches the order in
+which Y tries to load the files and the order in which they will appear to the \{Next\_File\}
+command. The general form of each line is
+
+NAME ACTIVE\_FLAG ROW COLUMN OFFSET COLOR TAB\_DISTANCE I/R\_FLAG
+
+The NAME is the name of the file. Names can contain fully qualified paths, but they cannot
+contain wildcard characters.
+
+ACTIVE\_FLAG is one of the letters `-', `*', or `x'. The `-' is a place holder. The `*' means
+that the file was the active file at the time Y was terminated. Y marks one and only one file
+with a `*' character.
+
+An ACTIVE\_FLAG of `x' means that the file was a deleted file. That is, the file was not
+actually loaded into Y at the time Y was terminated, but it had at some time in the past been
+loaded into Y. Should the file be reloaded into Y, the editor will restore the saved attributes.
+Files with an ACTIVE\_FLAG of `x' always appear at the end of FILELIST.YFY. They appear in no
+particular order.
+
+ROW and COLUMN are the cursor coordinates in the file. The top row and the left column are row
+zero and column zero respectively.
+
+OFFSET is the distance below the top row on the screen to where the cursor appeared. For
+example, an OFFSET of zero means that the cursor was at the top of the screen, while an OFFSET
+of 22 means that cursor was at the bottom of the screen.
+
+COLOR is the color attribute used for the file. This number is in decimal, but it reflects the
+color attribute values as used by the IBM PC video cards in text mode. Note that you can insert
+any color value here even if a monochrome monitor is in use. Y will adjust the color accordingly
+when it reads FILELIST.YFY.
+
+TAB\_DISTANCE is the number of columns between tab stops for the file.
+
+I/R\_FLAG is a `0' if the file was in insert mode and a `1' if the file was in replace mode.
+
+If you create your own FILELIST.YFY, be careful to avoid illegal values. Y does little error
+checking on FILELIST.YFY since it assumes that users do not mess with the file. Be particularly
+careful not to create any blank lines in the file (including at the end of the file). Note also
+that Y writes FILELIST.YFY before it saves changed files. Thus if you use Y to edit
+FILELIST.YFY, your modified version is the one that Y saves.
+
+\section{File Types}
+
+Y is sensitive the extension of the file with which it is working. Some of the default file
+attributes are different for different types of files. Similarly some of the commands work
+differently for different types of files. In this appendix, I will list all the special
+extensions to which Y is sensitive, and note the corresponding attributes for each.
+
+Notice the simple minded approach usually used for searching for procedures. I designed the
+searching algorithms to work well for the way I program. If the commands don't work for you, you
+can get the source code from me and tailor them to your style.
+
+The following table shows all the special extensions that Y understands and summarizes the
+effects of those extensions.
+
+\begin{verbatim}
+.ASM, .INC, .MAC
+  Language: 8086 Assembly Language.
+  Tab Stop: 8
+\end{verbatim}
+
+Find procedure: Y searches for the string ``PROC'' or ``proc.'' It ignores matches which are
+followed by an alphanumeric. For example, it would skip the strings ``procedure'' or
+``process.''
+
+Y also searches for the strings ``MACRO,'' ``macro,'' ``STRUCT,'' or ``struct.''
+
+\begin{verbatim}
+.C, .H, .CPP, .HPP, .CXX, .HXX
+  Language: C/C++
+  Tab Stop: 2
+\end{verbatim}
+
+Find Procedure: Starting at the beginning of the file, Y counts `\{' and `\}' characters until
+it comes to the current line. Y remembers the last time it passed a `\{' with a brace count of
+zero or it will go forward until it finds such a brace (depending on which way you want to go).
+After locating the opening brace for a function, Y backs up looking for the first line which is
+not indented. Y assumes that this is the first line of the function's header.
+
+Y also finds file scoped struct definitions and initialized arrays. Y becomes confused if there
+are mismatched braces in comments, strings, or character constants.
+
+\begin{verbatim}
+.PAS, .DEF, .MOD
+  Language: Pascal/Modula_2
+  Tab Stop: 2
+\end{verbatim}
+
+Find Procedure: Y searches for one of the strings ``PROCEDURE,'' ``FUNCTION,'' or ``MODULE.''
+Notice that Y only searches for uppercase strings. Thus Y avoids finding ``procedure'' inside
+comments. The search may be ineffective in some Pascal files.
+
+\begin{verbatim}
+.TXT, .DOC
+  Language: English Text
+  Tab Stop: 5
+\end{verbatim}
+
+Find Procedure: Not implemented. A future version of Y may attempt to locate paragraphs.
+
+\begin{verbatim}
+.ADA, .PRC, .PKG, .LIB, .SEP, .GEN, .TSK, .FNC
+  Language: Ada
+  Tab Stop: 2
+\end{verbatim}
+
+Find Procedure: Y searches for one of the strings ``PROCEDURE,'' ``procedure,'' ``FUNCTION,''
+``function,'' ``PACKAGE,'' ``package,'' ``TASK,'' ``task,'' ``ACCEPT,'' or ``accept.'' Y ignores
+these strings if they occur in comments. (But it will still be fooled if they occur in a string
+literal).
+
+\begin{verbatim}
+.PCD
+  Language: Pseduo-Code
+  Tab Stop: 2
+\end{verbatim}
+
+Find Procedure: Y searches for one of the strings, ``FUNCTION,'' ``TYPE,'' or ``CLASS.'' Y
+ignores these strings if they occur in comments where a comment is any text from a `\#'
+character to the end of the line.
+
+\begin{verbatim}
+(ANYTHING ELSE...)
+  Language: Unknown
+  Tab Stop: 8
+\end{verbatim}
+
+Find Procedure: Not implemented.
+
+\section{Future Directions}
+
+There are several areas where Y could be enhanced. I expect that future versions of the program
+will have some of these enhancements. If you have any suggestions for enhancements not mentioned
+here, contact me at the address listed in the introduction.
+
+\begin{enumerate}
+
+\item Macro language.
+
+  An ability to put Y commands into a macro file would be useful. Although the ability to use
+  external programs reduces the need for a macro language, there are certain operations for
+  which it would be useful. In particular, it would be useful for interactive operations that
+  adapt to the specific text in the active file.
+
+\item Windows.
+
+  Although the IBM PC screen is small, there are times when the ability to look at two files at
+  once would be useful.
+
+\item Support for very large files.
+
+  It would be nice to allow the editor to deal with files that are too large to fit in memory.
+  Such files would be kept primarily on disk (or EMS memory), with only a portion being swapped
+  into memory as needed. This could be used, in addition, to allow more memory for external
+  programs.
+
+\item Undo.
+
+  In accordance with Y's model (which involves no backup files), Y does not support an undo
+  ability. However, such an ability would be very useful at times.
+
+\end{enumerate}

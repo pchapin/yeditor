@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Y" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Y" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="../../Scr/bin/Debug/libscr.a" />
+					<Add library="../../Spica/Cpp/bin/Debug/libSpicaCpp.a" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Y" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../../Scr/bin/Release/libscr.a" />
+					<Add library="../../Spica/Cpp/bin/Release/libSpicaCpp.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="-Wall" />
+			<Add directory="../../Scr" />
+			<Add directory="../../Spica/Cpp" />
+		</Compiler>
+		<Linker>
+			<Add library="ncurses" />
+		</Linker>
+		<Unit filename="BlockEditFile.cpp" />
+		<Unit filename="BlockEditFile.hpp" />
+		<Unit filename="CharacterEditFile.cpp" />
+		<Unit filename="CharacterEditFile.hpp" />
+		<Unit filename="CursorEditFile.cpp" />
+		<Unit filename="CursorEditFile.hpp" />
+		<Unit filename="DiskEditFile.cpp" />
+		<Unit filename="DiskEditFile.hpp" />
+		<Unit filename="EditBuffer.cpp" />
+		<Unit filename="EditBuffer.hpp" />
+		<Unit filename="EditFile.cpp" />
+		<Unit filename="EditFile.hpp" />
+		<Unit filename="EditList.cpp" />
+		<Unit filename="EditList.hpp" />
+		<Unit filename="FileList.cpp" />
+		<Unit filename="FileList.hpp" />
+		<Unit filename="FileNameMatcher.cpp" />
+		<Unit filename="FileNameMatcher.hpp" />
+		<Unit filename="FilePosition.cpp" />
+		<Unit filename="FilePosition.hpp" />
+		<Unit filename="LineEditFile.cpp" />
+		<Unit filename="LineEditFile.hpp" />
+		<Unit filename="SearchEditFile.cpp" />
+		<Unit filename="SearchEditFile.hpp" />
+		<Unit filename="WPEditFile.cpp" />
+		<Unit filename="WPEditFile.hpp" />
+		<Unit filename="WordSource.cpp" />
+		<Unit filename="WordSource.hpp" />
+		<Unit filename="YEditFile.cpp" />
+		<Unit filename="YEditFile.hpp" />
+		<Unit filename="clipboard.cpp" />
+		<Unit filename="clipboard.hpp" />
+		<Unit filename="command.hpp" />
+		<Unit filename="command_a.cpp" />
+		<Unit filename="command_b.cpp" />
+		<Unit filename="command_c.cpp" />
+		<Unit filename="command_d.cpp" />
+		<Unit filename="command_e.cpp" />
+		<Unit filename="command_f.cpp" />
+		<Unit filename="command_g.cpp" />
+		<Unit filename="command_h.cpp" />
+		<Unit filename="command_i.cpp" />
+		<Unit filename="command_k.cpp" />
+		<Unit filename="command_l.cpp" />
+		<Unit filename="command_n.cpp" />
+		<Unit filename="command_p.cpp" />
+		<Unit filename="command_q.cpp" />
+		<Unit filename="command_r.cpp" />
+		<Unit filename="command_s.cpp" />
+		<Unit filename="command_t.cpp" />
+		<Unit filename="command_table.cpp" />
+		<Unit filename="command_table.hpp" />
+		<Unit filename="command_x.cpp" />
+		<Unit filename="command_y.cpp" />
+		<Unit filename="global.cpp" />
+		<Unit filename="global.hpp" />
+		<Unit filename="help.cpp" />
+		<Unit filename="help.hpp" />
+		<Unit filename="keyboard.cpp" />
+		<Unit filename="keyboard.hpp" />
+		<Unit filename="macro_stack.cpp" />
+		<Unit filename="macro_stack.hpp" />
+		<Unit filename="mylist.hpp" />
+		<Unit filename="mystack.hpp" />
+		<Unit filename="overview.hpp" />
+		<Unit filename="parameter_stack.cpp" />
+		<Unit filename="parameter_stack.hpp" />
+		<Unit filename="special.cpp" />
+		<Unit filename="special.hpp" />
+		<Unit filename="support.cpp" />
+		<Unit filename="support.hpp" />
+		<Unit filename="y.cpp" />
+		<Unit filename="yfile.cpp" />
+		<Unit filename="yfile.hpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
+  Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+  <head>
+    <meta name="Author" content="Peter C. Chapin"/>
+    <meta name="ROBOTS" content="NOARCHIVE"/>
+
+    <title>Y Text Editor</title>
+  </head>
+
+  <body>
+    <h1>Y Text Editor</h1>
+
+    <hr/>
+    <h2>Overview and History</h2>
+
+    <p>Y is a simple, but efficient programmer's text editor. It was originally written in the
+    early 1990s as an MS-DOS application to support the programming classes in the Electrical
+    and Computer Engineering Technology Department at <a href="http://www.vtc.edu/">Vermont
+    Technical College</a>. Its main goals were ease of use and lightweight design. The original
+    version of Y that was widely used, version 1.1, executed efficiently even on 4.77 MHz 8088
+    machines.</p>
+
+    <p>Y did not attempt to be all things to all people. It was a custom application and thus
+    adapted precisely for the usage it received. However, due to its popularity in the VTC
+    community, there were many requests for enhancements. In the mid-1990s I began work on Y
+    version 2.0. The new version of Y was intended to provide significantly more functionality
+    by way of a new macro language. The idea was to make the macro language powerful enough so
+    that users could provide support for enhanced features themselves by creating suitable
+    macros. However, it was also my intention to stay true to Y's original design goals and keep
+    the program essentially simple and lightweight.</p>
+
+    <p>Due to many distractions in my life, work on Y 2.0 is still incomplete. The macro
+    language is only partially implemented and still not powerful enough to be really useful.
+    There has been much refactoring of Y's internals to accommidate the macro engine, but the
+    overall interface and experience of using Y has changed very little since version 1.1.</p>
+
+    <p>Y has seen many changes in the computer industry over its long life. The current code
+    base for Y targets not only MS-DOS (largely untested these days), but also Windows, OS/2
+    (also largely untested), and most recently Linux and Cygwin. Although Y was initially
+    developed using Turbo C++ version 1.0, it is currently compiled with recent versions of
+    Visual C++ and g++. While not part of Y's original design goals, it has become a cross
+    platform, multi-compiler editor.</p>
+
+    <p>Over much of Y's lifespan the main development compiler has been Open Watcom C++.
+    Unfortunately Y currently makes use of certain features of modern C++ that are not supported
+    by Open Watcom. However, it is my hope that some future version of Open Watcom will be able
+    to compile Y again. Note that it was Open Watcom that generated the MS-DOS and OS/2 versions
+    of Y and so support for those platforms is in "hibernation" until Open Watcom matures.</p>
+
+    <p>At the moment Y's source code is being cleaned up and modernized. Compliation only
+    definitely works with Visual Studio 2013 or g++ version 4.8 or higher. Development occurs on
+    Windows and Linux with the occasional test on Cygwin (using g++). Once the code
+    modernization settles down, I will hopefully resume forward development of Y to complete the
+    macro language as long planned. In the meantime to compile Y the easiest way is load the
+    <tt>Y.sln</tt> file into Visual Studio and do a "Build Solution" operation. See the
+    README.txt file in the code base for more details about the other build and IDE options.</p>
+
+    <h2>Downloads</h2>
+
+    <p>The source code for Y is available via Git from GitHub at the URL
+    <tt>https://github.com/pchapin/yeditor</tt>. Y requires two additional supporting projects,
+    Scr and Spica, both also available on my GitHub site. The build control files require that
+    these supporting projects be installed in a folder that is a sibling of the folder where the
+    Y project is cloned. See the README.txt file in the code base for more information.</p>
+
+    <p>Eventually it is my hope to post installers and documentation here for the various
+    versions of Y available.</p>
+
+    <p>Y's internals are documented with <a href="http://www.doxygen.org/">Doxygen</a>. You
+    should be able to use the Doxygen tool to generate nicely formatted Doxyen documentation for
+    internal classes, functions, etc.</p>
+    
+    <!-- BEGIN signature block -->
+    <hr/>
+    <address>
+      &copy; Copyright 2015 by <a href="mailto:PChapin@vtc.vsc.edu">Peter C. Chapin</a>.<br/>
+      Last Revised: <b>February 4, 2015</b>
+    </address>
+    <!-- END signature block -->
+  </body>
+</html>
+

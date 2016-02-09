@@ -1,0 +1,19 @@
+############################################################################
+# FILE   : link.rsp
+# AUTHOR : Peter C. Chapin <PChapin@vtc.vsc.edu>
+#
+# This is the main linker response file for the Y project.
+############################################################################
+
+system nt
+name y20.exe
+debug all
+option q
+option map
+libpath %WATCOM%\lib386
+libpath %WATCOM%\lib386\nt
+library clib3r.lib
+#library ntdll.lib
+library ..\..\..\..\Spica\Cpp\owbuild\win32\SpicaCpp.lib
+library ..\..\..\..\Scr\owbuild\win32\scr.lib
+

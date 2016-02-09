@@ -1,0 +1,37 @@
+\chapter{Installing Y}
+
+Installing Y is easy. First copy the single executable file \filename{y.exe} into some directory
+in your path. If you are on a Unix system, the executable is named \filename{y20}. You can now
+use Y.
+
+You will find, however, that without a start-up macro, Y is a rather rudimentary editor. If you
+would like to install a start-up macro, consider using one of the samples distributed with Y.
+There are three ways to force Y to execute a start-up macro.
+
+\begin{enumerate}
+
+\item Specify the path to the macro on the command line.
+
+\item Put the macro into the directory that you use when you start Y. It must be named
+  \filename{ystart.ymy} in this case.
+
+\item Put the macro somewhere and set the environment variable YSTART to contain the fully
+  qualified name of the macro. For example:
+
+\begin{verbatim}
+set YSTART=C:\ystuff\macros\mystart.ymy
+\end{verbatim}
+
+\item Put the macro in the same directory as Y's executable. It must be named
+  \filename{ystart.ymy} in this case.
+
+\end{enumerate}
+
+Y will search for it's start-up macro in the same order as I've given above. That is, Y will use
+a project specific startup macro if it finds one, otherwise it will look for a user specific
+startup macro (for example, in a network environment each user could define a YSTART in their
+login script). Finally Y will default to a global startup macro. Once a startup macro is found
+the search ends. Y will not (automatically, at least) execute more than one startup macro.
+
+If you are a Y version 1.1 user, consider initially installing y11.ymy as your start-up macro.
+That will cause Y to emulate Y11.

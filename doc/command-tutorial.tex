@@ -1,0 +1,752 @@
+\chapter{Command Tutorial}
+
+\section{Lesson \#1: Getting Started}
+
+To invoke Y, just type it's name at the prompt. Try it.
+
+When Y asks you for a file to edit, type \filename{afile.txt}. Assuming that you have no such
+file in the current directory, Y will display an empty screen surrounded by a border. Notice
+that the name of the file is in the upper left corner of the screen. The current coordinates of
+the cursor are in the lower right corner in (line, column) format.
+
+Shift+F1 pops up the help screens. Try it. The PgUp and PgDn keys let you page through the help
+screens. The ESC key returns you to your editing.
+
+To enter text into your file, just type. Go ahead and type in a few lines. Notice that the arrow
+keys move the cursor the way you would expect. Using the control key together with the left or
+right arrow key allows you to jump to the next (or previous) word on a line. The Home key jumps
+to the start of the line. The End key jumps just past the end of the line. Ctrl+Home jumps to
+the top of the file. Ctrl+End jumps just past the end of the file. The PgDn key and the PgUp key
+let you jump forward and backward in the file one screen at a time.
+
+Notice that you can move the cursor off the end of a line or off the end of the file. Try moving
+the cursor several lines below the last line you typed. Type something at this new position. Y
+extends the file with blank lines and extends the line with spaces as necessary when you start
+typing.
+
+To delete characters, you can use either the backspace key or the Delete key. Backspace eats the
+character to the left of the cursor and moves the cursor. Delete eats the character under the
+cursor and does not move the cursor. Notice that Ctrl+Backspace deletes everything from the
+cursor to the start of the line. Ctrl+Return deletes everything from the cursor to the end of
+the line.
+
+When you are finished playing around, exit Y by typing Alt+Y. You don't need to worry about
+saving your text. Y saves all changes for you automatically before it exits.
+
+\section{Lesson \#2: Multiple Files}
+
+Start Y by type ``Y'' at the prompt. If you worked through lesson one, you should now be looking
+at \filename{afile.txt} just where you left it when you exited Y at the end of lesson one. When
+you used the Alt+Y command to exit, Y wrote a file named \filename{filelist.yfy} in the current
+directory. This file contains information about the files that were loaded into Y at that time.
+When you started Y it looked for \filename{filelist.yfy}. Y then used the information in that
+file to reestablish the state it was in when you last exited.
+
+Now some notation: When I say ``\press{F3}'' I mean type the F3 key. Similarly
+``\press{Alt+F10}'' means type the Alt+F10 key. When I say ``\press{F1:xyz.txt}'' I mean type
+the string ``xyz.txt'' into the input box that you get after typing the F1 key. More on input
+boxes in a moment.
+
+Type \press{F1}. Y pops up an input box to ask you for the name of another file to edit. Notice
+that the name \filename{afile.txt} is already shown in the input box. Y remembers text that you
+have typed into input boxes, and \filename{afile.txt} was effectively entered when Y processed
+\filename{filelist.yfy}. You don't need to erase the name \filename{afile.txt}. Just type
+\filename{bfile.txt} and Y will erase the old name\footnote{You can edit the text in an input
+  box in the obvious way; use the up and down arrow keys to scroll through the input history of
+  an input box.}.
+
+After pressing RETURN, Y will load \filename{bfile.txt} (or create it) and you will have two
+files in memory at once. You can use \press{F3} to switch between them. Actually, \press{F3}
+cycles among all the files you have loaded. For example, do \press{F1:cfile.txt} to load (or
+create) another file. With three files in memory, it is easier to see the true effect of using
+\press{F3}.
+
+Let's say you decide that you don't want to edit \filename{cfile.txt}. Switch to that file and
+type \press{F4} to remove it from Y's file list. Now, switch to \filename{afile.txt} and make
+some changes. Notice that a `*' character appears in the upper left corner of the border when
+the version of a file in memory is different from the version on the disk. Let's imagine that
+you are satisfied with the changes you made to \filename{afile.txt}. Type \press{F4} to remove
+the file from Y's file list. Again, you don't have to worry about saving the changes; Y will
+save the file automatically before it removes the file.
+
+You should now be looking at \filename{bfile.txt}. Furthermore, \filename{bfile.txt} should be
+the only file loaded into Y. Try this: \press{F1:afile.txt}, make a change, \press{F4}. You
+should now be back to \filename{bfile.txt}. You can see how easily you can manipulate multiple
+files using Y.
+
+Exit Y with \press{Alt+Y}.
+
+\section{Lesson \#3: Blocks}
+
+Start Y (you should be looking at \filename{bfile.txt} again) and load \filename{afile.txt} by
+doing \press{F1:afile.txt}. Be sure there are several lines in the file. Move the cursor to one
+of the lines and type \press{F6}. This command cuts the line to a special clipboard area.
+Without moving the cursor, type \press{F7} to paste the contents of the clipboard back into your
+file. Type \press{F7} several more times. Notice that Y does not lose the clipboard after a
+paste operation. Notice also that Y inserts the clipboard into your file just above the line
+containing the cursor. The Cut and Paste commands make it easy to move or copy an individual
+line. Just cut the line with \press{F6}, move the cursor, and paste it into it's new position
+with \press{F7}.
+
+There is only one clipboard. This makes it easy to transfer text from one file to another. For
+example, use \press{F6} to cut a line. Next do \press{F3} followed by an \press{F7} to paste
+that line into \filename{bfile.txt}. Use \press{F3} to switch back to \filename{afile.txt}.
+
+To form a block, go to the first line of the block and type \press{F5}. The \press{F5} command
+toggles block mode on and off. As you can see, blocks are shown in reverse video on the screen.
+Notice that a line is either entirely in or entirely out of a block. Blocks cannot divide lines.
+Although this sounds a bit restrictive, it is usually more convenient when editing programs. The
+first time you press \press{F5}, Y activates and anchors block mode. You can control the size of
+the block by simply moving the cursor in the usual way. Make a block of several lines.
+
+As you might expect \press{F6} will now cut the entire block to the clipboard. Why not transfer
+the block you formed over to \filename{bfile.txt}? Sometimes, you want to copy a block to the
+clipboard without actually cutting it from the file. This can be done with \press{Alt+F6}. If
+block mode is not on, \press{Alt+F6} just copies the current line to the clipboard. Try
+\press{Alt+F6} and then \press{F7}.
+
+Notice that \press{F6} works differently depending on whether or not block mode is on. Many Y
+commands are like this. For example, make a block of several lines in \filename{afile.txt} (or
+\filename{bfile.txt}). Type ``This is a test.'' As you can see, Y entered the text on every line
+in the block. The backspace, delete, and tab keys work the same way. This feature makes it easy
+to indent a section of code, manage tables, align text, and enter the same text on several
+lines.
+
+Now, remove \filename{bfile.txt} from the file list using \press{F4}. Be sure you are looking at
+\filename{afile.txt}. Type \press{F8:bfile.txt} to cause Y to read \filename{bfile.txt} and
+insert it into the current file above the cursor. I have a standard header that I put on the top
+of all of my C/C++ source files. I call the file \filename{fhead.c}. Whenever I start a new C
+source file, I always use \press{F8:fhead.c} to insert this file at the top of my new file.
+
+In \filename{afile.txt} make a block and type \press{F2:bfile.txt}. This saves the text in your
+block into the file \filename{bfile.txt} (destroying whatever was in that file). Thus \press{F2}
+and \press{F8} allow you, in effect, to use external files as a non-volatile clipboard. Using
+this technique you can use as many ``clipboards'' as you like (limited only by the number of
+files you can create).
+
+By the way, typing \press{F2} with block mode off saves the current file (whether you have
+changed it or not). Since Y automatically saves changes, you don't normally need to use
+\press{F2} in that way.
+
+Exit Y.
+
+\section{Lesson \#4: Invoking and Terminating}
+
+You can start Y with a whole list of filenames on the command line. Y will load all existing
+files and create any new files. For example, start Y with a command like this
+
+\begin{verbatim}
+A:\> y afile.txt bfile.txt example.c
+\end{verbatim}
+
+As you can see, Y loads all three files. Notice that in this case, Y ignores
+\filename{filelist.yfy}. If you exit with \press{Alt+Y} now you will overwrite your existing
+\filename{filelist.yfy} with new information. Sometimes this is fine, but other times it isn't
+what you want. You can use \press{Alt+X} to exit Y, save changes, and \emph{not} write
+\filename{filelist.yfy}. You can also use \press{Alt+Q} to exit Y without saving any changes at
+all (or writing \filename{filelist.yfy}).
+
+Y understands wildcard characters. Try this
+
+\begin{verbatim}
+A:\> y *.txt
+\end{verbatim}
+
+As you can see, this loads all files which end with a \filename{.txt} extension. Make a change
+to one of the files and exit with \press{Alt+X} to save those changes without updating
+\filename{filelist.yfy}.
+
+Whenever I work on a project, I consistently use \filename{filelist.yfy}. I always exit with
+\press{Alt+Y} and I always start Y with no arguments. However, when I want to make a quick
+change to an unrelated file I will name the file on the command line and exit Y with
+\press{Alt+X} so I don't disturb my \filename{filelist.yfy}. Sometimes, however, I \emph{want}
+to rewrite \filename{filelist.yfy}. For example, \filename{filelist.yfy} may contain information
+on a set of files that I'm no longer interested in. In that case, I start Y with the names of
+the new files and exit with \press{Alt+Y} to reset \filename{filelist.yfy}.
+
+For example, suppose I want to start work on a new module called \filename{newmodule}. I do
+
+\begin{verbatim}
+A:\> y newmodule.c .h
+\end{verbatim}
+
+and exit with \press{Alt+Y} to set up a new \filename{filelist.yfy}. This shows another feature
+of Y. If you ask it to load a filename which starts with a `.', Y will use the base part of the
+previous filename. Thus the ``.h'' in the example above will cause Y to load
+\filename{newmodule.h}. As another example, asking Y to load "*.c .h" will cause Y to load all
+.c files and all .h files (ie *.h). Note that this feature is suppressed in the Unix version of
+Y because important configuration files in Unix are often given names that start with a dot.
+
+By the way, everything you can do on the command line can be done in the input box you get when
+you type \press{F1}. For example, entering \press{F1:*.c .h} while in Y loads all .c files and
+.h files
+
+Exit Y.
+
+\section{Lesson \#5: Misc Commands}
+
+Start Y and make sure a scrap file is loaded (such as \filename{afile.txt}).
+
+There are several other commands and features of Y that you may find useful. Let's experiment
+with them now.
+
+\subsection{Search \& Replace}
+
+Move the cursor to the top of the file and type \press{Ctrl+F1:a}. This causes Y to search,
+starting from the current cursor location, for the next occurrence of `a' in the file. The
+searching is case sensitive. Type \press{Ctrl+F2} to get Y to search for the next occurrence of
+`a'.
+
+Now form a block of several lines and type \press{Ctrl+F3}. The first input box will ask you for
+a search string (just accept the `a' that is shown by default). The second input box will ask
+you for a replace string (type `BB' for example). Y then searches for each occurrence of `a' in
+the block you defined and asks you if you want to replace it with `BB.' You have several
+choices. The default choice is `y' for yes. You also may select `n' for no, or `a' for all. If
+you select `a', Y will not bother to ask for confirmation anymore. If you want to stop the
+search and replace operation, use the ESC key. Note: `a' is ``all,'' not ``abort!''
+
+Notice how Y returns to the top of the block when the search and replace operation is over. This
+is so you can do another search and replace from the same starting point. If block mode is not
+on, Y does the search and replace from the current cursor position to the end of the file.
+
+\subsection{Bookmarks}
+
+Load several scrap text files and move the cursor to some distinctive position within one of
+them. Now type \press{Ctrl+F5}. This sets the bookmark. Now move the cursor to another file.
+Type \press{Ctrl+F6}. This exchanges the cursor's current point with the bookmark. Since it is
+an exchange, you can use \press{Ctrl+F6} to get back to where you were. This feature makes it
+easy to switch back and forth between two working files. Once the bookmark is set,
+\press{Ctrl+F6} toggles you between the two working points.
+
+The bookmark does not have to be in another file.
+
+\subsection{Repeat Sequences}
+
+Type \textasciicircum R (that is, \press{Ctrl+R}) followed by a number. For example, type
+\textasciicircum R5. Notice that the five did not appear on the screen. Now, type a letter.
+Notice that the letter appears five times. The repeat count did not need to be one digit. Type
+\textasciicircum R75= to insert seventy five `=' characters into your file. I use this feature
+often to make dividing lines in a file. For example, to enter the text
+
+\begin{verbatim}
+/*********************************************************/
+\end{verbatim}
+
+I just type ``/*\textasciicircum R55**/''
+
+You can repeat all Y commands. For example type \textasciicircum R3\press{PgDn} to execute the
+\press{PgDn} command three times. If you want to load three new files, try \textasciicircum
+R3\press{F1}.
+
+\subsection{Keyboard Macros}
+
+Many times you will want to do the same key motions over and over. Y makes this easy by allowing
+you to define a keyboard macro. For example, suppose you had the following text in your file:
+
+\begin{verbatim}
+This is the first line.
+This is the second line.
+This is the third line.
+...
+This is the four thousandth line.
+\end{verbatim}
+
+If you wanted to remove the `.' from every line you would be faced with a very tedious and
+repetitive operation. There is an easier way. Move the cursor to the first line and type
+``\textasciicircum K\press{End}\press{Backspace}\press{Home}\press{Down\_Arrow}\textasciicircum
+K.''
+
+The first \textasciicircum K tells Y that you want to record a keyboard macro. Y saves all of
+your keystrokes up to the next \textasciicircum K in its macro buffer. Notice that the
+keystrokes remove the `.' character from the current line (regardless of the length of that
+line), and move the cursor down to the start of the next line. Y executes the commands as it
+records them, so you can see what you are doing. Now type \textasciicircum E to playback the
+keystrokes saved in the macro buffer. The effect is to take the `.' off the next line and move
+the cursor down again.
+
+You've already taken care of two lines. Only 3998 to go! Type ``\textasciicircum
+R3998\textasciicircum E.'' To execute the keyboard macro the appropriate number of times!
+
+\subsection{Quoting Characters}
+
+Y allows you to enter almost any character you want into the file. Y can edit files that contain
+extended ASCII characters or control characters\footnote{The null character is not allowed,
+  however.}. Y uses some control characters for commands. You can still type these characters
+into your file by prefixing them with \textasciicircum Q. The \textasciicircum Q character tells
+Y to treat the next character literally and not to interpret it as a command. For example,
+\textasciicircum Q\textasciicircum R puts a \textasciicircum R into your file. Y does not treat
+the \textasciicircum R as the beginning of a repeat sequence.
+
+You can use \textasciicircum Q in front of any character. Thus to be safe, you might want to use
+\textasciicircum Q whenever you try to type any control character into the file. That way, you
+don't have to remember all the control characters that Y uses as commands.
+
+\subsection{Set Colors}
+
+Use \press{Alt+F} to cycle the foreground color through 16 possibilities. Use \press{Alt+B} to
+cycle the background color through 8 possibilities. The color scheme you select is file
+specific. That is, if you make \filename{afile.txt} green on black, it is only
+\filename{afile.txt} that is affected. All other files remain at the default color of white on
+black. This makes it possible for you to use color as a way of distinguishing files. For
+example, you might make all \filename{.h} files white on red so they stand out as you cycle
+among the files with \press{F3}.
+
+Y saves color information for a file in \filename{filelist.yfy}. Thus, Y preserves your choices
+as long as you consistently exit Y with \press{Alt+Y}.
+
+\subsection{Paragraph Reformatting}
+
+Y is not a word processor. However, to facilitate the editing of comments it does have a
+rudimentary word wrapping feature. If the cursor is in a paragraph, \press{Alt+R} will tidy the
+paragraph by wrapping long lines and filling short lines.
+
+Y assumes paragraphs are flush with the left margin (except possibly for the first line). Thus
+in languages that require a comment mark at the start of each line, you will have to delete the
+comment marks before you can use this feature (form a block and delete them all in one step).
+
+\section{Lesson \#6: Using External Commands I}
+
+Start Y. Be sure that you have at least one file loaded (\filename{afile.txt}, for example).
+
+You can invoke operating system commands from Y without having to leave the editor. This is done
+with the \press{F10} key. For example, type \press{F10:dir} to get a directory listing of the
+current directory. You can use any command understood by the command processor. This includes,
+batch files, I/O redirection, and pipes. For example, type \press{F10:dir > dir.txt}. When you
+return from the command, load \press{dir.txt} as another file to see that the I/O redirection
+worked.
+
+Before running an external command, Y saves all changed files on the assumption that the command
+may want to reference those files. To see this effect try this: Switch to \filename{afile.txt}
+and type \press{F10:type afile.txt}. Now, change \filename{afile.txt} is some obvious way and
+repeat the command. Notice that the command operates on the new version of the file.
+
+When coming back from an external command, Y examines the disk to see if the command changed any
+of the files Y has loaded. Y will automatically reload the files that have been changed. For
+example, do this command: \press{F10:dir > afile.txt}. When the command finishes, Y will notice
+that its version of \filename{afile.txt} is out of date and Y will automatically reload
+\filename{afile.txt} (which now contains the output of the dir command).
+
+To put this behavior into practice, try this: Write a program in your favorite programming
+language. For example, I would type \press{F1:hello.c} and enter
+
+\begin{verbatim}
+#include <stdio.h>
+
+int main(void)
+{
+  printf("Hello, World\n);  /* Error on purpose here */
+  return 0;
+}
+\end{verbatim}
+
+Now I compile my program with \press{F10:wcl386 hello.c > errors.txt} to run the Open Watcom C
+compiler and put all of its error messages into the file \filename{errors.txt}. Next, I load
+\filename{errors.txt} as a file with \press{F1:errors.txt}. Opps, I've got an error! I switch
+back to my program and fix the error. Then I rerun the compile command and watch what Y does.
+First, the editor saves the changed program file. Next it runs the external command. Finally, it
+notices that \filename{errors.txt} has been changed by the command, so it reloads
+\filename{errors.txt} for me! After using \press{F3} over to \filename{errors.txt} to verify
+that the compile was successful I try my program out with \press{F10:hello}.
+
+I use \press{F10} often. Usually, I want to run two or three different commands over and over. Y
+makes this easy. Every input box remembers the last eight strings that you entered into it. When
+an input box is on the screen, you can use the up and down arrow keys to scroll through your
+previous entries. Furthermore, you can edit the text in an input box exactly the same was as in
+the main file. Remember: this applies to all input boxes---not just the \press{F10} input box.
+
+You might be wondering what to do if your compiler takes more memory to operate than is left
+with Y loaded. You can solve this problem by preceding the command with an `!' character. This
+tells Y to back out of memory before running the DOS command. For example \press{F10:!wcl
+  hello.c > errors.txt} would make essentially the same amount of memory available to the
+compiler as it would have if you were running it directly from the command prompt. It will take
+a bit longer, however, to get back to Y when the command is over since Y must reload itself and
+all the files you were editing.
+
+Here is the way it works. The program \filename{y.exe} is a driver program that just starts
+\filename{ymain.exe}. \filename{ymain.exe} is the actual editor. In fact, you can use
+\filename{ymain.exe} directly; you don't really need \filename{y.exe} to edit files. When you
+precede a command with an `!', however, \filename{ymain.exe} writes a batch file named
+\filename{ycommand.bat} that contains the command. \filename{ymain.exe} then exits, saving all
+changes, and saving state information in \filename{filelist.yfy}. \filename{y.exe} then notices
+that \filename{ycommand.bat} exists, and runs it. When the batch file finishes, \filename{y.exe}
+deletes it and restarts \filename{ymain.exe} with no parameters. \filename{ymain.exe} reads
+\filename{filelist.yfy} and reloads all files. When you exit Y normally, there is no
+\filename{ycommand.bat} and so the driver, \filename{y.exe}, just exits. In this way, the only
+memory Y uses when an external command is preceded by a `!' is that required by the driver.
+
+One consequence of this is that you can write your own \filename{ycommand.bat} in Y to get more
+spectacular effects. For example do this: \press{F1:ycommand.bat} and enter
+
+\begin{verbatim}
+echo off
+date
+time
+\end{verbatim}
+
+now exit Y with \press{Alt+Y}. Y will save \filename{ycommand.bat} (as usual). The driver does
+not know that you explicitly wrote the file, nor does it care. Seeing that
+\filename{ycommand.bat} exists, the driver invokes it, deletes it, and restarts Y. Notice that
+\filename{ycommand.bat} is still in Y's file list (since it was described in
+\filename{filelist.yfy}), but it is empty (since the driver deleted it). If you have a
+complicated batch file that you want to use as \filename{ycommand.bat}, you should maintain it
+under another name, and insert it into \filename{ycommand.bat} with \press{F8} before each run.
+
+\section{Lesson \#7: Using External Programs II}
+
+In addition to executing unrelated external programs, Y lets you use external programs to edit
+the text in a file. There are three ways to do this. Start Y and load a file that has some text
+in it. Perhaps \filename{afile.txt}.
+
+Move the cursor into the text and do \press{Ctrl+F10:dir}. This command will run the specified
+external program with the string ``>STDOUT\$.TMP'' appended to it. When the program finishs, Y
+will insert the contents of STDOUT\$.TMP into the file you are editing. Notice that Y prompts
+you before doing the insertion. This is so you can abort the operation if the external command
+fails.
+
+This feature is very useful with programs that can produce segments of text. You might have a
+program that does some processing and writes the processed output to the standard output device.
+It is simple to insert that output into the file you are editing. For example, if I want to
+insert into the file I'm editing a list of people currently logged into the Novell network that
+I use, I can do \press{Ctrl+F10:userlist}.
+
+Now form a block out of several lines in the file and do \press{Shift+10:sort}. This command
+writes the block to the file STDIN\$.TMP and runs the specified external program with the string
+``<STDIN\$.TMP'' appended to it. This gives you a way to direct text from the file you are
+editing to any program that accepts its input from the standard input device. For example, I
+have a C/C++ brace checking program that reads its standard input and matches (), \{\}, and []
+pairs. I can use this program to analyze a function from my C program by simply forming a block
+and doing \press{Shift+10:bracket}.
+
+In the last example, you sorted a block of lines using the utility. You can sort a block of
+lines and replace the original lines with the sorted results with a command such as
+\press{Alt+F10:sort}. Try it. This command writes the current block to the file STDIN\$.TMP and
+runs the external program with the string ``<STDIN\$.TMP >STDOUT\$.TMP'' appended to it. Y will
+then insert, after your confirmation, STDOUT\$.TMP into the file you are editing replacing the
+block you originally defined.
+
+For example, I have a program that can replace one set of characters with another. If I want to
+change every letter in a block to uppercase, I can do \press{Alt+F10:tr [a-z] [A-Z]}. Try
+\press{Shift+F10:sort} and \press{Alt+F10:sort} without defining a block. As you can see, the
+entire file is used (and replaced) in such a case.
+
+The usefulness of this feature depends on what you have for external programs. If you have a
+good collection of interesting filter programs (like the sort utility), then those programs
+become useful extensions to Y. Not only that: filter programs are easy to write! You can extend
+Y in very specialized and sophisticated ways by writing such programs. I discuss this in more
+detail below.
+
+\section{Lesson \#8: Extension Specific Behavior}
+
+Whenever you load a file into Y, Y notes the extension on that file. Some of the commands behave
+differently depending on the file extension. For example, the number of spaces between tab stops
+is two in program files, and five in text files. Start Y and load a file named
+\filename{test.c}. Type the following text into that file.
+
+\begin{verbatim}
+void function()
+{
+  printf("Hi");
+}
+\end{verbatim}
+
+Notice that when you struck the RETURN key after the `\{' character, Y automatically indented an
+extra tab stop. This feature is only active in C/C++ files. Furthermore, notice that Y
+automatically unindents `\}' characters that appear by themselves on a line. Again, this feature
+is only active in C/C++ files.
+
+Now add this to the bottom of the file you are working on.
+
+\begin{verbatim}
+int main()
+{
+  int x = 0, y = 1;
+
+  function();
+
+  if (x == y) {
+    function();
+  }
+  return 0;
+}
+\end{verbatim}
+
+Now type \press{Ctrl+PgUp}. Notice that Y jumps to beginning of the function immediately above
+the cursor. Each time you type \press{Ctrl+PgUp}, Y jumps up one function. \press{Ctrl+PgDn}
+works similarly. When you work on a program, you are usually more interested in the function to
+function layout of your file. \press{Ctrl+PgUp} and \press{Ctrl+PgDn} allow you to step through
+your file in a more natural manner than \press{PgUp} and \press{PgDn}.
+
+This feature works in Ada, Pascal, Modula-2, and 8086 assembly language files as well. Of
+course, the techniques Y uses to find procedures varies from file type to file type. The
+reference manual describes in detail the methods used for each file type.
+
+\section{Lesson \#9: Using Y From Other Programs}
+
+Y is a well behaved program so you should have no difficulty using it while ``shelled out'' of
+another application. Some programming environments can invoke an editor defined by you and pass
+that editor parameters. In some cases, the environment can pass a line number or column number
+to the editor as a command line parameter. Y can accept this information. For example
+
+\begin{verbatim}
+A:\> y -L10 -C20 afile.txt
+\end{verbatim}
+
+will cause Y to load \filename{afile.txt} and position the cursor on line 10, column 20. You can
+use this idea in your own driver program or batch file. For example
+
+\begin{verbatim}
+@echo off
+y -L%1 first.c -L1 second.c third.c
+\end{verbatim}
+
+Alternatively, you could write a program that outputs a \filename{filelist.yfy} and then invokes
+Y with no parameters. This would allow you not only to specify the line and column positions of
+the cursor, but also the color, tab spacing, window position, etc for arbitrarly many files. An
+appendix in the reference manual discusses the format of \filename{filelist.yfy}. Be sure you
+read and understand that appendix before you try such an approach.
+
+\section{Lesson \#10: Using Programs to Extend Y}
+
+Since Y can make use of external filter programs to edit blocks of text, you can write such
+programs to extend Y's abilities. What Y can do is thus limited only by your imagination and
+your programming skill. Although you can use any language to write a filter program, C is
+especially well suited to it. Here are two C programs that filter text from the standard input
+file to the standard output file\footnote{Actually Perl might be a better choice. Update this
+  tutorial to show at least one Perl example.}.
+
+\subsection{Example 1: Encryption}
+
+The first handles the text character by character and does a simple encryption using a password
+from the command line.
+
+\begin{verbatim}
+#include <ctype.h>
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+  int   ch;        /* Character from Y.     */
+  char *password;  /* Points into password. */
+
+  /* Make sure there's a password. */
+  if (argc != 2) {
+    fprintf(stderr, "Sorry: No password provided.");
+    return 1;
+  }
+    
+  password = argv[1];
+
+  /* Read all the characters selected in Y. */
+  while ((ch = getchar()) != EOF) {
+
+    /* Don't modify control characters. */
+    if (!iscntrl(Ch)) {
+      ch ^= *password;
+
+      /* Don't produce control characters. */
+      if (iscntrl(ch)) ch ^= *password;
+    }
+    putchar(ch);
+
+    /* Advance to next character in password. */
+    if (*++password == '\0') password = argv[1];
+  }
+
+  return 0;
+}
+\end{verbatim}
+
+\subsection{Example 2: String Reversal}
+
+This example reads the input one line at a time. It flip flops the lines in the files.
+
+\begin{verbatim}
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+  char line_buffer[256+1];  /* Holds a line from Y.  */
+
+  /* Read all the lines (Hope they're not too long!) */
+  while (gets(line_buffer) != NULL) {
+    strrev(line_buffer);    /* Reverse the line.	   */
+    puts(line_buffer);      /* Write the result out. */
+  }
+
+  return 0;
+}
+\end{verbatim}
+
+\section{Lesson \#11: Using AWK to Extend Y}
+
+AWK is a text processing language that is usually interpreted. The AWK interpreter reads a file,
+called an AWK script, and uses what it finds there to process the text in another file (often
+the standard input file). This document is not a tutorial on AWK. In this document I will
+discuss the special support Y gives AWK, and show some simple examples of how you might use AWK
+as an alternative to a compiled language. Since AWK is interpreted, it is usually faster to
+write an AWK script than to compile a program in a traditional language. You can find detailed
+information on AWK in the book, \textit{The AWK Programming Language}, by Aho, Kernighan, and
+Weinberger (Addison-Wesley Publishing \copyright\ 1988). This book was written by the creators
+of AWK and is the definitive text on the subject.
+
+Y works with AWK just like it does with any other external program. However, if your AWK
+interpreter is named \filename{awk} (and not some variation like \filename{bawk} or
+\filename{gawk}), Y makes it especially easy to process text through AWK scripts. Normally, to
+process a script, you must tell AWK the script name as part of a -f switch on the AWK
+interpreter. For example
+
+\begin{verbatim}
+C:\> awk -f script.awk < input.txt > output.txt
+\end{verbatim}
+
+causes AWK to use the script defined by `script.awk' on the text at its standard input. AWK
+writes the result to its standard output. Y makes entering such commands easy: if Y sees a word
+with a \filename{.awk} extension in any of its external commands input boxes, Y will
+automatically insert the string ``awk -f '' in front of that word. Thus if you wanted to direct
+a block of text through the script `script.awk', just form the block and do
+\press{Alt+F10:script.awk}. Very simple.
+
+As another example consider \press{Alt+F10:sort | script.awk}. This directs the block through
+the sort filter. From there the text goes to the AWK interpreter for more processing. This works
+because Y transforms the above to: \press{Alt+F10:sort | AWK -f script.awk}.
+
+Here are some simple examples of AWK scripts.
+
+\subsection{Example 1: Line Numbering}
+
+Suppose you want to number the lines in a file (or a block).
+
+\begin{verbatim}
+{
+  line_number++
+  printf "%4d %s\n", line_number, $0
+}
+\end{verbatim}
+
+Notice that the AWK script is much shorter (and easier to write) than a C program.
+
+\subsection{Example 2: Directory Listing}
+
+Suppose you wanted to insert a list of files into the text of the file you were editing. The DOS
+dir command produces an ugly list, however. For example:
+
+\begin{verbatim}
+ Volume in drive F is SYS        
+ Directory of  F:\Y\DOC
+
+YREF     WP     61951   4-21-91   1:34p
+YTECH    WP     33769   4-24-91  11:13p
+REG      WP      1883   4-21-91   1:25p
+EDITOR   WP       676   4-01-91   9:04p
+YREF     DOC    76220   4-21-91   1:36p
+YTECH    DOC    40772   4-24-91  11:13p
+WINDOW   DOC    16305   4-01-91  11:00p
+SCRTOOLS DOC     3089   4-01-91  11:11p
+SCR      DOC    14128   4-01-91  11:10p
+FNMATCH  DOC    10304   4-01-91  11:00p
+HELP     WP      5500   7-11-91  10:20a
+YREV     WP     12178   7-11-91   2:19p
+YREV     DOC    15096   7-11-91   2:20p
+YTUT     WP     38279   8-10-91   9:52p
+       15 File(s)   3043328 bytes free
+\end{verbatim}
+
+What follows is an AWK script that will produce:
+
+\begin{verbatim}
+Name           Modified                    Size     
+-------------  --------------------------  ---------
+yref.wp        April     21, 1991   1:34p      61951
+ytech.wp       April     24, 1991  11:13p      33769
+reg.wp         April     21, 1991   1:25p       1883
+editor.wp      April     01, 1991   9:04p        676
+yref.doc       April     21, 1991   1:36p      76220
+ytech.doc      April     24, 1991  11:13p      40772
+window.doc     April     01, 1991  11:00p      16305
+scrtools.doc   April     01, 1991  11:11p       3089
+scr.doc        April     01, 1991  11:10p      14128
+fnmatch.doc    April     01, 1991  11:00p      10304
+help.wp        July      11, 1991  10:20a       5500
+yrev.wp        July      11, 1991   2:19p      12178
+yrev.doc       July      11, 1991   2:20p      15096
+ytut.wp        August    10, 1991   9:52p      38279
+\end{verbatim}
+
+The script is as follows
+
+\begin{verbatim}
+# This awk program reformats the output of the DIR command.
+BEGIN {
+  month_names[1]  = "January"
+  month_names[2]  = "February"
+  month_names[3]  = "March"
+  month_names[4]  = "April"
+  month_names[5]  = "May"
+  month_names[6]  = "June"
+  month_names[7]  = "July"
+  month_names[8]  = "August"
+  month_names[9]  = "September"
+  month_names[10] = "October"
+  month_names[11] = "November"
+  month_names[12] = "December"
+
+  printf "%-13s  %-26s  %-9s\n", "Name", "Modified", "Size"
+  printf "%-13s  %-26s  %-9s\n",  \
+    "-------------",              \
+    "--------------------------", \
+    "---------"
+}
+
+# Process lines which begin with a letter. This kills . and ..
+/^[A-Z]/ {
+  name = $1
+
+  # If there's not 5 fields, the file has no extension.
+  if (NF == 5) {
+    extension = $2
+    size      = $3
+    date      = $4
+    time      = $5
+  }
+  else {
+    extension = ""
+    size      = $2
+    date      = $3
+    time      = $4
+  }
+
+  # Form total name.
+  name = name "." extension
+
+  # Break the date into components
+  split(date, date_parts, /-/)
+
+  # If the size field is "<DIR>", the file is really a dir
+  if (size != "<DIR>") name = lower(name)
+    else size = "Directory"
+
+  # Output the goods.
+  printf "%-13s  %-9s %s %s  %6s  %9s\n", \
+    name,                                 \
+    month_names[date_parts[1]],           \
+    date_parts[2] ",",                    \
+    "19" date_parts[3],                   \
+    time,                                 \
+    size
+
+  # See if it's time to print another header.
+  line_count++
+  if (line_count == 20) {
+    line_count = 0
+    print ""
+    printf "%-13s  %-26s  %-9s\n", "Name", "Modified", "Size"
+    printf "%-13s  %-26s  %-9s\n",  \
+      "-------------",              \
+      "--------------------------", \
+      "---------"
+  }
+}
+\end{verbatim}
+
+I can then insert the formatted text into my file like this: \press{Ctrl+F10:dir | dir.awk}.

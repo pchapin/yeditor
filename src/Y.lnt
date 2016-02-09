@@ -1,0 +1,32 @@
+// Y Specific Options
+// ==================
+
+-dDEBUG
++libclass(foreign)
+
+// Okay to ignore return values from the following.
+-esym(534, "scr::SimpleWindow::open")
+-esym(534, "List<EditBuffer>::insert")
+-esym(534, "List<EditBuffer>::previous")
+-esym(534, "List<WordSource *>::insert")
+-esym(534, "List<WordSource *>::previous")
+
+-esym(1790, "List<<1>>::Link")                   // Okay to use as a public base class.
+-esym(1790, "List<EditBuffer *>::Link")          // Okay to use as a public base class.
+-esym(1931, "EditBuffer::EditBuffer")            // Okay to use ctor for explicit conversions.
+-esym(1930, "EditBuffer::operator char *")       // Conversion operators ok. REVISIT!
+-esym(1930, "EditBuffer::operator const char *") // Conversion operators ok. REVISIT!
+
+// It is okay that Link has no virtual functions besides its destructor.
+// The only polymorphic operation on Link of interest is destruction.
+-esym(1790, "List<EditBuffer>::Link")
+-esym(1790, "List<WordSource *>::Link")
+
+// The base class is private so the warning is useless.
+-esym(1509, "Stack<EditBuffer>")
+-esym(1509, "Stack<WordSource *>")
+
+// These methods can't actually be made const because they override non-const methods.
+-esym(1961, "KeyboardWord::get_word")
+-esym(1961, "KeyboardWord::get")
+-esym(1961, "KeyboardWord::unget")

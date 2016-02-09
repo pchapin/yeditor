@@ -1,0 +1,490 @@
+
+\chapter{Design Documentation}
+
+This is the technical documentation for Y. To understand this document, you should be familiar
+with C++ programming. This is not a tutorial on that language. Also, you should have access to
+the Y source code.
+
+The document also assumes that you are familiar with how to use Y. Please refer to the Y v2.0
+Tutorial and Reference for more information. That document describes the execution model of Y
+from the user's point of view. You will need to understand that model before you can make much
+sense of the implementation described here.
+
+The intent of this document is to put you into a position where you can make meaningful changes
+to Y with confidence. In addition, this document points out some aspects of Y's design that you
+may find useful in general. Finally, this document explains some of Y's weaknesses.
+
+Originally, Y was designed with the students at Vermont Technical College in mind. For several
+semesters in the late 1980s, we at VTC switched editors every semester. We couldn't seem to find
+one that addressed the issues we found important. Many public domain editors were not powerful
+enough for the more advanced programming classes, and commercial editors were usually overkill,
+complicated to install, and could not be copied legally by the students.
+
+My first ideas for a text editor were rather simple. As Y evolved, however, I realized that it
+could become powerful enough to use for "serious" editing applications. I therefor decided, when
+Y was well under development, that I would try to build an editor capable of satisfying my own
+editing needs.
+
+Originally, Y was designed for implementation in C. When I received my copy of Borland
+International's Turbo C++ Version 1.0, I decided to change my strategy and implement Y in C++.
+Because of the immaturity of my C++ skills when I started Y (and the immaturity of C++ in
+general at that time), the C++ code in Y has a very C-like feeling. Over the years the code has
+gradually taken on a more idiomatic C++ form but this transformation is still ongoing.
+
+As with any program, the quality of Y's code varies considerably from section to section.
+Partially as a result of the above two design changes, some of Y's code is, in fact, not very
+well constructed. Indeed, if I had designed Y for implementation in C++ from the beginning,
+there are numerous things that I would have done differently. The fact that the development of Y
+went fairly smoothly reflects well on the usefulness of C++ in real world applications. Any
+programming project will go well if people only attempt well designed programs! C++ worked
+nicely even for a not so well designed program.
+
+\section{Layout of the Source Code}
+
+Y supports four different compilation environments.
+
+\begin{enumerate}
+
+\item Visual Studio 2012 on Windows. The 64 bit build is primary but it should be a simple
+matter to configure the project files to produce a 32 bit executable as well. Note that at
+the time of this writing, Y is not ``64~bit clean.'' Fixing that is a TODO item.
+
+\item Clang v3.3 via Makefiles on Linux. Y is being updated to take advantage of C++ 2011
+features. Currently clang v3.3 is the primary C++ 2011 compiler used.
+
+\item Code::Blocks with gcc (or clang) on Linux. The Code::Blocks project files are currently
+configured to use gcc, but it should be a simple matter to switch them to clang by providing
+a suitable compiler definition.
+
+\item Open Watcom 1.9. Targets for DOS 16 bit, Windows 32 bit, and OS/2 32 bit are supported.
+Only the Windows host has been tested but other hosts will probably work fine. Note that
+Open Watcom is, at the time of this writing, not able to process any siginificant C++ 2011
+features. Thus support for Open Watcom exists only on paper in the hope that Open Watcom will
+eventually be upgraded sufficiently in the future.
+
+\end{enumerate}
+
+Using multiple compilers not only allows Y to be built for multiple systems, but it also
+improves reliability by exposing the source to various warnings and portability issues.
+
+Y makes use of a screen handling library called Scr and an additional support library called
+Spica. These libraries are independent of Y and can be compiled and tested separately. They can
+also be used in other projects. The first step in building Y is to build Scr and Spica. The
+Visual Studio and Code::Blocks project files do this automatically; for the other supported
+compilers it is necessary to build Scr and Spica manually as an initial step.
+
+\section{Tour of the Source}
+
+All of the Y source code is in a single folder. It is roughly divided into four parts.
+
+\begin{enumerate}
+\item General purpose utility components.
+\item YEditFile classes.
+\item Command implementations.
+\item Macro handing support.
+\end{enumerate}
+
+In the subsections that follow certain key files and systems are described in more detail.
+
+\subsection{EditBuffer}
+
+Class EditBuffer is very important to Y. Objects from this class are strings of arbitrary length
+supporting basic editing operations. This class is used not only to implement the lines in the
+file being edited, but also the parameters which are manipulated by the parameter handler.
+
+The methods of this class allow, for example, insertion, deletion, and replacement of characters
+at arbitrary offsets. If the offset from the beginning of the string is larger than the length
+of the string, the string is simply extended with spaces.
+
+This class offers a conversion to char* which allows objects of class EditBuffer to be used in
+contexts where char* is expected. Although this is convenient, it is also a potential problem.
+When an EditBuffer object is manipulated, the data area where the string is being stored may
+be moved. Thus any previously converted char* values will be invalidated.
+
+In addition, this creates problems for future versions of Y that want to swap material to disk.
+Ideally, all that would need be done to implement that ability would be to revise the
+implementation of class EditBuffer so that swapping is done on a line by line basis. However, in
+such a scenario, a char* obtained from an EditBuffer may become invalid if an insertion is done
+into ANY EditBuffer object (not just the one which was used to get the char*).
+
+\subsection{List}
+
+Because Y predates the first C++ standard it provides its own list handling support. The List
+class implements a generic doubly linked lists of void*. Y specializes this class several
+different ways. Class List forms the basis of the list of loaded files, the list of deleted
+files, the list of EditBuffers that compose the text of each file, and the list of EditBuffers
+that compose the parameter lists.
+
+Each object of class List maintains two sentinel list nodes, a 'Head' and a 'Tail'. These nodes
+are never used for data; their 'Data' members are always NULL. However, their presence
+simplifies the implementation of many of the methods. The constructor for class List allocates
+the sentinel nodes and links them together. The destructor frees all the nodes (but NOT the
+things pointed at by the void* data elements).
+
+Each list object maintains a notion of 'current point'. The get() method returns the void*
+associated with the current point very quickly. The current point \emph{cannot} be off the head
+of list; get() will never return the data member associated with the head sentinel. However, the
+current point may be off the tail of the list. In that case, get() will return the NULL pointer.
+
+Each list object also maintains easy access to the total number of elements in the list and the
+index of the current point. Asking for this information using the Nmbr\_Items() and
+Current\_Index() member functions does not cause the entire list to be scanned.
+
+Class List also offers an operator[](). This function allows the list to be randomly accessed.
+This function also positions the current point. Operator[]() is smart in that it tries to use
+the shortest path to the desired element. For example, if the index of the current point is 100,
+the index of the tail is 200, and the desired new index of the current point is 190,
+operator[]() will position the current point to the tail and back it up 10 elements rather than
+moving it forward 90 elements.
+
+Class List also offers a Next() and a Previous() member. The Next() member acts something like
+*p++. That is, it returns the void* associated with the current point and then advances the
+current point. Previous() acts something like *--p. That is, it backs up the current point and
+then returns the void* associated with the new current point.
+
+\subsection{FIXME}
+
+\textit{The material below this point is old and probably very out of date.}
+
+WINDOW.CPP
+
+Objects from class Window are simple rectangular colored regions on the screen which remember
+their background.
+
+Each file which is loaded into Y is handled internally as an instance from a class derived from
+YEdit\_File. Accordingly, class YEdit\_File has a large interface. Operations such as moving the
+current point, inserting and deleting text, saving to disk, turning on and off blocks, etc are
+all member functions in this large class.
+
+YEdit\_Files, however, know nothing about each other. The fact that Y can load a large number of
+files at once is due to the file list. Class File\_List, in the main directory, implements a
+single abstract object (ie all of the member functions are static) which binds the many
+YEdit\_Files together.
+
+YEdit\_Files also know nothing about the user interface. The command functions defined in the
+files COMMAND?.CPP, in the main directory, implement the details of each command. In some cases,
+the command functions simply invoke an appropriate member in the YEdit\_File object for the
+active file. In other cases, the command functions must do considerable preparatory work. Class
+YEdit\_File can, however, print messages by calling the functions in SUPPORT.CPP. All messages
+produced by Y go through the functions in this file.
+
+Because YEdit\_File is so large, I built it up using inheritance. In particular, I started with a
+base class, called Edit\_File. Objects from class Edit\_File contain the actual text of the file,
+a notion of the current point in the file, a record of wether or not the text has been changed,
+and some functions for dealing with line oriented blocks.
+
+From Edit\_File I then derived a number of classes which added specialized functions to the
+interface of class Edit\_File. For example, class Cursor\_Edit\_File has public functions which
+move the current point around, class Disk\_Edit\_File has public functions for reading and writing
+the disk, etc. Each of these derived classes have some supporting private data members.
+
+It is important to realize that, except for the fact that they are all derived from Edit\_File,
+each of the XXX\_Edit\_File classes are all independent.
+
+Finally, class YEdit\_File is derived, using multiple inheritance, from all of the XXX\_Edit\_File
+classes! This merges the public interfaces from all of these classes into one rather large
+public interface while at the same time holding the independent concerns of YEdit\_File's various
+aspects separate.
+
+Of course, each YEdit\_File object must have only one Edit\_File base. All of the XXX\_Edit\_File
+subobjects must be sharing the same text and block information! This is no problem: Edit\_File is
+a virtual base class of all of the XXX\_Edit\_File classes.
+
+I think that this is a nice example of multiple inheritance. Even though the interface to
+YEdit\_File is large, the interface of each XXX\_Edit\_File is manageable. Furthermore, the
+XXX\_Edit\_Files can be used in other contexts to build editors.
+
+For example, suppose you need a simple editor imbedded in another program. Take class Edit\_File
+as your base. You probably want to move the current point and insert and delete characters, so
+you take Cursor\_Edit\_File and Character\_Edit\_File as well. Do you need to deal with a disk? If
+not, then you skip over Disk\_Edit\_File. If you don't need search and replace or word processing
+features, skip over Search\_Edit\_File and WP\_Edit\_File. Finally, you take the components you do
+need and glue them together with multiple inheritance to get a Edit\_File class which suits your
+purposes. I have not tried this, so I don't know how well it would really work.
+
+The virtual base object, from class Edit\_File in this case, is the common ground shared by all
+the subobjects in a YEdit\_File object. It is anomalous for class Edit\_File to know about blocks
+when there is a Block\_Edit\_File subobject which is supposed to deal with blocks. Normally, this
+could be dealt with using virtual functions in the virtual base class. For example, in class
+Edit\_File, we might have
+
+\begin{verbatim}
+struct Block_Definition {
+    long     Start_Line, End_Line;
+    unsigned Start_Column, End_Column;
+};
+
+virtual Block_Definition Get_Block_Definition();
+virtual void Set_Block_Definition(Block_Definition);
+virtual boolean          Get_Block_State();
+virtual void             Set_Block_State();
+\end{verbatim}
+
+These functions would be implemented in Block\_Edit\_File (where they belong) and used by all the
+other classes derived from Edit\_File (which need to know about blocks to do their work).
+
+Y currently does not deal with blocks which cover only part of a line. That is, the
+implementation of the virtual Get\_Block\_Definition() might force Start\_Column to zero and
+End\_Column to UINT\_MAX. You'd like to have it so that fancier blocks could be implemented by
+simply adjusting the functions in Block\_Edit\_File.
+
+I started implementing block mode as I've described it above. However, Turbo C++ (version 1.0)
+proved to be buggy with regard to virtual functions in virtual base classes. Eventually, I
+decided that the code was too unreliable on my compiler and I gave up the attempt. Y currently
+has class Edit\_File knowing too much about blocks. It would be a nice exercise to "do blocks
+right" for Y.
+
+EDITLIST.CPP
+
+This file implements class Edit\_List. This class is a specialization of class List which deals
+with a list of EditBuffer* objects. Notice that this class does not deal directly with the
+EditBuffers themselves.
+
+EDITFILE.CPP
+
+This file implements the base class from which class YEdit\_File is built. It contains an object
+from class Edit\_List which represents the text of the file. It also contains an object from
+class File\_Position which keeps track of the current point in the file.
+
+The current point in the Edit\_List is not related to the current point in the file. In fact,
+many of the XXX\_Edit\_File classes have member functions which leave the current point of the
+Edit\_List object in an undefined state. Each XXX\_Edit\_File member function which wants the
+Edit\_List's current point in a known state must move it there before it tries to use the
+Edit\_List.
+
+FILEPOS.CPP
+
+This file implements class File\_Position. Objects from this class deal with a file's current
+point. Cursor row and column is maintained as well as the row and column of the display's upper
+left corner (and thus the relative position of the cursor on the display).
+
+Objects of this class prevent the cursor from wandering outside the display or the display from
+riding up too high or too far to the left. Class Cursor\_Edit\_File allows clients of YEdit\_File
+to get directly at the File\_Position member in the Edit\_File base with the CP() member function.
+Thus most cursor positioning functions are really just members in class File\_Position. This
+behavior also allows for easy saving and restoring of the cursor position. For example
+
+\begin{verbatim}
+void f()
+  {
+    File_Position Old_Position = Active_File.CP();
+
+    // Move Active_File.CP() with calls like:
+    //   Active_File.CP().Jump_To_Line(10L);
+    // etc...
+
+    Active_File.CP() = Old_Position;
+    return;
+  }
+\end{verbatim}
+
+In the above example, both the cursor position and the relative position of the cursor within
+the display are saved and restored.
+
+If you don't like the way Y moves the cursor, you should be able to change only the members of
+class File\_Position.
+
+YEDITF.CPP
+
+This is the total YEdit\_File class. It is build from the XXX\_Edit\_File class via multiple
+inheritance. In addition, it adds some Y specific features. In particular, member functions for
+dealing with the screen, setting colors, etc are defined in class YEdit\_File. In addition
+several virtual functions are introduced in class YEdit\_File. These function will be described
+later.
+
+Y.CPP
+
+This is the file which contains main(). This file is concerned primarily with opening
+activities. The processing of the command line, and the initial reading of FILELIST.YFY is done
+here. Main() itself just initializes Y and enters an infinite loop which extracts a keystroke
+from the keyboard handler and passes it to a function in this file. That function searches a
+table for the proper command function to handle that keystroke. Control thus touches main()
+between every keystroke.
+
+COMTABLE.CPP
+
+This file contains the dispatch table for the commands. The keystroke used to activate each
+command function is defined here. Thus if you want to reconfigure the keyboard, this is the only
+file that you must change.
+
+COMMAND  CPP     7410   4-11-91   8:38p ; Numeric keypad keys
+COMMANDA CPP     8401   4-21-91   1:18p ; Alt+Function keys
+COMMANDC CPP     8231   4-11-91   9:16p ; Cntrl+Function keys
+COMMANDF CPP     5659   4-11-91   9:21p ; Function keys
+COMMANDL CPP     2613   4-11-91   9:25p ; Alt+Letter keys
+COMMANDS CPP     6606   4-21-91   9:19a ; Shift+Function keys
+
+These file implement the command functions. As you can see, they are organized by invoking
+keystroke groups. If you are familiar with Y's keyboard layout (as I assume you are), then you
+should have no problem locating a given command function. For example, the function which is
+invoked when you try to rename a file is in COMMANDA.CPP since the keystroke used to rename a
+file is Alt+F2.
+
+If you want to add a new command, take the following steps:
+
+\begin{enumerate}
+
+\item Decide which keystroke you want to use to invoke your command.
+
+\item Add a command function to the appropriate file. All the command functions have names which
+  end with ...Com. For example, "My\_CommandCom()."
+
+\item Edit COMMAND.HPP to include a prototype of your new command function. Note that it must
+  look something like boolean My\_CommandCom();
+
+\item Edit COMTABLE.CPP to include an entry for your command function and to associate it with a
+  keystroke.
+
+\item ReMAKE the program!
+
+\end{enumerate}
+
+You can call upon a function in class File\_List to get a reference to the currently active
+YEdit\_File. For example:
+
+\begin{verbatim}
+boolean My_CommandCom()
+  {
+    YEdit_File &Active_File = File_List::Active_File();
+
+    // Play with the public interface to Active_File.
+    // return ERROR if you fail; otherwise return NO_ERROR.
+  }
+\end{verbatim}
+
+FILELIST. CPP
+
+Class File\_List, implemented in FILELIST.CPP, is an example of a class being used to implement a
+single abstract object. In other words, all of class File\_List's members are static: there is
+logically only one File\_List. In fact, class File\_List defines a private constructor (which does
+nothing) to prevent you from accidently declaring another File\_List object.
+
+Class File\_List deals with the fact that Y can load multiple files. For example, the
+\{Next\_File\} and \{Previous\_File\} commands draw on functions in class File\_List. When Y
+reloads files after an external program runs, or writes FILELIST.YFY, it is functions in class
+File\_List that are at work.
+
+Class File\_List maintains a doubly linked list of YEdit\_File pointers on the heap. Because
+File\_List holds pointers to YEdit\_Files rather than YEdit\_Files themselves, the possibility
+exists that objects from classes derived from YEdit\_File are really on the list. This is, in
+fact, the case. For each file type (ie extension), a different kind of YEdit\_File has been
+derived. Class YEdit\_File declares certain functions as virtual and these are overridden for
+each of the derived classes.
+
+For example, the Next\_Procedure() function in YEdit\_File is virtual. It's default action, that
+is, it's implementation in class YEdit\_File, is to print the message "Can't find procedures in
+this file type." In class ASM\_YEdit\_File, however, Next\_Procedure() searches for PROC keywords.
+
+The fact that there are several different types of YEdit\_Files is hidden inside of the
+implementation of File\_List. Everywhere else in the program there are only pointers (or
+references) to YEdit\_Files. The virtual functions insure consistent behavior.
+
+If you want to add another file type, simply derive a new class from YEdit\_File and override
+whichever of the virtual functions you need to override. You will also need to edit
+File\_List::New\_File(). It is in that function where the particular type of YEdit\_File is
+created. In the body of File\_List::New\_File() there is a switch statement, the only one of its
+kind in the program, which has a case for each type of YEdit\_File. You will need to add a new
+case.
+
+If you want another behavior to be file type specific, simply make the appropriate member
+function of YEdit\_File virtual. You can then override that function in whichever derived classes
+you want. For the other YEdit\_File types, you do nothing; the default virtual function in
+YEdit\_File (the original behavior) will step in automatically. Likewise, the command functions
+do not need to be edited.
+
+SPECIAL.CPP
+
+This file contains the implementations of the specialized YEdit\_Files. That is, the virtual
+functions in class YEdit\_File which are being overridden by the derived classes are implemented
+in this file. In particular, it is in this file that you will find the Next\_Procedure() and
+Previous\_Procedure() functions for the various file types.
+
+HELP.CPP
+
+This file contains the help screens which Y displays. I wrote the help text using WordPerfect,
+version 4.2. You can find the "source" files for the help text in the DOC directory. The program
+TXTTOC, in the TOOLS directory, converts a text file (such as produced by directing Wordperfect
+to print to a file) into a C language declaration of an array of character pointers.
+
+KEYBOARD.CPP
+
+This file implements the abstract keyboard handler object. This object finds the next keystroke
+and returns it to main() for dispatching.
+
+Keystrokes can come from many sources. For example, they can come from the keyboard itself, from
+a keyboard macro, or from a set of repeated keystrokes. Y does not really care where keystrokes
+come from. Thus the keyboard handler can hide all manner of interesting and unusual things. In
+Version 2.0 of Y I may implement a full macro language. My plan is to do so by elaborating on
+the keyboard handler.
+
+Inside the keyboard handler, an abstract base class called Keyboard\_Script is defined. From this
+abstract class, several concrete class are derived with one such class for each "source" of
+keystrokes. For example class NeverEnding\_Source reads keystrokes directly from the keyboard.
+Class Keyboard\_Macro, however, takes its keystrokes out of an array.
+
+The keyboard handler sets up a stack of Keyboard\_Script* with the address of a
+NeverEnding\_Source object at the bottom. Whenever a caller wants a keystroke, the keyboard
+handler consults the currently active Keyboard\_Script on the stack. Most of the time this
+results in reading a key from the keyboard. If, however, the key is a special control character,
+the keyboard handler builds an appropriate object and puts it on the stack. For example, the \^R
+character causes the keyboard handler to build a Repeat\_Sequence object.
+
+Each Keyboard\_Script class will return -1 when they have no more keystrokes to give. In such a
+case, the keyboard handler will pop the stack and try to draw another keystroke out of the new
+Keyboard\_Script object now on the top of the stack. NeverEnding\_Source objects, naturally, never
+return -1.
+
+Although this may sound complicated, it has two nice features.
+\begin{enumerate}
+\item Giving Y the ability to read keystrokes from other places is easily integrated into the
+  existing program.
+
+\item All kinds of interesting combinations work perfectly. For example, repeatedly executing a
+  keyboard macro which contains a repeat sequence would involve a stack like this
+
+\begin{verbatim}
+TOP  Current Script -> Repeat_Sequence
+                       Keyboard_Macro
+                       Repeat_Sequence
+BOTTOM                 NeverEnding_Source
+\end{verbatim}
+\end{enumerate}
+
+If you wish to give Y the ability to deal with multiple keyboard macros which can invoke each
+other, it should be fairly straightforward.
+
+I would like to point out that this is, I think, a nice example of using C++'s polymorphic
+abilities to create a heterogenous stack.
+
+Quoted characters are handled in a rather gross way. If the keyboard handler see a \^Q
+character, it draws another keystroke out of the currently active Keyboard\_Script and turns on
+the most significant bit of that key code. The command dispatching function back in Y.CPP checks
+for this special case. If it finds it, the keystroke is unconditionally passed to
+Insert\_LetterCom().
+
+This is gross because it means that the keyboard handler knows that certain key codes are
+available for use. On the other hand, it integrates nicely with the structure I described above.
+For example, the sequence \^R10\^Q\^E causes a Repeat\_Sequence object to be built which will
+return the \^E code with its most significant bit ON ten times.
+
+PARA.CPP
+
+This file implements class Parameter. Objects from this class manage an input box and an
+Edit\_List of eight parameters (EditBuffers). There is an instance from this class for each of
+the different input boxes Y provides.
+
+Class Parameter contains a static member Insert(). This function takes a string as a parameter
+and copies it into a special buffer in PARA.CPP. When any parameter handler object is asked to
+come up with a parameter, the "inserted" string is used (once). This allows parameters to be
+"force fed" to a command. For example
+
+\begin{verbatim}
+Parameter::Insert("CONFIG.SYS");
+Find_FileCom();
+\end{verbatim}
+
+causes the file CONFIG.SYS to be loaded into the editor. Normally Find\_FileCom() will prompt the
+user for a filename. However, when it asks its parameter handler object for a parameter the
+string "CONFIG.SYS" will be returned instead.
+
+This ability will be very important when a macro language is implemented.

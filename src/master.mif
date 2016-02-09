@@ -1,0 +1,65 @@
+############################################################################
+# FILE   : master.mif
+# AUTHOR : Peter C. Chapin <PChapin@vtc.vsc.edu>
+#
+# Master file list for the Y project.
+############################################################################
+
+cpp_options = -q -w4 -xs -fo=$*.obj -d2 -I../.. -I../../../../Spica/Cpp -I../../../../Scr
+
+# Object file list.
+OBJS = &
+    BlockEditFile.obj     &
+    CharacterEditFile.obj &
+    clipboard.obj         &
+    command_a.obj         &
+    command_b.obj         &
+    command_c.obj         &
+    command_d.obj         &
+    command_e.obj         &
+    command_f.obj         &
+    command_g.obj         &
+    command_h.obj         &
+    command_i.obj         &
+    command_k.obj         &
+    command_l.obj         &
+    command_n.obj         &
+    command_p.obj         &
+    command_q.obj         &
+    command_r.obj         &
+    command_s.obj         &
+    command_t.obj         &
+    command_x.obj         &
+    command_y.obj         &
+    command_table.obj     &
+    CursorEditFile.obj    &
+    DiskEditFile.obj      &
+    EditBuffer.obj        &
+    EditFile.obj          &
+    EditList.obj          &
+    FileList.obj          &
+    FilePosition.obj      &
+    FileNameMatcher.obj   &
+    global.obj            &
+    help.obj              &
+    keyboard.obj          &
+    LineEditFile.obj      &
+    macro_stack.obj       &
+    parameter_stack.obj   &
+    SearchEditFile.obj    &
+    special.obj           &
+    support.obj           &
+    WordSource.obj        &
+    WPEditFile.obj        &
+    y.obj                 &
+    YEditFIle.obj         &
+    yfile.obj
+
+# The overall target and how to make it.
+y20.exe:        $(OBJS)
+        wlink @link.rsp @../../Y.cds
+
+# Utility targets.
+clean: .SYMBOLIC
+    del *.obj *.err *.map y20.exe
+

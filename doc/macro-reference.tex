@@ -1,0 +1,36 @@
+\chapter{Macro Reference}
+
+Whenever a key is pressed an associated macro is pushed onto the macro stack and executed. Even
+simple keys such as letter keys invoke a macro (usually \texttt{add\_text}) to handle that
+keystroke. Since Y 2.0 is still under development the precise macros associated with particular
+keys is subject to change. Thus for information on the current associations, please refer to the
+Y source code\ldots\ specifically the file \texttt{WordSource.cpp}. Toward the bottom of that
+file is an array \texttt{keyboard\_map} that maps key codes to the macro text that is executed
+when that key is pressed.
+
+Note that the macro associated with a key can be changed interactively or as part of macro
+execution using the ``define\_key'' macro command. Thus the associations in
+\texttt{WordSource.cpp} should be taken as defaults or initial values only.
+
+When using the ``define\_key'' macro command you need to provide the name of the key you are
+defining. The official names (case sensitive) are given in the array \texttt{key\_names} near
+the bottom of \texttt{WordSource.cpp} in the Y source code. Notice that decimal names for the
+``extended ASCII'' keys are used rather than hex names because you can use decimal values on the
+numeric keypad to enter those keystrokes.
+
+The functions in the editor source code that implement each macro command (and ultimately
+document each macro command) are specified in the file \texttt{command\_table.cpp}. At the top
+of that file the array \texttt{command\_table} maps command name to the C++ function that
+implements that command. Again, since Y 2.0 is under development the precise mappings from macro
+command to C++ function are subject to change.
+
+Note that there may be macro commands that are not bound to any key; that is, some macro
+commands may not appear in the \texttt{keyboard\_map} mentioned previously. These commands can
+be bound to keys or executed directly in user defined macros.
+
+The C++ command functions themselves are stored in files such as \texttt{command\_X.cpp} where
+\texttt{X} is the first letter of the command function's name. For example the ``add\_text''
+macro command is implemented by the \texttt{add\_text\_command} function found in
+\texttt{command\_a.cpp}.
+
+More information about the macro language will be forthcoming in this document as time allows.

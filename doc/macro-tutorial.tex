@@ -1,0 +1,217 @@
+\chapter{Macro Tutorial}
+
+A Y macro is a string of macro text. Internally, Y maintains a stack of these macro strings. The
+string in stack level one is the currently executing macro. If that macro invokes another macro,
+the new macro is pushed into stack level one and the suspended macro is moved to stack level
+two. When the new macro completes execution, it is popped and the suspended macro returns to
+stack level one so that it can continue execution.
+
+Each key on the keyboard is associated with some macro text. When Y starts the macros associated
+with each key are set to Y's initial defaults. However, using the define\_key macro command, you
+can redefine the macro text associated with a key. Typically the start up macro executes many
+define\_key commands to remap the keyboard as the user sees fit.
+
+Since you can bind an arbitrarily complex macro to a key with define\_key, the keyboard
+remapping is not just a simple matter of moving built in commands to different keys. You can
+actually construct new commands using the built in ones or previously defined macros and bind
+your new commands to appropriate keys.
+
+Since define\_key is just another macro command, you can define macros that redefine keys on the
+fly. For example, to implement a line draw mode, you could write a macro that uses define\_key
+to bind new functions to the arrow keys.
+
+Ordinarily, Y takes its commands from the macro text currently on the macro stack. Only if the
+macro stack is empty does Y consult the keyboard. When you press a key on the keyboard, Y pushes
+the macro text associated with that key onto the macro stack and executes it in the usual way.
+If that macro text invokes other macros they are pushed onto the macro stack and executed as
+well. Only when the macro associated with the keystroke is completely finished and the macro
+stack is empty again does Y return to the keyboard for its next command.
+
+One consequence of this is that even the letter keys have macros associated with them. By
+default these macros merely add the corresponding letter to the file currently being edited.
+However, if you want certain letters to exhibit special behavior, it's a straight forward matter
+to redefine the associated macro. The special handling of `\{' and `\}' in .C files is
+implemented in this way.
+
+The macro language itself is also stack based. In addition to the macro stack that holds the
+text of the pending macros, Y also maintains a parameter stack that holds the strings upon which
+the macro commands operate. Macro text is read from left to right and is regarded as a sequence
+of white space delimited words. Each word enclosed in quotation marks is pushed onto the
+parameter stack as it is encountered. Words that are built in macro commands or other named
+macros are executed as they are encountered. Words that are not recognized are assumed to be
+strings and pushed onto the parameter stack. Thus Y does not require a string to be enclosed in
+quotation marks if the string is not the name of a built in command or existing macro and if the
+string contains no embedded spaces. This is convenient for dealing with numbers and certain
+other things, but I don't recommend making it a practice of leaving out the quotation marks.
+
+For example, the following macro inserts the text ``Y v2.0!'' into the current file:
+
+\begin{verbatim}
+"Y v2.0!" add_text
+\end{verbatim}
+
+Y pushes the first item onto the stack since it is a quotation enclosed string. Notice that it
+is pushed as a single word despite the embedded space. Y recognizes the second item as a macro
+command that pops a string off the stack and inserts it into the current file.
+
+As another example, here is a macro that inserts ``()'' into the file and then moves the cursor
+to the left so that it will be just after the `(' character.
+
+\begin{verbatim}
+"()" add_text cursor_left
+\end{verbatim}
+
+By default the macros associated with the letter keys are very simple. Here is the default macro
+associated with the `Y' key (distinct from the `y' key).
+
+\begin{verbatim}
+"Y" add_text
+\end{verbatim}
+
+Because macros can define other macros the need often arises to nest quoted strings. Within a
+quoted string, you can use the `$\backslash$' character to temporarily disable the meaning of
+the quotation mark. For example, the following macro defines the `Y' key so that when pressed
+the text ``Y v2.0!'' is inserted into the file instead of just `Y'
+
+\begin{verbatim}
+K_Y "\"Y v2.0!\" add_text" define_key
+\end{verbatim}
+
+The define\_key command takes two string arguments. In stack level two (pushed first), it
+expects the name of the key to define. Since ``K\_Y'' is not the name of a built in command or
+an existing macro, Y will push ``K\_Y'' onto the stack. It happens that K\_Y is meaningful to
+the define\_key command. The define\_key command then looks at the material in stack level one
+to find the macro to associate with the specified key. Since the macro itself contains quotation
+marks, the macro that executes the define\_key has to deal with nested quotes.
+
+Nesting quotes works to arbitrary depth. Here is a macro that will bind to the ALT+0 key a macro
+that, when invoked, will redefine the `Y' key. In other words this macro sets things up so that
+ALT+0 remaps the keyboard.
+
+\begin{verbatim}
+K_ALT0 "K_Y \"\\\"Y v2.0!\\\" add_text\" define_key" define_key
+\end{verbatim}
+
+This works because the `$\backslash$' character also temporarily disables the special meaning of
+`$\backslash$'.
+
+As you can see setting up such nested macros correctly is difficult. To address this problem, Y
+allows you to quote strings a different way. The `\{$\ldots$\}' characters can be used like
+quotation marks. For example
+
+\begin{verbatim}
+{Y v2.0!} add_text
+\end{verbatim}
+
+is exactly the same as
+
+\begin{verbatim}
+"Y v2.0!" add_text
+\end{verbatim}
+
+There are a few differences, however. Extra white space is squeezed out of \{$\ldots$\}
+delimited strings. That is the following macro inserts all the spaces exactly as indicated.
+
+\begin{verbatim}
+" a     b " add_text
+\end{verbatim}
+
+but the macro below only inserts ``a b'' into the file without the spaces
+
+\begin{verbatim}
+{ a     b } add_text
+\end{verbatim}
+
+This two line macro also only inserts ``a b'' into the file
+
+\begin{verbatim}
+{ a
+  b } add_text
+\end{verbatim}
+
+In addition, comments are possible inside \{$\ldots$\} delimited strings. Y macro comments start
+with a `\#' character and run to the end of the line. Compare:
+
+\begin{verbatim}
+"# This is not a comment" add_text
+\end{verbatim}
+
+with
+
+\begin{verbatim}
+{ a   # This is a comment!
+  b } add_text
+\end{verbatim}
+
+The other significant difference between \{$\ldots$\} and ``$\ldots$'' is that the curly braces
+nest more easily. Here is that macro that defines ALT+0 so that when pressed, the `Y' key is
+remapped.
+
+\begin{verbatim}
+K_ALT0 { K_Y { "Y v2.0!" add_text } define_key } define_key
+\end{verbatim}
+
+The start up macro that Y executes normally contains a large number of define\_key commands.
+Since the macro text associated with certain keys might be very complex, the ability to use
+\{$\ldots$\} enclosed strings to break up the macro text over several lines and to intermix
+comments is absolutely essential.
+
+All built in macro commands that take parameters take string parameters from the parameter
+stack. In some cases, the strings are converted into numbers. What happens if the parameter
+stack is empty? Just as when the macro stack is empty, Y ``goes interactive'' in such a case.
+Each built in command will pop up an input box and let the user enter whatever text they want.
+That text is then immediately pushed onto the parameter stack and the macro command is allowed
+to pop that text in the usual way.
+
+For example, the find\_file command expects to find the name of a file to load on the parameter
+stack. The macro associated with the F1 key (Y v1.1 compatibility mode) is just ``find\_file.''
+Since no parameter is given, find\_file will pop up an input box when the user selects F1.
+
+However, a macro such as
+
+\begin{verbatim}
+"C:\\AUTOEXEC.BAT" find_file
+\end{verbatim}
+
+will cause Y to load \filename{C:$\backslash$AUTOEXEC.BAT}. Notice that you need to disable the
+special meaning of `$\backslash$' in the string given to find\_file so that the input word
+recognizer puts the appropriate string onto the parameter stack.
+
+The find\_file command has a default prompt that it uses when it goes interactive. If you want
+to use a different prompt, you can use the ``input'' macro command. Input takes its prompt from
+the parameter stack and pushes the string entered by the user back onto the parameter stack. For
+example
+
+\begin{verbatim}
+"Backup File:" input find_file
+\end{verbatim}
+
+With respect to macro processing, Y supports the execute\_macro and execute\_file commands. The
+execute\_macro command pops the parameter stack and executes the string it finds there as a
+macro (pushing it onto the macro stack). The execute\_file command pops the parameter stack for
+a file name and then pushes the contents of the file into stack level one of the macro stack for
+execution. By binding these commands to appropriate keys, you can enter macro text or run files
+of macro text interactively. For example:
+
+\begin{verbatim}
+K_ALTM { execute_macro } define_key
+\end{verbatim}
+
+The error\_message command allows you to display error messages to the user. The text popped
+from stack level one of the parameter stack is put into an error box underneath the word
+"Sorry." For example
+
+\begin{verbatim}
+K_ALTM { "Unable to execute!" error_message } define_key
+\end{verbatim}
+
+You can experiment with what error messages look like by binding the error\_message command
+without a parameter to the key of your choice. For example, if you have execute\_macro bound to
+the ALT+M key, select it and in the input box popped up by execute\_macro, type
+
+\begin{verbatim}
+K_ALTE { error_message } define_key
+\end{verbatim}
+
+Then type ALT+E to get error\_message to go interactive so you can enter test messages from the
+keyboard.
