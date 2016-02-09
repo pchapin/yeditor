@@ -16,7 +16,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scr", "..\Scr\scr.vcxproj",
 		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA} = {73BA8A8D-D8E5-4435-8947-FA40F2E450CA}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpicaCpp", "..\Spica\Cpp\SpicaCpp.vcxproj", "{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpicaCpp", "..\Spica\SpicaCpp.vcxproj", "{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clac_engine", "ClacEngine\clac_engine.vcxproj", "{623EC45F-2C80-4934-8C92-AB0E07EE9550}"
 	ProjectSection(ProjectDependencies) = postProject
