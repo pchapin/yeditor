@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Workspace">
+		<Project filename="scr.cbp" active="1">
+			<Depends filename="../Spica/Cpp/SpicaCpp.cbp" />
+		</Project>
+		<Project filename="check_simple/check_simple.cbp">
+			<Depends filename="scr.cbp" />
+			<Depends filename="../Spica/Cpp/SpicaCpp.cbp" />
+		</Project>
+		<Project filename="check_manager/check_manager.cbp">
+			<Depends filename="scr.cbp" />
+			<Depends filename="../Spica/Cpp/SpicaCpp.cbp" />
+		</Project>
+		<Project filename="../Spica/Cpp/SpicaCpp.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

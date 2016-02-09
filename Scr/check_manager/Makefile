@@ -1,0 +1,34 @@
+#
+# Makefile for the CheckManager project.
+#
+
+CXX=g++
+CXXFLAGS=-std=c++11 -c -O -I../../Spica/Cpp -I..
+LINK=g++
+LINKFLAGS=-lncurses
+SOURCES=check.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=check_manager
+LIBSPICA=../../Spica/Cpp/libSpicaCpp.a
+LIBSCR=../libScr.a
+
+%.o:	%.cpp
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+$(EXECUTABLE):	$(OBJECTS) $(LIBSPICA) $(LIBSCR)
+	$(LINK) -o $@ $(OBJECTS) $(LIBSPICA) $(LIBSCR) $(LINKFLAGS)
+
+# File Dependencies
+###################
+
+# Module dependencies -- Produced with 'depend' on Sat Jul  6 17:42:33 2013
+
+
+check.o:	check.cpp ../CommandWindow.hpp ../ImageBuffer.hpp ../scr.hpp ../Manager.hpp ../Window.hpp \
+	../debug.hpp ../TextWindow.hpp ../ListWindow.hpp 
+
+
+# Additional Rules
+##################
+clean:
+	rm -f *.bc *.bc1 *.bc2 *.o $(EXECUTABLE) *.s *.ll *~
