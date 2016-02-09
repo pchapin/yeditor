@@ -1,0 +1,27 @@
+
+These items are in no particular order, but they probably should be arranged in order of
+priority and/or level of difficulty.
+
++ Define an XML format for the tasks file and implement support for it.
+
++ Update the documentation to describe Pixie's "time tracker" features.
+
++ Add support for a configuration file?
+
++ Make the existing features more robust against bad input. An error message display function
+should be added. Right now the program mostly just ignores errors without telling the user
+about them.
+
++ Consider moving to a Model-View-Controller design. For example, the Task_Window should not
+really own the vector of tasks. Instead it should only be responsible for displaying them.
+
++ Improve the user interface to take better advantage of scr.
+
++ Add new features.
+  - It might be nice to have an option to exit the program without saving the task list.
+  - A help command that lists the available commands and their syntax.
+  - An indication that the task list has changed (so the user knows when to "save").
+  
++ The task window could use some kind of label ("Task List"), perhaps in the border at the top.
+
+

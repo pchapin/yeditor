@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Pixie Requirements</title>
+  <meta name="generator" content="Amaya, see http://www.w3.org/Amaya/" />
+</head>
+
+<body>
+<h1>Pixie</h1>
+<hr />
+
+<p>This document describes <em>Pixie</em>, a personal time management
+application. Pixie is an ordinary application that runs on Windows and Linux
+systems. At this time it does not target any PDA device (except to the extent
+such devices can run normal Windows or Linux applications). However, Pixie
+has a number of features that make it unusually light weight; adapting Pixie
+to various small devices should hopefully not be too difficult.</p>
+
+<p>Pixie's main features are</p>
+<ul>
+  <li><p><strong>Individual</strong>. Pixie does not currently contain
+    support for group or team features. Pixie is self contained and
+    <em>private</em>. No information is ever exported from Pixie without the
+    user taking explicit steps to do so.</p>
+  </li>
+  <li><p><strong>Integrated</strong>. Pixie includes an appointment calendar,
+    prioritized task and todo lists, and time tracking (auditing) features.
+    Pixie is intended to be the central location for all of her user's time
+    management needs.</p>
+  </li>
+  <li><p><strong>Active</strong>. Pixie uses algorithms borrowed from the
+    theory of operating systems to schedule tasks and alert her user about
+    impending deadlines and events.</p>
+  </li>
+  <li><p><strong>Small</strong>. Pixie consumes minimal system resources and
+    is non-intrusive. Pixie can be easily run from a flash drive or a network
+    drive. Pixie can be used over a text mode terminal.</p>
+  </li>
+  <li><p><strong>Scriptable</strong>. Pixie provides a comprehensive command
+    line interface that allows all of her functions to be used
+    non-interactively. This allows Pixie to be used in shell scripts and
+    batch files, or launched periodically via a scheduling service.
+    Eventually Pixie will be directly runnable as a service and able to
+    automatically contact her user by, for example, sending email or instant
+    messages.</p>
+  </li>
+</ul>
+
+<p>This document describes Pixie's features at a high level. It can be used
+to define the software requirements for the Pixie developers. It can also
+give potential users a clear idea of what Pixie does and does not do.</p>
+
+<h2>Data Model</h2>
+
+<p>Pixie manages several kinds of entities.</p>
+<dl>
+  <dt><strong>Events</strong></dt>
+    <dd><p>An event is something that occurs usually just once at a specific
+      time, although some events are periodic and automatically reschedule
+      themselves after they occur. Some events have no duration, in effect
+      lasting for zero seconds and just serving to mark a particular moment
+      of interest. These events might occur at a specific hour, minute, or
+      even second, but some of these events might only be specified to the
+      nearest day, week, or month. However, most events do have a duration,
+      typically short (a few minutes to a few hours at the most).</p>
+      <p>Pixie assumes that her user does not need to do anything specfic to
+      prepare for an event. The existence of an event in Pixie's calendar
+      database is only for the user's information. Pixie informs her user
+      when events are approaching but never sounds an alarm condition because
+      of an event. There is no concept of an "overdue" event. Once an event
+      has passed it is removed from the active calendar (unless it
+      reschedules itself, in which case a new event is created to replace the
+      old one).</p>
+      <p>Examples of events are: "Computer Club Meeting", "Full Moon", and
+      "Vacation."</p>
+    </dd>
+  <dt><strong>Tasks</strong></dt>
+    <dd><p>A task is a job that Pixie's user must complete. Unlike events
+      tasks have specific deadlines and can become overdue. Also, unlike
+      events tasks have a priority. The priority values assigned to tasks are
+      meaningful to Pixie's user. Pixie only considers relative priorities
+      when making scheduling suggestions. Also unlike events, tasks can have
+      fairly long durations. A task might be active for days or weeks (or
+      even months). Tasks have an optional start time so that a task can be
+      added to Pixie's calendar database before it is active (Pixie will
+      never suggest working on the task until it becomes active). Unlike
+      events, tasks are not removed from the active calendar until they are
+      specifically marked as completed. However, like events, tasks can
+      automatically reschedule themselves. Pixie does not currently support
+      any notion of subtasks. If a large task needs to be broken into several
+      component tasks, it is up to Pixie's user to explicitly manage that.</p>
+      <p>Examples of tasks are: "Finish Homework #3", "Prepare Agenda for
+      Computer Club Meeting", and "Submit Financial Aid Paperwork."</p>
+    </dd>
+  <dt><strong>Todo Items</strong></dt>
+    <dd><p>A todo item is a general activity that Pixie's user wants to
+      accomplish at some point. Unlike tasks, todo items do not have specific
+      deadlines or start dates (they become active as soon as they are
+      entered). Todo items do have priorities, however, and must be
+      explicitly marked as completed. Also todo items have a record of past
+      activity: the amount of time spent working on the todo item so far.
+      Pixie dynamically increases the priority of a todo item if it remains
+      in the sytem a long time without any activity. The more time spent on a
+      todo item, the lower its priority becomes. Priority values of tasks and
+      todo items are assumed to be comparable and Pixie makes scheduling
+      suggestions based on the assumption that the priorities of both types
+      of entities have the same meaning.</p>
+      <p>Examples of todo items are: "Wash the Car", "Read My New C++ Book",
+      and "Learn to Play the Flute."</p>
+    </dd>
+</dl>
+
+<p>Pixie assigns a unique ID number to every entity that she knows about. ID
+numbers are never reused in the scope of a single Pixie calendar database.
+All the fields of an entity, including its title and description, can be
+edited without changing the entity's identity. Entities are stored on disk
+(the calendar database) between Pixie sessions. At any time there is a set of
+active entities, called the active calendar, consisting of events that have
+not yet occurred and tasks and todo items that are not completed. Pixie
+normally only displays the active calendar to the user, but inactive entities
+are stored in the calendar database (unless explicitly deleted or purged by
+the user) and can be reviewed if desired. Tasks and todo items can be
+converted back and forth without changing their ID numbers by simply adding
+or removing a deadline time.</p>
+
+<p>Unlike most calendar programs, Pixie does not (by default) present the
+active entities to the user in chronological order. Although Pixie does have
+a "calendar view" that can be used for viewing events and task deadlines
+(todo items do not appear in the calendar view), Pixie's main display is the
+"suggested activity view" (SAV). Pixie uses a scheduling algorithm to combine
+priority, deadline, and past activity information and organizes the SAV to
+show the most urgent entity first. To work most efficiently you should next
+do whatever activity Pixie shows at the top of the SAV list.</p>
+
+<p>Different scheduling algorithms optimize different characteristics. For
+example, you may wish to minimize the number of deadlines you miss, or
+maximize your task throughput (maximum number of tasks completed per unit of
+time), or minimize your response time to new task requests. These
+characteristics are not always compatible. Pixie allows you to switch
+scheduling algorithms on the fly. She recomputes the SAV according to the
+currently selected algorithm to let you immediately see the impact of
+different scheduling policies. For example, the entity at the top of the SAV
+might change when you switch from minimizing missed deadlines to minimizing
+response time.</p>
+</body>
+</html>

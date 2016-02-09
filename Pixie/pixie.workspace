@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Workspace">
+		<Project filename="Pixie.cbp" active="1">
+			<Depends filename="../Scr/scr.cbp" />
+			<Depends filename="../Spica/Cpp/SpicaCpp.cbp" />
+		</Project>
+		<Project filename="../Scr/scr.cbp">
+			<Depends filename="../Spica/Cpp/SpicaCpp.cbp" />
+		</Project>
+		<Project filename="../Spica/Cpp/SpicaCpp.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

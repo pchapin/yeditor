@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Pixie" />
+		<Option pch_mode="2" />
+		<Option compiler="clang" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Pixie" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="clang" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="../Scr/bin/Debug/libscr.a" />
+					<Add library="../Spica/Cpp/bin/Debug/libSpicaCpp.a" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Pixie" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="clang" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../Scr/bin/Release/libscr.a" />
+					<Add library="../Spica/Cpp/bin/Release/libSpicaCpp.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="../Scr" />
+			<Add directory="../Spica/Cpp" />
+		</Compiler>
+		<Linker>
+			<Add library="libncurses" />
+		</Linker>
+		<Unit filename="PixieCommandWindow.cpp" />
+		<Unit filename="PixieCommandWindow.hpp" />
+		<Unit filename="TaskWindow.cpp" />
+		<Unit filename="TaskWindow.hpp" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
