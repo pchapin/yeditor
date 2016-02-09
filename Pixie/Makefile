@@ -2,34 +2,24 @@
 # Makefile for the Pixie project.
 #
 
-CXX=clang++
-CXXFLAGS=-std=c++11 -c -O -emit-llvm -I../Spica/Cpp -I../Scr
-LLVMLINK=llvm-link
-LLVMLINKFLAGS=
-# It shouldn't be necessary to use Boost here since my application does not require it.
-LINKFLAGS=-L/usr/lib/i386-linux-gnu -L$(BOOST_HOME)/stage/lib -lboost_regex -lncurses -lpthread
+CXX=g++
+CXXFLAGS=-std=c++11 -c -O -I../Spica -I../Scr
+LINK=g++
+LINKFLAGS=-lncurses -lpthread
 SOURCES=main.cpp               \
 	PixieCommandWindow.cpp \
 	TaskWindow.cpp
-OBJECTS=$(SOURCES:.cpp=.bc)
-EXECUTABLE=Pixie
-LIBSPICA=../Spica/Cpp/libSpicaCpp.bc
-LIBSCR=../Scr/libScr.bc
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=pixie
+LIBSPICA=../Spica/libSpicaCpp.a
+LIBSCR=../Scr/libScr.a
 
-%.bc:	%.cpp
+%.o:	%.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-$(EXECUTABLE):	Pixie.o
-	$(CXX) $< $(LINKFLAGS) -o $@
+$(EXECUTABLE):	$(OBJECTS)
+	$(CXX) $(OBJECTS) $(LIBSPICA) $(LIBSCR) $(LINKFLAGS) -o $@
 
-Pixie.o:	Pixie.bc2
-	llc -filetype=obj Pixie.bc2 -o Pixie.o
-
-Pixie.bc2:	Pixie.bc1
-	opt -o Pixie.bc2 -globaldce Pixie.bc1
-
-Pixie.bc1:	$(OBJECTS) $(LIBSPICA) $(LIBSCR)
-	$(LLVMLINK) $(LLVMLINKFLAGS) -o $@ $(OBJECTS) $(LIBSPICA) $(LIBSCR)
 
 # File Dependencies
 ###################
@@ -38,15 +28,15 @@ Pixie.bc1:	$(OBJECTS) $(LIBSPICA) $(LIBSCR)
 
 
 main.o:	main.cpp ../Scr/debug.hpp ../Scr/scr.hpp ../Scr/TextWindow.hpp ../Scr/Window.hpp ../Scr/ImageBuffer.hpp \
-	../Scr/Manager.hpp PixieCommandWindow.hpp ../Scr/CommandWindow.hpp TaskWindow.hpp ../Spica/Cpp/Date.hpp \
+	../Scr/Manager.hpp PixieCommandWindow.hpp ../Scr/CommandWindow.hpp TaskWindow.hpp ../Spica/Date.hpp \
 	
 
 PixieCommandWindow.o:	PixieCommandWindow.cpp ../Scr/debug.hpp ../Scr/scr.hpp ../Scr/TextWindow.hpp ../Scr/Window.hpp \
 	../Scr/ImageBuffer.hpp PixieCommandWindow.hpp ../Scr/CommandWindow.hpp ../Scr/Manager.hpp \
-	TaskWindow.hpp ../Spica/Cpp/Date.hpp 
+	TaskWindow.hpp ../Spica/Date.hpp 
 
 TaskWindow.o:	TaskWindow.cpp ../Scr/debug.hpp ../Scr/scr.hpp ../Scr/TextWindow.hpp ../Scr/Window.hpp \
-	../Scr/ImageBuffer.hpp TaskWindow.hpp ../Spica/Cpp/Date.hpp 
+	../Scr/ImageBuffer.hpp TaskWindow.hpp ../Spica/Date.hpp 
 
 
 # Additional Rules

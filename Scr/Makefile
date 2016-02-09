@@ -3,7 +3,7 @@
 #
 
 CXX=g++
-CXXFLAGS=-c -O -std=c++11 -I../Spica/Cpp
+CXXFLAGS=-c -O -std=c++11 -I../Spica
 LINK=ar
 LINKFLAGS=rc
 SOURCES=ansiscr.cpp       \
@@ -52,7 +52,7 @@ ImageBuffer.o:	ImageBuffer.cpp ImageBuffer.hpp scr.hpp
 InputWindow.o:	InputWindow.cpp InputWindow.hpp Shadow.hpp Window.hpp ImageBuffer.hpp scr.hpp scrtools.hpp \
 	
 
-key.o:	key.cpp ../Spica/Cpp/environ.hpp scr.hpp 
+key.o:	key.cpp ../Spica/environ.hpp scr.hpp 
 
 ListWindow.o:	ListWindow.cpp ListWindow.hpp ImageBuffer.hpp scr.hpp Manager.hpp Window.hpp scrtools.hpp \
 	
@@ -62,7 +62,7 @@ Manager.o:	Manager.cpp ImageBuffer.hpp scr.hpp Manager.hpp Window.hpp scrtools.h
 MessageWindow.o:	MessageWindow.cpp MessageWindow.hpp Shadow.hpp Window.hpp ImageBuffer.hpp scr.hpp \
 	scrtools.hpp 
 
-scr.o:	scr.cpp ../Spica/Cpp/environ.hpp scr.hpp ansiscr.hpp 
+scr.o:	scr.cpp ../Spica/environ.hpp scr.hpp ansiscr.hpp 
 
 scrtools.o:	scrtools.cpp scr.hpp scrtools.hpp 
 

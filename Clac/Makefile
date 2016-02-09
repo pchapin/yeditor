@@ -3,7 +3,7 @@
 #
 
 CXX=g++
-CXXFLAGS=-std=c++11 -c -O -I../Spica/Cpp -I../Scr -IClacEntity -IClacEngine
+CXXFLAGS=-std=c++11 -c -O -I../Spica -I../Scr -IClacEntity -IClacEngine
 LINK=g++
 LINKFLAGS=-lncurses
 SOURCES=clac.cpp              \
@@ -13,7 +13,7 @@ SOURCES=clac.cpp              \
 	StackWindow.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=clac
-LIBSPICA=../Spica/Cpp/libSpicaCpp.a
+LIBSPICA=../Spica/libSpicaCpp.a
 LIBSCR=../Scr/libScr.a
 LIBENTITY=ClacEntity/libClacEntity.a
 LIBENGINE=ClacEngine/libClacEngine.a
