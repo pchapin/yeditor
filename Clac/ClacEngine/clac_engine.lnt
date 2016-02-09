@@ -1,0 +1,9 @@
+// Environment Setup
+//==================
+-dDEBUG
+-i..\clac_entity
+-i..\..\lint      // Contains translation headers.
+
+// Project Specific Options
+//=========================
+

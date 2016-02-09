@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="clac" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/clac" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="clac_engine/bin/Debug/libclac_engine.a" />
+					<Add library="clac_entity/bin/Debug/libclac_entity.a" />
+					<Add library="../Scr/bin/Debug/libscr.a" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/clac" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="clac_engine/bin/Release/libclac_engine.a" />
+					<Add library="clac_entity/bin/Release/libclac_entity.a" />
+					<Add library="../Scr/bin/Release/libscr.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++0x" />
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="clac_entity" />
+			<Add directory="clac_engine" />
+			<Add directory="../Scr" />
+		</Compiler>
+		<Linker>
+			<Add library="ncurses" />
+		</Linker>
+		<Unit filename="ClacCommandWindow.cpp" />
+		<Unit filename="ClacCommandWindow.hpp" />
+		<Unit filename="DirectoryWindow.cpp" />
+		<Unit filename="DirectoryWindow.hpp" />
+		<Unit filename="StackWindow.cpp" />
+		<Unit filename="StackWindow.hpp" />
+		<Unit filename="clac.cpp" />
+		<Unit filename="record_f.cpp" />
+		<Unit filename="record_f.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

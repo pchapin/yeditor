@@ -1,0 +1,8 @@
+// Environment Setup
+//==================
+-dDEBUG
+-i..\..\lint      // Contains translation headers.
+
+// Project Specific Options
+//=========================
+

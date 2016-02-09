@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<!-- FILE   : User-Manual.html
+     AUTHOR : (C) Copyright 2014 by Peter C. Chapin
+     SUBJECT: The Clacky User Manual. -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+  <head>
+    <meta name="Author" content="Peter C. Chapin" />
+    <meta name="ROBOTS" content="NOARCHIVE" />
+    <link rel="stylesheet" href="default.css" type="text/css" />
+
+    <title>Clacky User Manual</title>
+  </head>
+
+  <body>
+    <h1>Clacky User Manual</h1>
+
+    <p>This document is a complete user manual, reference guide, and tutorial for the Clacky
+    calculator. If you are a user of Clacky you only need to read this document.</p>
+
+    <h2>Installation</h2>
+
+    <p><i>TODO: Finish me!</i></p>
+
+    <h2>Overview</h2>
+
+    <p>Clacky is a stack based calculator with an arbitrary number of stack levels. The "top"
+    level is numbered 0 with levels below the top numbered 1, 2, etc. All operations apply to
+    values in the stack, usually only in the top one or two levels.</p>
+
+    <p>Clacky displays the stack with level 0 at the bottom of the display and the "lower"
+    levels actually appearing above the upper levels. While this seems backward it actually
+    makes sense when considering the effect of the non-commutative binary operators such as
+    subtraction and division. The appearance of the stack just prior to executing those
+    operations resembles how the numbers would traditionally be arranged on a sheet of paper.
+    For example, when doing a division it is tradition for the dividend to be written above the
+    divisor. With Clacky the dividend is pushed first and thus appears above the divisor on the
+    display.</p>
+
+    <p>The Clacky stack can store four different data types.</p>
+
+    <ol>
+      <li><p><strong>Integer</strong>. Clacky integers have arbitrary precision and can contain as
+      many digits as required (until memory is exhausted). They are thus an accurate
+      representation of the mathematical integer type.</p></li>
+
+      <li><p><strong>Rational</strong>. Rational numbers are fractions with a numerator and a
+      denominator. Clacky rationals have arbitrary precision integers for both values. Clacky
+      always stores and displays rational numbers in reduced form.</p></li>
+
+      <li><p><strong>Float</strong>. Clacky floating point values using the underlying type
+      <tt>double</tt> as provided by the Java virtual machine.</p></li>
+
+      <li><p><strong>Complex</strong>. Clacky stores complex numbers as real and imaginary parts
+      using the underlying JVM type double for each component.</p></li>
+    </ol>
+
+    <p>If an arithmetic operation is done on two values of the same type the result is of that
+    type. If an aritmetic operation is done on two values of different types, the type with the
+    lower number in the list above is promoted to the type with the higher number. The result is
+    of the higher numbered type.</p>
+
+    <p>For example, if an Integer is added to a Float, the Integer is prompted to Float and the
+    result is Float. Similarly if a Rational is multiplied by a Complex, the Rational is
+    prompted to Complex and the result is Complex.</p>
+
+    <p>Unary operations return the type most appropriate for the operand and the operation. For
+    example the <tt>sin</tt> of an Integer is a Float and the <tt>sqrt</tt> of a Rational is a
+    Float unless the Rational is negative (in which case its <tt>sqrt</tt> is a Complex).</p>
+
+    <p>The Clacky command line consists of a sequence of whitespace separated "words." Each word
+    is either a value to be pushed on the stack or the name of an operation or function. Value
+    words have the following format.</p>
+
+    <ol>
+      <li><p><strong>Integer</strong>. Integers consist of a sequence of digit characters with
+      an optional leading <tt>+</tt> or <tt>-</tt> (no space is allowed between the leading sign
+      and the digits of the number). The sequence of digits can have arbitrary length. Clacky
+      integers have infinite precision.</p></li>
+
+      <li><p><strong>Float</strong>. Floats are numbers containing either a decimal point or an
+      exponent. They have a format similar to floating point literals in many programming
+      languages.</p></li>
+
+      <li><p><strong>Rational</strong>. Rationals appear to be two integers separated by a
+      <tt>/</tt>. No space is allowed on either side of the slash. If a leading sign is present
+      it only appears on the numerator.</p></li>
+
+      <li><p><strong>Complex</strong>. Complex values consist of two Float values inside
+      parentheses and separated by a comma. For example: <tt>(3.14, -2.72)</tt>. Notice that
+      white space is allowed between the components of the complex number. That space does not
+      create two words, the entire number is considerd a single word.</p></li>
+    </ol>
+
+    <p><i>TODO: Provide a list of supported Clacky operations and functions.</i></p>
+
+    <p>Clacky processes the entire command line before displaying the resulting stack. This
+    allows multiple operations to be performed in "one step." Once Clacky has processed the
+    command line it accepts another command line for processing.</p>
+
+    <p>Certain special words beginning with <tt>.</tt> (dot) are treated by Clacky as commands.
+    They are not operations or functions. The following is a list of Clacky commands.</p>
+
+    <ul>
+      <li><strong>.debug</strong>: Activate Clacky debugging features (useful for
+      developers)</li>
+      <li><strong>.deg</strong>: Switch to degrees mode</li>
+      <li><strong>.nodebug</strong>: Deactivate Clacky debugging features</li>
+      <li><strong>.quit</strong>: Terminate Clacky</li>
+      <li><strong>.rad</strong>: Switch to radians mode</li>
+    </ul>
+
+    <!-- BEGIN signature block -->
+    <hr />
+    <p class="signature">Last Revised: 2014-08-03<br />© Copyright 2014 by Peter C. Chapin
+    &lt;<a href="mailto:PChapin@vtc.vsc.edu">PChapin@vtc.vsc.edu</a>&gt; </p>
+    <!-- END signature block -->
+  </body>
+</html>

@@ -1,0 +1,8 @@
+// This file contains a list of source files that have been "de-linted." As the code evolves
+// these files should be adjusted to remain lint free. Once this list is complete, the "Global
+// Wrap-Up" at the end of the PC-Lint run will be meaningful.
+//
+// Note that some of these files may have a few remaining issues. However the bulk of the
+// "noise" messages should already be handled before adding a file to this list.
+//
+
