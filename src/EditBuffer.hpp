@@ -1,8 +1,7 @@
 /*! \file    EditBuffer.hpp
-    \brief   Interface to class EditBuffer
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to class EditBuffer
+ *  \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
+ */
 
 #ifndef EDITBUFFER_HPP
 #define EDITBUFFER_HPP

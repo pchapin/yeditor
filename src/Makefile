@@ -3,7 +3,7 @@
 #
 
 CXX=g++
-CXXFLAGS=-std=c++11 -c -O -I../Spica -I../Scr
+CXXFLAGS=-Wall -std=c++11 -c -O -I../Spica -I../Scr
 LINK=g++
 LINKFLAGS=-lncurses
 ## It shouldn't be necessary to use Boost here since my application does not require it.

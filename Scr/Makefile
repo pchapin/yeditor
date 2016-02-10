@@ -3,7 +3,7 @@
 #
 
 CXX=g++
-CXXFLAGS=-c -O -std=c++11 -I../Spica
+CXXFLAGS=-Wall -c -O -std=c++11 -I../Spica
 LINK=ar
 LINKFLAGS=rc
 SOURCES=ansiscr.cpp       \
