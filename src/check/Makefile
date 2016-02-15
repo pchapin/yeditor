@@ -2,33 +2,23 @@
 # Makefile for the Check project.
 #
 
-CXX=clang++
-CXXFLAGS=-std=c++11 -c -O -emit-llvm -I../../../Spica/Cpp -I..
-LLVMLINK=llvm-link
-LLVMLINKFLAGS=
-# It shouldn't be necessary to use Boost here since my application does not require it.
-LINKFLAGS=-L/usr/lib/i386-linux-gnu -L$(BOOST_HOME)/stage/lib -lboost_regex -lncurses -lpthread
+CXX=g++
+CXXFLAGS=-Wall -std=c++11 -c -O -I.. -I../../Spica -I../../Scr
+LINK=g++
+LINKFLAGS=-lncurses
 SOURCES=check.cpp
-OBJECTS=$(SOURCES:.cpp=.bc)
-OBJECTSTESTED=../EditBuffer.bc
+OBJECTS=$(SOURCES:.cpp=.o)
+OBJECTSTESTED=../EditBuffer.o
 EXECUTABLE=check
-LIBSPICA=../../../Spica/Cpp/libSpicaCpp.bc
-LIBSCR=../../../Scr/libScr.bc
+LIBSPICA=../../Spica/libSpicaCpp.a
+LIBSCR=../../Scr/libScr.a
 
-%.bc:	%.cpp
+%.o:	%.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-$(EXECUTABLE):	check.o
-	$(CXX) $< $(LINKFLAGS) -o $@
+$(EXECUTABLE):	$(OBJECTS) $(OBJECTSTESTED) $(LIBSPICA) $(LIBSCR)
+	$(LINK) $(OBJECTS) $(OBJECTSTESTED) $(LIBSPICA) $(LIBSCR) $(LINKFLAGS) -o $@
 
-check.o:	check.bc2
-	llc -filetype=obj check.bc2 -o check.o
-
-check.bc2:	check.bc1
-	opt -o check.bc2 -globaldce check.bc1
-
-check.bc1:	$(OBJECTS) $(OBJECTSTESTED) $(LIBSPICA) $(LIBSCR)
-	$(LLVMLINK) $(LLVMLINKFLAGS) -o $@ $(OBJECTS) $(OBJECTSTESTED) $(LIBSPICA) $(LIBSCR)
 
 # File Dependencies
 ###################
@@ -36,7 +26,7 @@ check.bc1:	$(OBJECTS) $(OBJECTSTESTED) $(LIBSPICA) $(LIBSCR)
 # Module dependencies -- Produced with 'depend' on Sat Jul  6 17:55:04 2013
 
 
-check.bc:	check.cpp ../EditBuffer.hpp ../../../Spica/Cpp/UnitTestManager.hpp 
+check.o:	check.cpp ../EditBuffer.hpp ../../Spica/UnitTestManager.hpp 
 
 
 # Additional Rules
