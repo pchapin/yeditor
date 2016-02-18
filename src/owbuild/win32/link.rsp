@@ -14,6 +14,6 @@ libpath %WATCOM%\lib386
 libpath %WATCOM%\lib386\nt
 library clib3r.lib
 #library ntdll.lib
-library ..\..\..\..\Spica\Cpp\owbuild\win32\SpicaCpp.lib
-library ..\..\..\..\Scr\owbuild\win32\scr.lib
+library ..\..\..\Spica\owbuild\win32\SpicaCpp.lib
+library ..\..\..\Scr\owbuild\win32\scr.lib
 

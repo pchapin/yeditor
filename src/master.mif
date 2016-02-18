@@ -5,7 +5,7 @@
 # Master file list for the Y project.
 ############################################################################
 
-cpp_options = -q -w4 -xs -fo=$*.obj -d2 -I../.. -I../../../../Spica/Cpp -I../../../../Scr
+cpp_options = -q -w4 -xs -fo=$*.obj -d2 -I../.. -I../../../Spica -I../../../Scr
 
 # Object file list.
 OBJS = &

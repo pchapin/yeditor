@@ -14,6 +14,6 @@ option map
 libpath %WATCOM%\lib286
 libpath %WATCOM%\lib286\dos
 library clibl.lib
-library ..\..\..\..\Spica\Cpp\owbuild\dos16\SpicaCpp.lib
-library ..\..\..\..\Scr\owbuild\dos16\scr.lib
+library ..\..\..\Spica\owbuild\dos16\SpicaCpp.lib
+library ..\..\..\Scr\owbuild\dos16\scr.lib
 

@@ -19,10 +19,10 @@ Introduction
 
 Greetings!
 
-This is the code base for the Y text editor, version 2.0. Although currently unfinished, it is
-my intention to release the source and documentation of Y under the terms of the GPL. Please
-note that I disclaim all warranties implied or otherwise. All the necessary, precise legal
-language will be added later.
+This is the code base for the Y text editor, version 2.0, along with related tools and
+libraries. Although currently unfinished, it is my intention to release the source and
+documentation of Y under the terms of the GPL. Please note that I disclaim all warranties
+implied or otherwise. All the necessary, precise legal language will be added later.
 
 Y is a simple, but effective cross platform editor. The supported platforms are Win32 consoles
 and Linux terminals (with some testing also on Cygwin). Some level of support also exists for
@@ -43,23 +43,29 @@ Peter C. Chapin
 Prerequisites
 -------------
 
-Y depends on a library of various utility components called Spica. This library can also be
-found on GitHub here
+Y depends on a library of various utility components called Spica. This library is included in
+this code base. It can be compiled separately (and used in other projects) or, if you are using
+Visual Studio or Code::Blocks, automatically during the build of Y itself. Look in the `Spica`
+folder for more information.
 
-    https://github.com/pchapin/spica
+In addition Y depends on a cross platform screen handling library called Scr. This library is
+also included in this code base. As with Spica, the Scr library can be compiled and used
+separately or, if you are using Visual Studio or Code::Blocks, during the build of Y itself.
+Look in the `Scr` folder for more information.
 
-In addition Y depends on a cross platform screen handling library called Scr. The Scr library
-can be found on GitHub here
+Both Spica and Scr endeavor to retain their identity as separate, potentially stand-alone
+projects. They have their own documentation and may use different conventions. See their
+respective folders for more information about these projects. That said, most of the conventions
+used by Spica and Scr are similar to those used by Y itself. If you are familiar with Y's
+organization you will find the organization of Spica and Scr to be straight forward.
 
-    https://github.com/pchapin/scr
-
-You should install Spica and Scr (for example by cloning the GitHub repositories) in sibling
-folders of your Y working copy. The build control files assume this layout. Note that Spica and
-Scr need to be built separately (unless you are using Visual Studio or Code::Blocks). Consult
-the documentation for these other libraries for more information on how to build them. However,
-the build systems used for Spica and Scr are largely similar to the build systems used for Y so
-familiarity with the way one project is organized should make it easy to understand the others.
-
+The Y code base also contains Clac, Pixie, and some general purpose tools. Clac is a calculator
+program inspired by the HP-48 series of calculators (although it does not attempt to emulate the
+HP-48 exactly). Pixie is a time management program. The tools are low level build assistance
+tools or text processing tools. These projects are also independent of Y; as with Spica and Scr
+they are documented and built separately. However, they are related in that they use the same
+Spica/Scr libraries and are written in largely the same style as Y. In the future they may be
+integrated into Y in some manner.
 
 Compiling
 ---------
@@ -73,6 +79,9 @@ type `make` to build whatever entity is contained in that folder.
 Currently it is necessary to build the Spica and Scr libraries first manually (using Makefiles)
 before you build Y itself. Y should probably be built before you build the test programs but
 that is not strictly necessary at this time.
+
+It is likely that Y and its supporting libraries can be built with clang++ as well. This might
+only entail a minor modification to the Makefiles.
 
 ### Code::Blocks
 
@@ -89,18 +98,19 @@ and Release configurations. This workspace includes the Spica and Scr projects a
 
 ### Visual C++
 
-Solution and project files for Visual C++ version 12.0 (Visual Studio 2013) are also provided.
+Solution and project files for Visual C++ version 14.0 (Visual Studio 2015) are also provided.
 Although development on Windows tends to be less frequent than on Linux, the Windows build is
 reasonably well maintained and should always be working.
 
 To build Y with Visual Studio load `Y.sln`. This solution file contains references to all
-required projects (including Spica and Scr). Thus building this solution will build everything.
+required projects (including Spica, Scr, and the test programs). Thus building this solution
+will build everything.
 
 ### Open Watcom
 
 Open Watcom is a cross platform compiler that supports Windows, OS/2, DOS, and Linux. In theory
 it can be used to build Y for all of these systems regardless of your development platform.
-Unfortunately Open Watcom does not currently (February 2015) support C++ 2011 to any significant
+Unfortunately Open Watcom does not currently (February 2016) support C++ 2011 to any significant
 degree. Thus it can't be used to build Y at this time. However the project files for Open Watcom
 are retained in the hope that some future version of that compiler will be able to compile Y
 again. Open Watcom was once the primary compiler for Y development and continued support for it,
@@ -116,14 +126,8 @@ To build Y with Open Watcom follow this procedure.
 You will need to build the supporting Spica and Scr libraries using Open Watcom as well. Look
 for owbuild folders in those code bases; the build system is organized in a similar way.
 
-You may find project files for the Open Watcom IDE (*.wpj and *.tgt). These files are likely to
-be very outdated.
-
-### clang++
-
-At one point compilation of Y with the clang++ compiler was supported via Makefiles. That
-support was dropped but it could (should?) be reinstated. The Makefile support for g++ should be
-retained, however.
+You may find project files for the Open Watcom IDE (*.wpj and *.tgt). If they exist at all these
+files are likely to be very outdated.
 
 
 Building the Documentation
@@ -186,10 +190,9 @@ create a script at some point to automate this process.
 
 ### g++
 
-1. Edit the depend.dep file to add/remove the file to/from the list. Rerun the `depend` tool
-   (see my [Tools project on GitHub](https://github.com/pchapin/tools)) via the shell script
-   `depend.sh`. This builds dependency lists for the Makefile. Replace the existing dependency
-   list with the contents of `depend.out`.
+1. Edit the depend.dep file to add/remove the file to/from the list. Rerun the `depend` tool in
+   the `Tools` folder via the shell script `depend.sh`. This builds dependency lists for the
+   Makefile. Replace the existing dependency list with the contents of `depend.out`.
 
 2. Update the list of source files in the Makefile.
 
@@ -214,4 +217,4 @@ create a script at some point to automate this process.
 
 These changes will make the file known to `wmake` during Open Watcom builds (owbuild). The Open
 Watcom IDE is not very well supported. Any files related to that product are likely to be
-outdated. You are invited (encouraged) to update them if you desire.
+outdated. You are invited (encouraged) to create/update them if you desire.
