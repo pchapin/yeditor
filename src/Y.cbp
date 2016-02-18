@@ -16,8 +16,8 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add library="../../Scr/bin/Debug/libscr.a" />
-					<Add library="../../Spica/Cpp/bin/Debug/libSpicaCpp.a" />
+					<Add library="../Scr/bin/Debug/libscr.a" />
+					<Add library="../Spica/bin/Debug/libSpicaCpp.a" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -31,16 +31,16 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../Scr/bin/Release/libscr.a" />
-					<Add library="../../Spica/Cpp/bin/Release/libSpicaCpp.a" />
+					<Add library="../Scr/bin/Release/libscr.a" />
+					<Add library="../Spica/bin/Release/libSpicaCpp.a" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-std=c++11" />
 			<Add option="-Wall" />
-			<Add directory="../../Scr" />
-			<Add directory="../../Spica/Cpp" />
+			<Add directory="../Scr" />
+			<Add directory="../Spica" />
 		</Compiler>
 		<Linker>
 			<Add library="ncurses" />

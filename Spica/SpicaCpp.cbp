@@ -36,7 +36,6 @@
 			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="$(#boost.include)" />
 		</Compiler>
 		<Unit filename="BinaryTree.hpp" />
 		<Unit filename="BinomialHeap.hpp" />

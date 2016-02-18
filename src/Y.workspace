@@ -2,15 +2,15 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
 		<Project filename="Y.cbp" active="1">
-			<Depends filename="../../Scr/scr.cbp" />
-			<Depends filename="../../Spica/Cpp/SpicaCpp.cbp" />
+			<Depends filename="../Scr/scr.cbp" />
+			<Depends filename="../Spica/SpicaCpp.cbp" />
 		</Project>
-		<Project filename="../../Scr/scr.cbp">
-			<Depends filename="../../Spica/Cpp/SpicaCpp.cbp" />
+		<Project filename="../Scr/scr.cbp">
+			<Depends filename="../Spica/SpicaCpp.cbp" />
 		</Project>
 		<Project filename="check/check.cbp">
-			<Depends filename="../../Spica/Cpp/SpicaCpp.cbp" />
+			<Depends filename="../Spica/SpicaCpp.cbp" />
 		</Project>
-		<Project filename="../../Spica/Cpp/SpicaCpp.cbp" />
+		<Project filename="../Spica/SpicaCpp.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

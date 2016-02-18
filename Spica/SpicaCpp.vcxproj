@@ -101,7 +101,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(BOOST_HOME)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -114,7 +115,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(BOOST_HOME)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -125,7 +127,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(BOOST_HOME)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -136,7 +139,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(BOOST_HOME)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -147,11 +151,9 @@
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="get_switch.cpp" />
     <ClCompile Include="regkey.cpp" />
-    <ClCompile Include="Semaphore.cpp" />
     <ClCompile Include="str.cpp" />
     <ClCompile Include="string_utilities.cpp" />
     <ClCompile Include="synchronize.cpp" />
-    <ClCompile Include="ThreadPool.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UnitTestManager.cpp" />
     <ClCompile Include="wincom.cpp" />
@@ -173,13 +175,11 @@
     <ClInclude Include="Graph.hpp" />
     <ClInclude Include="HashtableOpen.hpp" />
     <ClInclude Include="regkey.hpp" />
-    <ClInclude Include="Semaphore.hpp" />
     <ClInclude Include="sorters.hpp" />
     <ClInclude Include="spica.hpp" />
     <ClInclude Include="str.hpp" />
     <ClInclude Include="string_utilities.hpp" />
     <ClInclude Include="synchronize.hpp" />
-    <ClInclude Include="ThreadPool.hpp" />
     <ClInclude Include="Timer.hpp" />
     <ClInclude Include="UnitTestManager.hpp" />
     <ClInclude Include="wincom.hpp" />
