@@ -8,7 +8,7 @@
 
 #include "EditBuffer.hpp"
 
-extern void handle_word( EditBuffer &word );
+extern void handle_word( const EditBuffer &word );
 
 #endif
 

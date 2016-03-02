@@ -26,13 +26,13 @@
 #include "parameter_stack.hpp"
 #include "support.hpp"
 
-struct DispatchTable {
+struct DispatchTableEntry {
     const char *macro_word;
     bool ( *command_function )( );
 };
 
 
-static DispatchTable command_table[] = {
+static DispatchTableEntry command_table[] = {
     { "add_text",           add_text_command           },
     { "background_color",   background_color_command   },
     { "backspace",          backspace_command          },
@@ -139,17 +139,18 @@ static int scan_table( const std::string &word )
  * If the word is a quoted string, it pushes the word onto the parameter stack. Otherwise it
  * looks up the word in the dispatch table and executes the appropriate function.
  */
-void handle_word( EditBuffer &word )
+void handle_word( const EditBuffer &word )
 {
     int table_index;
 
     // Search the dispatch table.
     if( ( table_index = scan_table( word.to_string( ) ) ) != -1 ) {
-        command_table[table_index].command_function();
+        // TODO: Do something with the bool return value from the command function!
+        command_table[table_index].command_function( );
     }
 
     // Otherwise, we don't know what it is. Treat it like a string.
     else {
-        parameter_stack.push(word);
+        parameter_stack.push( word );
     }
 }
