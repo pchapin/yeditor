@@ -25,8 +25,8 @@ public:
     ADA_YEditFile( const char *file_name ) :
         YEditFile( file_name, 3, scr::WHITE ) { }
 
-    virtual bool next_procedure( );
-    virtual bool previous_procedure( );
+    virtual bool next_procedure( ) override;
+    virtual bool previous_procedure( ) override;
 };
 
 class ASM_YEditFile : public YEditFile {
@@ -34,8 +34,8 @@ public:
     ASM_YEditFile( const char *file_name ) :
         YEditFile( file_name, 8, scr::WHITE ) { }
 
-    virtual bool next_procedure( );
-    virtual bool previous_procedure( );
+    virtual bool next_procedure( ) override;
+    virtual bool previous_procedure( ) override;
 };
 
 class C_YEditFile : public YEditFile {
@@ -48,10 +48,10 @@ public:
     C_YEditFile( const char *file_name ) :
         YEditFile( file_name, 4, scr::WHITE ), marks_valid( false ) { }
 
-    virtual bool next_procedure( );
-    virtual bool previous_procedure( );
-    virtual bool extra_indent( );
-    virtual bool insert_char( char );
+    virtual bool next_procedure( ) override;
+    virtual bool previous_procedure( ) override;
+    virtual bool extra_indent( ) override;
+    virtual bool insert_char( char ) override;
 };
 
 class PCD_YEditFile : public YEditFile {
@@ -59,8 +59,8 @@ public:
     PCD_YEditFile( const char *file_name ) :
         YEditFile( file_name, 4, scr::WHITE ) { }
 
-    virtual bool next_procedure( );
-    virtual bool previous_procedure( );
+    virtual bool next_procedure( ) override;
+    virtual bool previous_procedure( ) override;
 };
 
 //! For now the SCALA_YEditFile is a copy of C_YEditFile. This won't be true forever, however.
@@ -74,10 +74,10 @@ public:
     SCALA_YEditFile( const char *file_name ) :
         YEditFile( file_name, 2, scr::WHITE ), marks_valid( false ) { }
 
-    virtual bool next_procedure( );
-    virtual bool previous_procedure( );
-    virtual bool extra_indent( );
-    virtual bool insert_char( char );
+    virtual bool next_procedure( ) override;
+    virtual bool previous_procedure( ) override;
+    virtual bool extra_indent( ) override;
+    virtual bool insert_char( char ) override;
 };
 
 #endif
