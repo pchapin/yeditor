@@ -11,7 +11,7 @@
 #include "errors.h"
 #include "text.h"
 
-void draw_status_bar( int size_y, int size_x, int line_number, int column_number )
+void draw_status_bar( int size_y, int size_x, int line_number, int column_number, int size )
 {
     int i;
 
@@ -21,7 +21,7 @@ void draw_status_bar( int size_y, int size_x, int line_number, int column_number
         addch( ' ' );
     }
     
-    mvprintw( size_y - 1, 0, "YIBBLE! (%d, %d)", line_number, column_number );
+    mvprintw( size_y - 1, 0, "YIBBLE! (line=%d, column=%d, size=%d)", line_number, column_number, size );
     attroff( A_REVERSE );
 }
 
@@ -46,7 +46,7 @@ int main( void )
     while( !quit ) {
         // Update the display.
         erase( );
-        draw_status_bar( size_y, size_x, get_current_line( ) + 1, get_current_column( ) + 1 );
+        draw_status_bar( size_y, size_x, get_current_line( ) + 1, get_current_column( ) + 1, get_count( ) );
         draw_screen( );
 
         ch = getch( );
@@ -56,6 +56,10 @@ int main( void )
         }
         else {
             switch( ch ) {
+            case '\r':
+                insert_character( '\n' );
+                break;
+
             case KEY_DC:
                 delete_character( );
                 break;

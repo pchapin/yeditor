@@ -36,6 +36,11 @@ int get_current_column( void )
     return current_column;
 }
 
+int get_count( void )
+{
+    return count;
+}
+
 void insert_character( char ch )
 {
     // Do nothing if the text array is full.
@@ -44,7 +49,13 @@ void insert_character( char ch )
     text[gap] = ch;
     gap++;
     count++;
-    current_column++;
+    if( ch != '\n' ) {
+        current_column++;
+    }
+    else {
+        current_column = 0;
+        current_line++;
+    }
 }
 
 void delete_character( )

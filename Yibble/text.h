@@ -11,6 +11,7 @@ void initialize_text( void );
 
 int get_current_line( void );
 int get_current_column( void );
+int get_count( void );
 
 void insert_character( char ch );
 void delete_character( );
