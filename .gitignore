@@ -8,6 +8,7 @@
 
 # Visual Studio generated files.
 *.sdf
+*.VC.db
 .vs
 Debug
 Release
