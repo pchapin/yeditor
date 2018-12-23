@@ -1,8 +1,7 @@
 /*! \file    CharacterEditFile.cpp
-    \brief   Implementation of class CharacterEditfile
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of class CharacterEditfile
+ *  \author  Peter Chapin <peter@pchapin.org>
+ */
 
 #include <cstring>
 

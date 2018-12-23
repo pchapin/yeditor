@@ -1,8 +1,7 @@
 /*! \file    command_a.cpp
-    \brief   Implementation of the 'a' command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the 'a' command functions.
+ *  \author  Peter Chapin <peter@pchapin.org>
+ */
 
 #include <cstdlib>
 

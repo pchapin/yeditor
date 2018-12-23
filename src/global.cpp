@@ -38,9 +38,9 @@ static void credits( )
     #endif
 
     std::printf("Y  Version 2.0 %s (ALPHA) Compiled: %s\n"
-                "(C) Copyright 2013 by Peter C. Chapin\n", version, adjust_date(__DATE__));
+                "(C) Copyright 2018 by Peter C. Chapin\n", version, adjust_date(__DATE__));
     std::printf("\nWARNING: Development release; bugs likely!\n");
-    std::printf("Please report bugs and suggestions to PChapin@vtc.vsc.edu.\n");
+    std::printf("Please report bugs and suggestions to peter@pchapin.org\n");
 }
 
 //=================================================================

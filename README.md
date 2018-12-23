@@ -37,7 +37,7 @@ find or fix a problem, send me email. I can be reached at PChapin@vtc.vsc.edu.
 There is some sketchy documentation about Y in the doc directory. Some of that document is
 outdated and is in serious need of editing. Fixing the documentation is a work in progress.
 
-Peter C. Chapin
+Peter Chapin
 
 
 Prerequisites

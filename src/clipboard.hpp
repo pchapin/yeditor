@@ -1,8 +1,7 @@
 /*! \file    clipboard.hpp
-    \brief   Interface to the clipboard
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to the clipboard
+ *  \author  Peter Chapin <peter@pchapin.org>
+ */
 
 #ifndef CLIPBOARD_HPP
 #define CLIPBOARD_HPP

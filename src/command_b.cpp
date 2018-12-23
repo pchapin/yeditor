@@ -1,8 +1,7 @@
 /*! \file    command_b.cpp
-    \brief   Implementation of the 'b' command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the 'b' command functions.
+ *  \author  Peter Chapin <peter@pchapin.org>
+ */
 
 #include <cstdlib>
 #include <cstring>

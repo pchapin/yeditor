@@ -1,8 +1,7 @@
 /*! \file    CharacterEditFile.hpp
-    \brief   Interface to class CharacterEditFile
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to class CharacterEditFile
+ *  \author  Peter Chapin <peter@pchapin.org>
+ */
 
 #ifndef CHARACTEREDITFILE_HPP
 #define CHARACTEREDITFILE_HPP

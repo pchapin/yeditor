@@ -1,16 +1,16 @@
 /*! \file    BlockEditFile.cpp
-    \brief   Implementation of class BlockEditFile
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-IMPLEMENTATION NOTES
-
-Is there any value in implementing a replace_block() function? Currently the client must delete
-the block and then insert the new block. A smart replace_block() could avoid all the deallocation
-and reallocation of the EditList nodes.
-
-The current version of insert_block() leaves its parameter alone. If the function was able to
-remove lines from the parameter the copying of the EditBuffers would not be necessary.
-*/
+ *  \brief   Implementation of class BlockEditFile
+ *  \author  Peter Chapin <peter@pchapin.org>
+ *
+ * IMPLEMENTATION NOTES
+ *
+ * Is there any value in implementing a replace_block() function? Currently the client must
+ * delete the block and then insert the new block. A smart replace_block() could avoid all the
+ * deallocation and reallocation of the EditList nodes.
+ *
+ * The current version of insert_block() leaves its parameter alone. If the function was able to
+ * remove lines from the parameter the copying of the EditBuffers would not be necessary.
+ */
 
 #include <cstddef>
 

@@ -1,8 +1,7 @@
 /*! \file    clipboard.cpp
-    \brief   Implementation of the clipboard
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the clipboard
+ *  \author  Peter Chapin <peter@pchapin.org>
+ */
 
 #include "clipboard.hpp"
 

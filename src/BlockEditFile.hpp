@@ -1,8 +1,7 @@
 /*! \file    BlockEditFile.hpp
-    \brief   Interface to class BlockEditFile
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to class BlockEditFile
+ *  \author  Peter Chapin <peter@pchapin.org>
+ */
 
 #ifndef BLOCKEDITFILE_HPP
 #define BLOCKEDITFILE_HPP
@@ -18,7 +17,7 @@
  * Ideally this class would contain the implementation of the virtual block functions in class
  * EditFile. Those block handling functions are not virtual because Borland's Turbo C++ 1.0 had
  * problems with virtual functions in virtual base classes.
-
+ *
  * This class has no private data. Class EditFile contains the data needed for blocks in its
  * protected section. An ideal implementation would have that private data here with a
  * constructor here to initialize it. Right now, EditFile's constructor is initializing block
