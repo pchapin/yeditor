@@ -1,6 +1,6 @@
 /*! \file    command_table.hpp
  *  \brief   Interface to the command dispatch table.
- *  \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
+ *  \author  Peter C. Chapin <chapinp@acm.org>
  */
 
 #ifndef COMMAND_TABLE_HPP

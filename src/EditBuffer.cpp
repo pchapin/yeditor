@@ -1,8 +1,7 @@
 /*! \file    EditBuffer.cpp
-    \brief   Implementation of class EditBuffer
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of class EditBuffer
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <algorithm>
 #include <cstring>

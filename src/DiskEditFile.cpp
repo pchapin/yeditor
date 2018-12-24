@@ -1,8 +1,7 @@
 /*! \file    DiskEditFile.cpp
-    \brief   Implementation of class DiskEditFile
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of class DiskEditFile
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cstdlib>
 #include <cstring>

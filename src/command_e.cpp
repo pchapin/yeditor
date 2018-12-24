@@ -1,8 +1,7 @@
 /*! \file    command_e.cpp
-    \brief   Implementation of the 'e' command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the 'e' command functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cstdio>
 #include <cstdlib>

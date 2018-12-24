@@ -1,8 +1,7 @@
 /*! \file    LineEditFile.cpp
-    \brief   Implementation of class LineEditFile.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of class LineEditFile.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cstring>
 

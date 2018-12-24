@@ -1,8 +1,7 @@
 /*! \file    editlist.hpp
-    \brief   Interface to class EditList
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to class EditList
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef EDITLIST_HPP
 #define EDITLIST_HPP

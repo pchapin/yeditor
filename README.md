@@ -12,76 +12,81 @@ This file has several sections.
  6. Analysis.
  7. Adding a Module.
 
-See also `TODO.md` for a roadmap of what needs to be done on Y.
+See also `TODO.md` and the GitHub issues list for this project for a roadmap of what needs to be
+done on Y.
 
 Introduction
 ------------
 
 Greetings!
 
-This is the code base for the Y text editor, version 2.0, along with related tools and
-libraries. Although currently unfinished, it is my intention to release the source and
-documentation of Y under the terms of the GPL. Please note that I disclaim all warranties
-implied or otherwise. All the necessary, precise legal language will be added later.
+This is the code base for the Y text editor, version 2.0. Although currently unfinished, it is
+my intention to release the source and documentation of Y under the terms of the GPL. Please
+note that I disclaim all warranties implied or otherwise. All the necessary, precise legal
+language will be added later.
 
 Y is a simple, but effective cross platform editor. The supported platforms are Win32 consoles
-and Linux terminals (with some testing also on Cygwin). Some level of support also exists for
-OS/2 text mode and DOS 16 bit targets. However, this support relies on the Open Watcom compiler
-which, unfortunately, is too far behind the latest C++ standard to compile Y at this time.
-However, it is my hope that Open Watcom will be updated at some point allowing these other
+and Linux terminals (with some testing also on Cygwin). Some level of support also once existed
+for OS/2 text mode and DOS 16 bit targets. However, that support relies on the Open Watcom
+compiler which, unfortunately, is too far behind the latest C++ standard to compile Y at this
+time. However, it is my hope that Open Watcom will be updated at some point allowing these other
 targets to be used again.
 
 I invite you to play around with Y. Compile it, use it, and let me know what you think. If you
-find or fix a problem, send me email. I can be reached at PChapin@vtc.vsc.edu.
+find or fix a problem, send me email or, better yet, open an issue on GitHub or create a pull
+request. I can be reached at chapinp@acm.org.
 
 There is some sketchy documentation about Y in the doc directory. Some of that document is
 outdated and is in serious need of editing. Fixing the documentation is a work in progress.
 
-Peter Chapin
+Peter C. Chapin
 
 
 Prerequisites
 -------------
 
-Y depends on a library of various utility components called Spica. This library is included in
-this code base. It can be compiled separately (and used in other projects) or, if you are using
-Visual Studio or Code::Blocks, automatically during the build of Y itself. Look in the `Spica`
-folder for more information.
+Y depends on a library of various utility components called Spica. This library can be cloned
+from GitHub using the URL:
 
-In addition Y depends on a cross platform screen handling library called Scr. This library is
-also included in this code base. As with Spica, the Scr library can be compiled and used
-separately or, if you are using Visual Studio or Code::Blocks, during the build of Y itself.
-Look in the `Scr` folder for more information.
+    https://github.com/pchapin/spica.git
 
-Both Spica and Scr endeavor to retain their identity as separate, potentially stand-alone
-projects. They have their own documentation and may use different conventions. See their
-respective folders for more information about these projects. That said, most of the conventions
-used by Spica and Scr are similar to those used by Y itself. If you are familiar with Y's
-organization you will find the organization of Spica and Scr to be straight forward.
+It should be cloned into a sibling folder of Y; the various build control files in Y expect this
+location. Spica can be compiled separately or, if you are using Visual Studio or Code::Blocks,
+it is automatically built during the build of Y itself.
 
-The Y code base also contains Clac, Pixie, and some general purpose tools. Clac is a calculator
-program inspired by the HP-48 series of calculators (although it does not attempt to emulate the
-HP-48 exactly). Pixie is a time management program. The tools are low level build assistance
-tools or text processing tools. These projects are also independent of Y; as with Spica and Scr
-they are documented and built separately. However, they are related in that they use the same
-Spica/Scr libraries and are written in largely the same style as Y. In the future they may be
-integrated into Y in some manner.
+In addition Y depends on a cross platform screen handling library called Scr. This library can
+be cloned from GitHub using the URL:
+
+    https://github.com/pchapin/scr.git
+
+As with Spica, the Scr library can be compiled separately or, if you are using Visual Studio or
+Code::Blocks, it is also automatically built during the build of Y itself.
+
+Both Spica and Scr are independent projects that can be used for other purposes. They have their
+own documentation and may use different conventions. See their respective folders for more
+information about these projects. That said, most of the conventions used by Spica and Scr are
+similar to those used by Y itself. If you are familiar with Y's organization you will find the
+organization of Spica and Scr to be straight forward.
+
+The Y code some general purpose tools. Currently the only tool provided with Y is `depend`. This
+tool computes dependency lists for Makefiles.
+
 
 Compiling
 ---------
 
 ### g++
 
-G++ targetting Unix-like systems is the primary compiler and platform for Y. Makefiles are
-provided that build each component of the system. In general you can just enter a folder and
-type `make` to build whatever entity is contained in that folder.
+G++ targetting Unix-like systems is the primary compiler and platform for Y at this time.
+Makefiles are provided that build each component of the system. In general you can just enter a
+folder and type `make` to build whatever entity is contained in that folder.
 
 Currently it is necessary to build the Spica and Scr libraries first manually (using Makefiles)
 before you build Y itself. Y should probably be built before you build the test programs but
 that is not strictly necessary at this time.
 
 It is likely that Y and its supporting libraries can be built with clang++ as well. This might
-only entail a minor modification to the Makefiles.
+only entail minor modifications to the Makefiles.
 
 ### Code::Blocks
 
@@ -98,9 +103,9 @@ and Release configurations. This workspace includes the Spica and Scr projects a
 
 ### Visual C++
 
-Solution and project files for Visual C++ version 14.0 (Visual Studio 2015) are also provided.
-Although development on Windows tends to be less frequent than on Linux, the Windows build is
-reasonably well maintained and should always be working.
+Solution and project files for Visual Studio 2017 are also provided. Although development on
+Windows tends to be less frequent than on Linux, the Windows build is reasonably well maintained
+and should always be working.
 
 To build Y with Visual Studio load `Y.sln`. This solution file contains references to all
 required projects (including Spica, Scr, and the test programs). Thus building this solution
@@ -110,11 +115,11 @@ will build everything.
 
 Open Watcom is a cross platform compiler that supports Windows, OS/2, DOS, and Linux. In theory
 it can be used to build Y for all of these systems regardless of your development platform.
-Unfortunately Open Watcom does not currently (February 2016) support C++ 2011 to any significant
+Unfortunately Open Watcom does not currently (January 2019) support C++ 2011 to any significant
 degree. Thus it can't be used to build Y at this time. However the project files for Open Watcom
 are retained in the hope that some future version of that compiler will be able to compile Y
-again. Open Watcom was once the primary compiler for Y development and continued support for it,
-at least on paper, should be retained out of respect if nothing else.
+again. Watcom was once the primary compiler for Y development and continued support for it, at
+least on paper, should be retained out of respect if nothing else.
 
 To build Y with Open Watcom follow this procedure.
 

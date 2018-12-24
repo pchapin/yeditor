@@ -1,11 +1,11 @@
 /*! \file    YEditFile.cpp
-    \brief   Implementation of class YEditFile.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-This file contains the implementation of class YEditFile. Objects of this class are EditFiles
-that have been elaborated using inheritance to have all the features required by Y. As most of
-what YEditFiles do is implemented in its various base classes, this file is concerned mostly
-with the display function.
+ *  \brief   Implementation of class YEditFile.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ *
+ * This file contains the implementation of class YEditFile. Objects of this class are EditFiles
+ * that have been elaborated using inheritance to have all the features required by Y. As most
+ * of what YEditFiles do is implemented in its various base classes, this file is concerned
+ * mostly with the display function.
 */
 
 #include <cstdio>

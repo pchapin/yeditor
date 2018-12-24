@@ -1,8 +1,7 @@
 /*! \file    EditFile.cpp
-    \brief   Implementation of class EditFile
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of class EditFile
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <climits>
 #include <cstddef>

@@ -1,8 +1,7 @@
 /*! \file    WordSource.cpp
-    \brief   Implementation of the WordSource classes.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the WordSource classes.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cctype>
 #include <cstring>

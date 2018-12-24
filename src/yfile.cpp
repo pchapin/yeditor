@@ -1,9 +1,10 @@
 /*! \file    yfile.cpp
-    \brief   Implementation of filelist.yfy handling.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-This file contains the implementation of class File_Descriptor. Objects of this class "describe"
-files in the manner used by filelist.yfy. This module also contains filelist.yfy handling code.
+ *  \brief   Implementation of filelist.yfy handling.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ *
+ * This file contains the implementation of class File_Descriptor. Objects of this class
+ * "describe" files in the manner used by filelist.yfy. This module also contains filelist.yfy
+ * handling code.
 */
 
 #include <cstdio>

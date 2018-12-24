@@ -1,8 +1,7 @@
 /*! \file    command_y.cpp
-    \brief   Implementation of the 'y' command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the 'y' command functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cstdlib>
 

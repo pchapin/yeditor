@@ -1,8 +1,7 @@
 /*! \file    yfile.hpp
-    \brief   Interface to filelist.yfy handling.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to filelist.yfy handling.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef YFILE_HPP
 #define YFILE_HPP

@@ -1,8 +1,7 @@
 /*! \file    WordSource.hpp
-    \brief   Interface to the WordSource classes.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to the WordSource classes.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef WORDSOURCE_HPP
 #define WORDSOURCE_HPP

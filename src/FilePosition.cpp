@@ -1,8 +1,7 @@
 /*! \file    FilePosition.cpp
-    \brief   Implementation of class FilePosition
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of class FilePosition
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include "FilePosition.hpp"
 #include "scr.hpp"

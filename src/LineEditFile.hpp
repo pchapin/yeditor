@@ -1,8 +1,7 @@
 /*! \file    LineEditFile.hpp
-    \brief   Interface to clss LineEditFile.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to clss LineEditFile.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef LINEEDITFILE_HPP
 #define LINEEDITFILE_HPP

@@ -1,8 +1,7 @@
 /*! \file    command_f.cpp
-    \brief   Implementation of the 'f' command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the 'f' command functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cstdlib>
 #include <cstring>

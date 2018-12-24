@@ -1,7 +1,7 @@
 /*! \file    check.cpp
-    \brief   Main program for Y's unit tests.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-*/
+ *  \brief   Main program for Y's unit tests.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cstdlib>
 #include <cstring>

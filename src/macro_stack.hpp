@@ -1,8 +1,7 @@
 /*! \file    macro_stack.hpp
-    \brief   Interface to the macro stack.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to the macro stack.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef MACRO_STACK_HPP
 #define MACRO_STACK_HPP

@@ -1,9 +1,9 @@
 /*! \file    FileNameMatcher.cpp
-    \brief   Implementatin of file name matching functions
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-This file contains the implementation of a class which assists in the problem of matching
-filenames.
+ *  \brief   Implementatin of file name matching functions
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ *
+ * This file contains the implementation of a class which assists in the problem of matching
+ * filenames.
 */
 
 #include "environ.hpp"

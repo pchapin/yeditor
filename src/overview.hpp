@@ -1,8 +1,7 @@
 /*! \file    overview.hpp
-    \brief   Overview documentation of Y's internal design.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Overview documentation of Y's internal design.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 /*!
 

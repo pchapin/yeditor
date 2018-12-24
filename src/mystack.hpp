@@ -1,6 +1,6 @@
 /*! \file    mystack.hpp
  *  \brief   General purpose Stack template.
- *  \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
+ *  \author  Peter C. Chapin <chapinp@acm.org>
  */
 
 #ifndef MYSTACK_HPP

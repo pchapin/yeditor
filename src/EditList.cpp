@@ -1,8 +1,7 @@
 /*! \file    EditList.cpp
-    \brief   Implementation of class EditList
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of class EditList
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include "EditBuffer.hpp"
 #include "EditList.hpp"

@@ -1,8 +1,7 @@
 /*! \file    FileNameMatcher.hpp
-    \brief   Interface to file name matching functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to file name matching functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef FILENAMEMATCHER_HPP
 #define FILENAMEMATCHER_HPP

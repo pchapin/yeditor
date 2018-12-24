@@ -1,8 +1,7 @@
 /*! \file    FileList.hpp
-    \brief   Interface to the FileList abstract object
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to the FileList abstract object
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef FILELIST_HPP
 #define FILELIST_HPP

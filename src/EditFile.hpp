@@ -1,8 +1,7 @@
 /*! \file    EditFile.hpp
-    \brief   Interface to class EditFile
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to class EditFile
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef EDITFILE_HPP
 #define EDITFILE_HPP

@@ -1,7 +1,7 @@
 /*! \file    special.hpp
-    \brief   Interface to specialized YEditFile classes.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-*/
+ *  \brief   Interface to specialized YEditFile classes.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef SPECIAL_HPP
 #define SPECIAL_HPP

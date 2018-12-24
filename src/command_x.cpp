@@ -1,8 +1,7 @@
 /*! \file    command_x.cpp
-    \brief   Implementation of the experimental command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the experimental command functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cctype>
 #include <cstdlib>

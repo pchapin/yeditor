@@ -1,8 +1,7 @@
 /*! \file    special.cpp
-    \brief   Implementation of specialized YEditFile classes.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of specialized YEditFile classes.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cctype>
 #include <cstring>

@@ -1,8 +1,7 @@
 /*! \file    command_p.cpp
-    \brief   Implementation of the 'p' command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the 'p' command functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include "clipboard.hpp"
 #include "command.hpp"

@@ -1,6 +1,6 @@
 /*! \file    help.cpp
  *  \brief   Text of the help screens.
- *  \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
+ *  \author  Peter C. Chapin <chapinp@acm.org>
  *
  * The help text is out of date; it needs a major overhaul.
  *
@@ -271,7 +271,7 @@ static const char *const legal_2[]={
     "     Peter C. Chapin",
     "     Vermont Technical College",
     "     Williston, VT 05495 (USA)",
-    "     PChapin@vtc.vsc.edu",
+    "     chapinp@acm.org",
     NULL
 }; 
 

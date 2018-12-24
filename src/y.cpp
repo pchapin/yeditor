@@ -1,6 +1,6 @@
 /*! \file    y.cpp
  *  \brief   Main program of the Y editor.
- *  \author  Peter C. Chapin <peter@pchapin.org>
+ *  \author  Peter C. Chapin <chapinp@acm.org>
  *
  * LICENSE
  *

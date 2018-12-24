@@ -1,13 +1,13 @@
 /*! \file    WPEditFile.cpp
-    \brief   Implementation of class WPEditFile.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-IMPLEMENTATION NOTES
-
-It would be better if the cursor moved when the paragraph was adjusted so that it stayed
-attached to the same text.
-
-It may be desirable to redesign this code in a later version of Y; it needs it.
+ *  \brief   Implementation of class WPEditFile.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ *
+ * IMPLEMENTATION NOTES
+ *
+ * It would be better if the cursor moved when the paragraph was adjusted so that it stayed
+ * attached to the same text.
+ *
+ * It may be desirable to redesign this code in a later version of Y; it needs it.
 */
 
 #include <cctype>

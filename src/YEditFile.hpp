@@ -1,8 +1,7 @@
 /*! \file    YEditFile.hpp
-    \brief   Interface to class YEditFile.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to class YEditFile.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef YEDITFILE_HPP
 #define YEDITFILE_HPP

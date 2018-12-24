@@ -1,8 +1,7 @@
 /*! \file    global.hpp
-    \brief   Declarations of global objects.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Declarations of global objects.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef GLOBAL_HPP
 #define GLOBAL_HPP

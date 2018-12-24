@@ -1,21 +1,21 @@
 /*! \file    FilePosition.hpp
-    \brief   Interface to class FilePosition
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-This file contains the interface to class FilePosition. Objects of this class record and
-manipulate the description of where in the file "we are." They are interested not only in the
-location of the cursor (current point), but also the location of the window (ie which portion of
-the file is currently to be displayed. Objects of this class insure that the cursor never strays
-outside the window.
-
-Notice that the first line in the file is line zero. Further notice that the first column in the
-file is column zero. Line numbers are of type long (negative numbers treated like zero), and
-column numbers are of type unsigned.
-
-This implementation is simple in that the dimensions of the window are hard coded to satisfy Ys
-needs. Obviously one can do better than that. In a future version, FilePosition objects may be
-able to deal with various sized windows. Certainly, this situation will need correcting before Y
-could become multiwindowed (should that ever become desirable).
+ *  \brief   Interface to class FilePosition
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ *
+ * This file contains the interface to class FilePosition. Objects of this class record and
+ * manipulate the description of where in the file "we are." They are interested not only in the
+ * location of the cursor (current point), but also the location of the window (ie which portion
+ * of the file is currently to be displayed. Objects of this class insure that the cursor never
+ * strays outside the window.
+ *
+ * Notice that the first line in the file is line zero. Further notice that the first column in
+ * the file is column zero. Line numbers are of type long (negative numbers treated like zero),
+ * and column numbers are of type unsigned.
+ *
+ * This implementation is simple in that the dimensions of the window are hard coded to satisfy
+ * Ys needs. Obviously one can do better than that. In a future version, FilePosition objects
+ * may be able to deal with various sized windows. Certainly, this situation will need
+ * correcting before Y could become multiwindowed (should that ever become desirable).
 */
 
 #ifndef FILEPOSITION_HPP

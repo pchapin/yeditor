@@ -1,8 +1,7 @@
 /*! \file    mylist.hpp
-    \brief   A general purpose list template.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   A general purpose list template.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef MYLIST_HPP
 #define MYLIST_HPP

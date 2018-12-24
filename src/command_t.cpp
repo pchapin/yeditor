@@ -1,8 +1,7 @@
 /*! \file    command_t.cpp
-    \brief   Implementation of the 't' command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the 't' command functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include "command.hpp"
 #include "FileList.hpp"

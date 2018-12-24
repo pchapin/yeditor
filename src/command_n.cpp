@@ -1,8 +1,7 @@
 /*! \file    command_n.cpp
-    \brief   Implementation of the 'n' command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the 'n' command functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cstddef>
 

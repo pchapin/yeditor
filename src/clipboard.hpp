@@ -1,6 +1,6 @@
 /*! \file    clipboard.hpp
  *  \brief   Interface to the clipboard
- *  \author  Peter Chapin <peter@pchapin.org>
+ *  \author  Peter C. Chapin <chapinp@acm.org>
  */
 
 #ifndef CLIPBOARD_HPP

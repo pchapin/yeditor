@@ -1,6 +1,6 @@
 /*! \file    command_a.cpp
  *  \brief   Implementation of the 'a' command functions.
- *  \author  Peter Chapin <peter@pchapin.org>
+ *  \author  Peter C. Chapin <chapinp@acm.org>
  */
 
 #include <cstdlib>

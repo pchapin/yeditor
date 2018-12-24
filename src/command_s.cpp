@@ -1,8 +1,7 @@
 /*! \file    command_s.cpp
-    \brief   Implementation of the 's' command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the 's' command functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <climits>
 #include <cstdio>

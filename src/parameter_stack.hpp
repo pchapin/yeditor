@@ -1,8 +1,7 @@
 /*! \file    parameter_stack.hpp
-    \brief   Interface to the parameter stack.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to the parameter stack.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef PARAMETER_STACK_HPP
 #define PARAMETER_STACK_HPP

@@ -1,8 +1,7 @@
 /*! \file    SearchEditFile.hpp
-    \brief   Interface to class SearchEditFile.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to class SearchEditFile.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef SEARCHEDITFILE_HPP
 #define SEARCHEDITFILE_HPP

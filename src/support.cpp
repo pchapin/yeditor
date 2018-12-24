@@ -1,8 +1,7 @@
 /*! \file    support.cpp
-    \brief   Implementation of various supporting functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of various supporting functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include "environ.hpp"
 

@@ -1,8 +1,7 @@
 /*! \file    command_l.cpp
-    \brief   Implementation of the 'l' command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the 'l' command functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include "command.hpp"
 #include "help.hpp"

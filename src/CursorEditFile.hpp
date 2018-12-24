@@ -1,8 +1,7 @@
 /*! \file    CursorEditFile.hpp
-    \brief   Interface to class CursorEditFile
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Interface to class CursorEditFile
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #ifndef CURSOREDITFILE_HPP
 #define CURSOREDITFILE_HPP

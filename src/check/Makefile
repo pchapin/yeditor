@@ -3,15 +3,15 @@
 #
 
 CXX=g++
-CXXFLAGS=-Wall -std=c++11 -c -O -I.. -I../../Spica -I../../Scr
+CXXFLAGS=-Wall -std=c++11 -c -O -I.. -I../../../Spica/Cpp -I../../../Scr
 LINK=g++
 LINKFLAGS=-lncurses
 SOURCES=check.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 OBJECTSTESTED=../EditBuffer.o
 EXECUTABLE=check
-LIBSPICA=../../Spica/libSpicaCpp.a
-LIBSCR=../../Scr/libScr.a
+LIBSPICA=../../../Spica/Cpp/libSpicaCpp.a
+LIBSCR=../../../Scr/libScr.a
 
 %.o:	%.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
@@ -26,7 +26,7 @@ $(EXECUTABLE):	$(OBJECTS) $(OBJECTSTESTED) $(LIBSPICA) $(LIBSCR)
 # Module dependencies -- Produced with 'depend' on Sat Jul  6 17:55:04 2013
 
 
-check.o:	check.cpp ../EditBuffer.hpp ../../Spica/UnitTestManager.hpp 
+check.o:	check.cpp ../EditBuffer.hpp ../../../Spica/Cpp/UnitTestManager.hpp 
 
 
 # Additional Rules

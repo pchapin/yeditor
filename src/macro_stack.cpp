@@ -1,6 +1,6 @@
 /*! \file    macro_stack.cpp
  *  \brief   Implementation of the macro stack.
- *  \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
+ *  \author  Peter C. Chapin <chapinp@acm.org>
  *
  * This file contains the implementation of the macro stack. This stack holds WordSource objects
  * of various types that provide macro text for execution by the editor's macro engine.

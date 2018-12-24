@@ -1,8 +1,7 @@
 /*! \file    CursorEditFile.cpp
-    \brief   Implementation of class CursorEditFile
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of class CursorEditFile
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cstring>
 

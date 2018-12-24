@@ -1,12 +1,12 @@
 /*! \file    command.hpp
-    \brief   Prototypes of all the command functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-This file contains the prototypes of all the command functions. One and only one of these
-functions is associated with each macro word.
-
-Notice that all command functions return bool. The idea is that a command function returns true
-if it works and false if it does not.
+ *  \brief   Prototypes of all the command functions.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ *
+ * This file contains the prototypes of all the command functions. One and only one of these
+ * functions is associated with each macro word.
+ *
+ * Notice that all command functions return bool. The idea is that a command function returns
+ * true if it works and false if it does not.
 */
 
 #ifndef COMMAND_HPP

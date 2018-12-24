@@ -1,8 +1,7 @@
 /*! \file    parameter_stack.cpp
-    \brief   Implementation of the parameter stack.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the parameter stack.
+ *  \author  Peter C. Chapin <chapinp@acm.org>
+ */
 
 #include <cctype>
 #include <cstdlib>
