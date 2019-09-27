@@ -176,8 +176,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\EditList.cpp" />
     <ClCompile Include="check.cpp" />
     <ClCompile Include="..\EditBuffer.cpp" />
+    <ClCompile Include="check_EditBuffer.cpp" />
+    <ClCompile Include="check_EditList.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="check.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
