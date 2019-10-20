@@ -174,15 +174,8 @@ information.
 Analysis
 --------
 
-The Y code base contains configuration information for the commercial C++ static analysis tool
-[PC-Lint](http://www.gimpel.com/html/pcl.htm). In the `src` folder there is a batch file
-`LIN.bat` that invokes PC-Lint using appropriately defined configuration files. The PC-Lint
-configuration is part of this code base. The file `FILES.lnt` contains a list of files that have
-approximately passed PC-Lint's analysis. The goal is to eventually have all source files in Y
-listed there.
-
-The use of other analysis tools is encouraged. Possibilities include valgrind and/or clang's
-static analyzer. The use of the static analysis tools provided with Visual Studio should be
+The use of analysis tools is encouraged. Possibilities include valgrind and/or clang's static
+analyzer. The use of the static analysis tools provided with Visual Studio should be
 investigated.
 
 
