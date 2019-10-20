@@ -31,9 +31,6 @@ obj
 # Doxygen generated files.
 internal
 
-# PC-Lint generated files.
-_LINT.TMP
-
 # Y documentation generated files.
 doc/y20.aux
 doc/y20.log
@@ -44,4 +41,6 @@ doc/y20.toc
 # Executables
 src/Y
 src/check/check
-Yibble/yibble
+
+# Ada Version
+api
