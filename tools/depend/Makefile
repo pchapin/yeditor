@@ -3,7 +3,7 @@
 #
 
 CXX=g++
-CXXFLAGS=-std=c++11 -c -O -I../../../Spica/Cpp -I../../../Scr
+CXXFLAGS=-std=c++11 -c -O -I../../../Spica/Cpp -I../../scr
 LINK=g++
 LINKFLAGS=
 SOURCES=adjdate.cpp   \
@@ -17,7 +17,7 @@ SOURCES=adjdate.cpp   \
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=depend
 LIBSPICA=../../../Spica/Cpp/libSpicaCpp.a
-LIBSCR=../../../Scr/libScr.a
+LIBSCR=../../scr/libScr.a
 
 %.o:	%.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
@@ -33,12 +33,12 @@ $(EXECUTABLE):	$(OBJECTS)
 
 adjdate.o:	adjdate.cpp misc.hpp 
 
-depend.o:	depend.cpp ../../../Spica/Cpp/environ.hpp ../../../Scr/ansiscr.hpp filename.hpp filescan.hpp \
+depend.o:	depend.cpp ../../../Spica/Cpp/environ.hpp ../../scr/ansiscr.hpp filename.hpp filescan.hpp \
 	../../../Spica/Cpp/get_switch.hpp misc.hpp output.hpp record_f.hpp 
 
 filename.o:	filename.cpp ../../../Spica/Cpp/environ.hpp filename.hpp 
 
-filescan.o:	filescan.cpp ../../../Spica/Cpp/environ.hpp ../../../Scr/ansiscr.hpp filename.hpp \
+filescan.o:	filescan.cpp ../../../Spica/Cpp/environ.hpp ../../scr/ansiscr.hpp filename.hpp \
 	filescan.hpp linescan.hpp 
 
 linescan.o:	linescan.cpp ../../../Spica/Cpp/environ.hpp filename.hpp filescan.hpp linescan.hpp \

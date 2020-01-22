@@ -5,7 +5,7 @@
 # Master file list for the Y project.
 ############################################################################
 
-cpp_options = -q -w4 -xs -fo=$*.obj -d2 -I../.. -I../../../Spica -I../../../Scr
+cpp_options = -q -w4 -xs -fo=$*.obj -d2 -I../.. -I../../../Spica -I../../scr
 
 # Object file list.
 OBJS = &
@@ -62,4 +62,3 @@ y20.exe:        $(OBJS)
 # Utility targets.
 clean: .SYMBOLIC
     del *.obj *.err *.map y20.exe
-

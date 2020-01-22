@@ -3,6 +3,7 @@
  *  \author  Peter C. Chapin <chapinp@acm.org>
  */
 
+#include <cstring>
 #include "EditBuffer.hpp"
 #include "UnitTestManager.hpp"
 

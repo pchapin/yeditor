@@ -41,6 +41,7 @@ doc/y20.toc
 # Executables
 src/Y
 src/check/check
+tools/depend/depend
 
 # Ada Version
 api

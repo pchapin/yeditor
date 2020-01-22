@@ -15,5 +15,5 @@ libpath %WATCOM%\lib386\os2
 library clib3r.lib
 library os2386.lib
 library ..\..\..\Spica\owbuild\os232\SpicaCpp.lib
-library ..\..\..\Scr\owbuild\os232\scr.lib
+library ..\..\scr\owbuild\os232\scr.lib
 

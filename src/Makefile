@@ -3,7 +3,7 @@
 #
 
 CXX=g++
-CXXFLAGS=-Wall -std=c++11 -c -O -I../../Spica/Cpp -I../../Scr
+CXXFLAGS=-Wall -std=c++11 -c -O -I../../Spica/Cpp -I../scr
 LINK=g++
 LINKFLAGS=-lncurses
 ## It shouldn't be necessary to use Boost here since my application does not require it.
@@ -56,7 +56,7 @@ SOURCES=BlockEditFile.cpp     \
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=Y
 LIBSPICA=../../Spica/Cpp/libSpicaCpp.a
-LIBSCR=../../Scr/libScr.a
+LIBSCR=../scr/libScr.a
 
 %.o:	%.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
@@ -100,13 +100,13 @@ command_d.o:	command_d.cpp clipboard.hpp EditList.hpp mylist.hpp command.hpp Fil
 	LineEditFile.hpp SearchEditFile.hpp WPEditFile.hpp 
 
 command_e.o:	command_e.cpp command.hpp FileList.hpp global.hpp parameter_stack.hpp EditBuffer.hpp \
-	EditList.hpp mylist.hpp mystack.hpp help.hpp macro_stack.hpp WordSource.hpp ../../Scr/scr.hpp \
+	EditList.hpp mylist.hpp mystack.hpp help.hpp macro_stack.hpp WordSource.hpp ../scr/scr.hpp \
 	support.hpp ../../Spica/Cpp/environ.hpp yfile.hpp YEditFile.hpp BlockEditFile.hpp EditFile.hpp \
 	FilePosition.hpp CharacterEditFile.hpp CursorEditFile.hpp DiskEditFile.hpp LineEditFile.hpp \
 	SearchEditFile.hpp WPEditFile.hpp 
 
 command_f.o:	command_f.cpp command.hpp EditFile.hpp EditList.hpp mylist.hpp FilePosition.hpp FileList.hpp \
-	global.hpp parameter_stack.hpp EditBuffer.hpp mystack.hpp ../../Scr/scr.hpp support.hpp \
+	global.hpp parameter_stack.hpp EditBuffer.hpp mystack.hpp ../scr/scr.hpp support.hpp \
 	../../Spica/Cpp/environ.hpp YEditFile.hpp BlockEditFile.hpp CharacterEditFile.hpp CursorEditFile.hpp \
 	DiskEditFile.hpp LineEditFile.hpp SearchEditFile.hpp WPEditFile.hpp yfile.hpp 
 
@@ -143,13 +143,13 @@ command_q.o:	command_q.cpp command.hpp FileList.hpp support.hpp ../../Spica/Cpp/
 	EditBuffer.hpp 
 
 command_r.o:	command_r.cpp command.hpp FileList.hpp global.hpp parameter_stack.hpp EditBuffer.hpp \
-	EditList.hpp mylist.hpp mystack.hpp help.hpp ../../Scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp \
+	EditList.hpp mylist.hpp mystack.hpp help.hpp ../scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp \
 	yfile.hpp YEditFile.hpp BlockEditFile.hpp EditFile.hpp FilePosition.hpp CharacterEditFile.hpp \
 	CursorEditFile.hpp DiskEditFile.hpp LineEditFile.hpp SearchEditFile.hpp WPEditFile.hpp 
 
 command_s.o:	command_s.cpp command.hpp FileList.hpp global.hpp parameter_stack.hpp EditBuffer.hpp \
-	EditList.hpp mylist.hpp mystack.hpp ../../Scr/MessageWindow.hpp ../../Scr/Shadow.hpp ../../Scr/Window.hpp \
-	../../Scr/ImageBuffer.hpp ../../Scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp YEditFile.hpp \
+	EditList.hpp mylist.hpp mystack.hpp ../scr/MessageWindow.hpp ../scr/Shadow.hpp ../scr/Window.hpp \
+	../scr/ImageBuffer.hpp ../scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp YEditFile.hpp \
 	BlockEditFile.hpp EditFile.hpp FilePosition.hpp CharacterEditFile.hpp CursorEditFile.hpp \
 	DiskEditFile.hpp LineEditFile.hpp SearchEditFile.hpp WPEditFile.hpp 
 
@@ -162,7 +162,7 @@ command_t.o:	command_t.cpp command.hpp FileList.hpp YEditFile.hpp BlockEditFile.
 	
 
 command_x.o:	command_x.cpp command.hpp parameter_stack.hpp EditBuffer.hpp EditList.hpp mylist.hpp \
-	mystack.hpp ../../Scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp 
+	mystack.hpp ../scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp 
 
 command_y.o:	command_y.cpp command.hpp FileList.hpp yfile.hpp EditBuffer.hpp mylist.hpp YEditFile.hpp \
 	BlockEditFile.hpp EditFile.hpp EditList.hpp FilePosition.hpp CharacterEditFile.hpp CursorEditFile.hpp \
@@ -173,8 +173,8 @@ CursorEditFile.o:	CursorEditFile.cpp EditBuffer.hpp CursorEditFile.hpp EditFile.
 	FilePosition.hpp 
 
 DiskEditFile.o:	DiskEditFile.cpp ../../Spica/Cpp/environ.hpp DiskEditFile.hpp EditFile.hpp EditList.hpp \
-	mylist.hpp FilePosition.hpp EditBuffer.hpp FileNameMatcher.hpp ../../Scr/MessageWindow.hpp \
-	../../Scr/Shadow.hpp ../../Scr/Window.hpp ../../Scr/ImageBuffer.hpp ../../Scr/scr.hpp support.hpp \
+	mylist.hpp FilePosition.hpp EditBuffer.hpp FileNameMatcher.hpp ../scr/MessageWindow.hpp \
+	../scr/Shadow.hpp ../scr/Window.hpp ../scr/ImageBuffer.hpp ../scr/scr.hpp support.hpp \
 	
 
 EditBuffer.o:	EditBuffer.cpp EditBuffer.hpp 
@@ -185,21 +185,21 @@ EditFile.o:	EditFile.cpp EditBuffer.hpp EditFile.hpp EditList.hpp mylist.hpp Fil
 EditList.o:	EditList.cpp EditBuffer.hpp EditList.hpp mylist.hpp 
 
 FileList.o:	FileList.cpp EditBuffer.hpp FileList.hpp FileNameMatcher.hpp ../../Spica/Cpp/environ.hpp \
-	mylist.hpp special.hpp ../../Scr/scr.hpp YEditFile.hpp BlockEditFile.hpp EditFile.hpp EditList.hpp \
+	mylist.hpp special.hpp ../scr/scr.hpp YEditFile.hpp BlockEditFile.hpp EditFile.hpp EditList.hpp \
 	FilePosition.hpp CharacterEditFile.hpp CursorEditFile.hpp DiskEditFile.hpp LineEditFile.hpp \
 	SearchEditFile.hpp WPEditFile.hpp support.hpp yfile.hpp 
 
 FileNameMatcher.o:	FileNameMatcher.cpp ../../Spica/Cpp/environ.hpp FileNameMatcher.hpp 
 
-FilePosition.o:	FilePosition.cpp FilePosition.hpp ../../Scr/scr.hpp 
+FilePosition.o:	FilePosition.cpp FilePosition.hpp ../scr/scr.hpp 
 
 global.o:	global.cpp ../../Spica/Cpp/environ.hpp global.hpp parameter_stack.hpp EditBuffer.hpp \
-	EditList.hpp mylist.hpp mystack.hpp ../../Scr/scr.hpp support.hpp 
+	EditList.hpp mylist.hpp mystack.hpp ../scr/scr.hpp support.hpp 
 
-help.o:	help.cpp help.hpp ../../Scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp EditBuffer.hpp \
-	../../Scr/TextWindow.hpp ../../Scr/Window.hpp ../../Scr/ImageBuffer.hpp 
+help.o:	help.cpp help.hpp ../scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp EditBuffer.hpp \
+	../scr/TextWindow.hpp ../scr/Window.hpp ../scr/ImageBuffer.hpp 
 
-keyboard.o:	keyboard.cpp command.hpp FileList.hpp keyboard.hpp ../../Scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp \
+keyboard.o:	keyboard.cpp command.hpp FileList.hpp keyboard.hpp ../scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp \
 	EditBuffer.hpp YEditFile.hpp BlockEditFile.hpp EditFile.hpp EditList.hpp mylist.hpp FilePosition.hpp \
 	CharacterEditFile.hpp CursorEditFile.hpp DiskEditFile.hpp LineEditFile.hpp SearchEditFile.hpp \
 	WPEditFile.hpp 
@@ -211,26 +211,26 @@ macro_stack.o:	macro_stack.cpp EditBuffer.hpp macro_stack.hpp mystack.hpp mylist
 	
 
 parameter_stack.o:	parameter_stack.cpp EditBuffer.hpp global.hpp parameter_stack.hpp EditList.hpp mylist.hpp \
-	mystack.hpp ../../Scr/scr.hpp ../../Scr/Shadow.hpp support.hpp ../../Spica/Cpp/environ.hpp \
-	../../Scr/Window.hpp ../../Scr/ImageBuffer.hpp 
+	mystack.hpp ../scr/scr.hpp ../scr/Shadow.hpp support.hpp ../../Spica/Cpp/environ.hpp \
+	../scr/Window.hpp ../scr/ImageBuffer.hpp 
 
 SearchEditFile.o:	SearchEditFile.cpp EditBuffer.hpp SearchEditFile.hpp EditFile.hpp EditList.hpp mylist.hpp \
 	FilePosition.hpp 
 
-special.o:	special.cpp EditBuffer.hpp ../../Scr/scr.hpp special.hpp YEditFile.hpp BlockEditFile.hpp \
+special.o:	special.cpp EditBuffer.hpp ../scr/scr.hpp special.hpp YEditFile.hpp BlockEditFile.hpp \
 	EditFile.hpp EditList.hpp mylist.hpp FilePosition.hpp CharacterEditFile.hpp CursorEditFile.hpp \
 	DiskEditFile.hpp ../../Spica/Cpp/environ.hpp LineEditFile.hpp SearchEditFile.hpp WPEditFile.hpp \
 	support.hpp 
 
 support.o:	support.cpp ../../Spica/Cpp/environ.hpp FileList.hpp FileNameMatcher.hpp global.hpp \
 	parameter_stack.hpp EditBuffer.hpp EditList.hpp mylist.hpp mystack.hpp ../../Spica/Cpp/Timer.hpp \
-	../../Scr/MessageWindow.hpp ../../Scr/Shadow.hpp ../../Scr/Window.hpp ../../Scr/ImageBuffer.hpp \
-	../../Scr/scr.hpp support.hpp YEditFile.hpp BlockEditFile.hpp EditFile.hpp FilePosition.hpp \
+	../scr/MessageWindow.hpp ../scr/Shadow.hpp ../scr/Window.hpp ../scr/ImageBuffer.hpp \
+	../scr/scr.hpp support.hpp YEditFile.hpp BlockEditFile.hpp EditFile.hpp FilePosition.hpp \
 	CharacterEditFile.hpp CursorEditFile.hpp DiskEditFile.hpp LineEditFile.hpp SearchEditFile.hpp \
 	WPEditFile.hpp 
 
 WordSource.o:	WordSource.cpp EditBuffer.hpp keyboard.hpp macro_stack.hpp mystack.hpp mylist.hpp \
-	WordSource.hpp parameter_stack.hpp EditList.hpp ../../Scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp \
+	WordSource.hpp parameter_stack.hpp EditList.hpp ../scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp \
 	
 
 WPEditFile.o:	WPEditFile.cpp EditBuffer.hpp support.hpp ../../Spica/Cpp/environ.hpp WPEditFile.hpp \
@@ -238,17 +238,17 @@ WPEditFile.o:	WPEditFile.cpp EditBuffer.hpp support.hpp ../../Spica/Cpp/environ.
 
 y.o:	y.cpp command.hpp command_table.hpp EditBuffer.hpp FileList.hpp FileNameMatcher.hpp \
 	../../Spica/Cpp/environ.hpp global.hpp parameter_stack.hpp EditList.hpp mylist.hpp mystack.hpp \
-	../../Scr/MessageWindow.hpp ../../Scr/Shadow.hpp ../../Scr/Window.hpp ../../Scr/ImageBuffer.hpp \
-	../../Scr/scr.hpp macro_stack.hpp WordSource.hpp support.hpp YEditFile.hpp BlockEditFile.hpp \
+	../scr/MessageWindow.hpp ../scr/Shadow.hpp ../scr/Window.hpp ../scr/ImageBuffer.hpp \
+	../scr/scr.hpp macro_stack.hpp WordSource.hpp support.hpp YEditFile.hpp BlockEditFile.hpp \
 	EditFile.hpp FilePosition.hpp CharacterEditFile.hpp CursorEditFile.hpp DiskEditFile.hpp \
 	LineEditFile.hpp SearchEditFile.hpp WPEditFile.hpp yfile.hpp 
 
-YEditFile.o:	YEditFile.cpp EditBuffer.hpp FileList.hpp ../../Scr/scr.hpp ../../Scr/scrtools.hpp \
+YEditFile.o:	YEditFile.cpp EditBuffer.hpp FileList.hpp ../scr/scr.hpp ../scr/scrtools.hpp \
 	support.hpp ../../Spica/Cpp/environ.hpp YEditFile.hpp BlockEditFile.hpp EditFile.hpp \
 	EditList.hpp mylist.hpp FilePosition.hpp CharacterEditFile.hpp CursorEditFile.hpp DiskEditFile.hpp \
 	LineEditFile.hpp SearchEditFile.hpp WPEditFile.hpp yfile.hpp 
 
-yfile.o:	yfile.cpp FileList.hpp ../../Scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp \
+yfile.o:	yfile.cpp FileList.hpp ../scr/scr.hpp support.hpp ../../Spica/Cpp/environ.hpp \
 	EditBuffer.hpp yfile.hpp mylist.hpp YEditFile.hpp BlockEditFile.hpp EditFile.hpp EditList.hpp \
 	FilePosition.hpp CharacterEditFile.hpp CursorEditFile.hpp DiskEditFile.hpp LineEditFile.hpp \
 	SearchEditFile.hpp WPEditFile.hpp 

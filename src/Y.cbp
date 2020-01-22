@@ -16,7 +16,7 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add library="../../Scr/bin/Debug/libscr.a" />
+					<Add library="../scr/bin/Debug/libscr.a" />
 					<Add library="../../Spica/Cpp/bin/Debug/libSpicaCpp.a" />
 				</Linker>
 			</Target>
@@ -31,7 +31,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../Scr/bin/Release/libscr.a" />
+					<Add library="../scr/bin/Release/libscr.a" />
 					<Add library="../../Spica/Cpp/bin/Release/libSpicaCpp.a" />
 				</Linker>
 			</Target>
@@ -39,7 +39,7 @@
 		<Compiler>
 			<Add option="-std=c++11" />
 			<Add option="-Wall" />
-			<Add directory="../../Scr" />
+			<Add directory="../scr" />
 			<Add directory="../../Spica/Cpp" />
 		</Compiler>
 		<Linker>
