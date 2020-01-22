@@ -54,19 +54,17 @@ It should be cloned into a sibling folder of Y; the various build control files 
 location. Spica can be compiled separately or, if you are using Visual Studio or Code::Blocks,
 it is automatically built during the build of Y itself.
 
-In addition Y depends on a cross platform screen handling library called Scr. This library can
-be cloned from GitHub using the URL:
+In addition Y depends on a cross platform screen handling library called Scr. This library is
+part of the Y repository (in the `scr` folder). However, it is fairly independent of Y and could
+potentially be used in other projects. As with Spica, the Scr library can be compiled separately
+or, if you are using Visual Studio or Code::Blocks, it is also automatically built during the
+build of Y itself.
 
-    https://github.com/pchapin/scr.git
-
-As with Spica, the Scr library can be compiled separately or, if you are using Visual Studio or
-Code::Blocks, it is also automatically built during the build of Y itself.
-
-Both Spica and Scr are independent projects that can be used for other purposes. They have their
-own documentation and may use different conventions. See their respective folders for more
-information about these projects. That said, most of the conventions used by Spica and Scr are
-similar to those used by Y itself. If you are familiar with Y's organization you will find the
-organization of Spica and Scr to be straight forward.
+It is important to realize that both Spica and Scr are independent projects that can be used for
+other purposes. They have their own documentation and may use different conventions. See their
+respective folders for more information about these projects. That said, most of the conventions
+used by Spica and Scr are similar to those used by Y itself. If you are familiar with Y's
+organization you will find the organization of Spica and Scr to be straight forward.
 
 The Y code some general purpose tools. Currently the only tool provided with Y is `depend`. This
 tool computes dependency lists for Makefiles.
@@ -115,7 +113,7 @@ will build everything.
 
 Open Watcom is a cross platform compiler that supports Windows, OS/2, DOS, and Linux. In theory
 it can be used to build Y for all of these systems regardless of your development platform.
-Unfortunately Open Watcom does not currently (January 2019) support C++ 2011 to any significant
+Unfortunately Open Watcom does not currently (January 2020) support C++ 2011 to any significant
 degree. Thus it can't be used to build Y at this time. However the project files for Open Watcom
 are retained in the hope that some future version of that compiler will be able to compile Y
 again. Watcom was once the primary compiler for Y development and continued support for it, at
