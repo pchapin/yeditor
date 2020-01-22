@@ -1,0 +1,40 @@
+# Open Watcom generated files.
+*.bak
+*.err
+*.obj
+*.lib
+*.exe
+*.map
+
+# Visual Studio generated files.
+*.sdf
+.vs
+Debug
+Release
+scr.vcxproj.user
+
+# Code::Blocks generated files.
+*.layout
+*.depend
+bin
+obj
+
+# gcc/LLVM/clang generated files.
+*.bc
+*.bc1
+*.bc2
+*.o
+*.a
+
+# depend generated files.
+*.out
+
+# Doxygen generated files.
+api
+
+# PC-Lint generated files.
+_LINT.TMP
+
+# Executables
+check_manager/check_manager
+check_simple/check_simple

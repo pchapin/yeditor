@@ -1,0 +1,36 @@
+project Screen is
+
+   type Os_Type is ("Unix", "Windows");
+   Os : Os_Type := external ("OS", "Windows");
+   
+   for Library_Name use "screen";
+   
+   type Build_Type is ("Release", "Debug");
+   Build : Build_Type := external ("BUILD", "Debug");
+
+   case Build is
+      when "Release" =>
+         for Library_Ali_Dir use "lib/Release";
+         for Library_Dir use "lib/Release";
+         for Object_Dir use "obj/Release";
+         for Source_Dirs use (".");
+         
+      when "Debug" =>
+         for Library_Ali_Dir use "lib/Debug";
+         for Library_Dir use "lib/Debug";
+         for Object_Dir use "obj/Debug";
+         for Source_Dirs use (".");
+   end case;
+
+   package Compiler is
+      case Build is
+         when "Release" =>
+            for Default_Switches ("ada") use ("-gnatwa", "-O2", "-gnatn");
+
+         when "Debug" =>
+            for Default_Switches ("ada") use ("-gnatwa", "-g", "-gnata", "-fstack-check");
+      end case;
+   end Compiler;
+
+end Screen;
+
