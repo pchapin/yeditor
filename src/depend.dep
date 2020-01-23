@@ -38,6 +38,7 @@ parameter_stack.cpp
 SearchEditFile.cpp
 special.cpp
 support.cpp
+Timer.cpp
 WordSource.cpp
 WPEditFile.cpp
 y.cpp

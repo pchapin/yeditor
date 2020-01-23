@@ -1,3 +1,4 @@
 check.cpp
+UnitTestManager.cpp
 check_EditBuffer.cpp
 check_EditList.cpp

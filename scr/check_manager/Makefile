@@ -3,20 +3,19 @@
 #
 
 CXX=g++
-CXXFLAGS=-std=c++11 -c -O -I../../Spica/Cpp -I..
+CXXFLAGS=-std=c++11 -c -O -I..
 LINK=g++
 LINKFLAGS=-lncurses
 SOURCES=check.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=check_manager
-LIBSPICA=../../Spica/Cpp/libSpicaCpp.a
 LIBSCR=../libScr.a
 
 %.o:	%.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-$(EXECUTABLE):	$(OBJECTS) $(LIBSPICA) $(LIBSCR)
-	$(LINK) -o $@ $(OBJECTS) $(LIBSPICA) $(LIBSCR) $(LINKFLAGS)
+$(EXECUTABLE):	$(OBJECTS) $(LIBSCR)
+	$(LINK) -o $@ $(OBJECTS) $(LIBSCR) $(LINKFLAGS)
 
 # File Dependencies
 ###################
