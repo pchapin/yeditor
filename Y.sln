@@ -1,23 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1000
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Y", "src\Y.vcxproj", "{CC4F684F-3845-4F81-9DCA-732CD3C5BCFC}"
 	ProjectSection(ProjectDependencies) = postProject
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA} = {73BA8A8D-D8E5-4435-8947-FA40F2E450CA}
 		{E8020C9E-D7F0-4156-B4D9-0230053C70B6} = {E8020C9E-D7F0-4156-B4D9-0230053C70B6}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "check", "src\check\check.vcxproj", "{8C24090F-FCAD-462B-A6E6-3F42F6D45586}"
-	ProjectSection(ProjectDependencies) = postProject
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA} = {73BA8A8D-D8E5-4435-8947-FA40F2E450CA}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scr", "scr\scr.vcxproj", "{E8020C9E-D7F0-4156-B4D9-0230053C70B6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA} = {73BA8A8D-D8E5-4435-8947-FA40F2E450CA}
-	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpicaCpp", "..\Spica\Cpp\SpicaCpp.vcxproj", "{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "check_manager", "scr\check_manager\check_manager.vcxproj", "{1E3DDC87-3333-4E56-9FDD-BF0DED4CD70A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "check_simple", "scr\check_simple\check_simple.vcxproj", "{1B2DB7D9-20CB-4E1E-8370-F10C3001FF3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,16 +48,27 @@ Global
 		{E8020C9E-D7F0-4156-B4D9-0230053C70B6}.Release|Win32.Build.0 = Release|Win32
 		{E8020C9E-D7F0-4156-B4D9-0230053C70B6}.Release|x64.ActiveCfg = Release|x64
 		{E8020C9E-D7F0-4156-B4D9-0230053C70B6}.Release|x64.Build.0 = Release|x64
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}.Debug|Win32.ActiveCfg = Debug|Win32
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}.Debug|Win32.Build.0 = Debug|Win32
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}.Debug|x64.ActiveCfg = Debug|x64
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}.Debug|x64.Build.0 = Debug|x64
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}.Release|Win32.ActiveCfg = Release|Win32
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}.Release|Win32.Build.0 = Release|Win32
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}.Release|x64.ActiveCfg = Release|x64
-		{73BA8A8D-D8E5-4435-8947-FA40F2E450CA}.Release|x64.Build.0 = Release|x64
+		{1E3DDC87-3333-4E56-9FDD-BF0DED4CD70A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1E3DDC87-3333-4E56-9FDD-BF0DED4CD70A}.Debug|Win32.Build.0 = Debug|Win32
+		{1E3DDC87-3333-4E56-9FDD-BF0DED4CD70A}.Debug|x64.ActiveCfg = Debug|x64
+		{1E3DDC87-3333-4E56-9FDD-BF0DED4CD70A}.Debug|x64.Build.0 = Debug|x64
+		{1E3DDC87-3333-4E56-9FDD-BF0DED4CD70A}.Release|Win32.ActiveCfg = Release|Win32
+		{1E3DDC87-3333-4E56-9FDD-BF0DED4CD70A}.Release|Win32.Build.0 = Release|Win32
+		{1E3DDC87-3333-4E56-9FDD-BF0DED4CD70A}.Release|x64.ActiveCfg = Release|x64
+		{1E3DDC87-3333-4E56-9FDD-BF0DED4CD70A}.Release|x64.Build.0 = Release|x64
+		{1B2DB7D9-20CB-4E1E-8370-F10C3001FF3A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1B2DB7D9-20CB-4E1E-8370-F10C3001FF3A}.Debug|Win32.Build.0 = Debug|Win32
+		{1B2DB7D9-20CB-4E1E-8370-F10C3001FF3A}.Debug|x64.ActiveCfg = Debug|x64
+		{1B2DB7D9-20CB-4E1E-8370-F10C3001FF3A}.Debug|x64.Build.0 = Debug|x64
+		{1B2DB7D9-20CB-4E1E-8370-F10C3001FF3A}.Release|Win32.ActiveCfg = Release|Win32
+		{1B2DB7D9-20CB-4E1E-8370-F10C3001FF3A}.Release|Win32.Build.0 = Release|Win32
+		{1B2DB7D9-20CB-4E1E-8370-F10C3001FF3A}.Release|x64.ActiveCfg = Release|x64
+		{1B2DB7D9-20CB-4E1E-8370-F10C3001FF3A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2A2C924-9601-46A8-89F0-6BA77EAD3AD2}
 	EndGlobalSection
 EndGlobal

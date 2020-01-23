@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- When designing an XML schema, it is useful to experiment with a sample instance document. -->
+
+<TestOutput xmlns="http://vortex.cis.vtc.edu/xml/UnitTestManager_0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://vortex.cis.vtc.edu/xml/UnitTestManager_0.0 UnitTestManager.xsd">
+
+  <MetaData>
+    <Title>Sample UnitTestManager Output</Title>
+  </MetaData>
+
+  <Results>
+    <TestResult title="Test 1">
+      <Failure>Badness #1!</Failure>
+      <Failure>Badness #2!</Failure>
+    </TestResult>
+
+    <TestResult title="Test 2">
+      <Failure>Badness #1!</Failure>
+      <Failure file="c:\home\prog\y\check\check.cpp"
+               line="18">test_buffer1.length( ) == 1</Failure>
+      <Exception type="UnitException">explicit raise</Exception>
+    </TestResult>
+
+    <TestResult title="Test 3">
+      <Failure>Badness #1!</Failure>
+      <BadReturn>false</BadReturn>
+    </TestResult>
+    
+    <TestResult title="Test 4">
+    </TestResult>
+    
+  </Results>
+
+</TestOutput>

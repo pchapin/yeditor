@@ -11,7 +11,7 @@
 .vs
 Debug
 Release
-scr.vcxproj.user
+*.user
 
 # Code::Blocks generated files.
 *.layout

@@ -30,9 +30,15 @@
     <ClCompile Include="..\EditList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UnitTestManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="check.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTestManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,9 +1,0 @@
-// Environment Setup
-//==================
--dDEBUG
--i..\lint          // Contains translation headers.
--libdir(..\scr)
-
-// scr Specific Options
-//======================
-
