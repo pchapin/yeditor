@@ -45,29 +45,13 @@ Peter C. Chapin
 Prerequisites
 -------------
 
-Y depends on a library of various utility components called Spica. This library can be cloned
-from GitHub using the URL:
+Y depends on a cross platform screen handling library called Scr. This library is part of the Y
+repository (in the `scr` folder). However, it is fairly independent of Y and could potentially
+be used in other projects. The Scr library can be compiled separately or, if you are using
+Visual Studio or Code::Blocks, it is also automatically built during the build of Y itself.
 
-    https://github.com/pchapin/spica.git
-
-It should be cloned into a sibling folder of Y; the various build control files in Y expect this
-location. Spica can be compiled separately or, if you are using Visual Studio or Code::Blocks,
-it is automatically built during the build of Y itself.
-
-In addition Y depends on a cross platform screen handling library called Scr. This library is
-part of the Y repository (in the `scr` folder). However, it is fairly independent of Y and could
-potentially be used in other projects. As with Spica, the Scr library can be compiled separately
-or, if you are using Visual Studio or Code::Blocks, it is also automatically built during the
-build of Y itself.
-
-It is important to realize that both Spica and Scr are independent projects that can be used for
-other purposes. They have their own documentation and may use different conventions. See their
-respective folders for more information about these projects. That said, most of the conventions
-used by Spica and Scr are similar to those used by Y itself. If you are familiar with Y's
-organization you will find the organization of Spica and Scr to be straight forward.
-
-The Y code some general purpose tools. Currently the only tool provided with Y is `depend`. This
-tool computes dependency lists for Makefiles.
+The Y code base also contains some general purpose tools. Currently the only tool provided with
+Y is `depend`. This tool computes dependency lists for Makefiles.
 
 
 Compiling
@@ -79,9 +63,9 @@ G++ targetting Unix-like systems is the primary compiler and platform for Y at t
 Makefiles are provided that build each component of the system. In general you can just enter a
 folder and type `make` to build whatever entity is contained in that folder.
 
-Currently it is necessary to build the Spica and Scr libraries first manually (using Makefiles)
-before you build Y itself. Y should probably be built before you build the test programs but
-that is not strictly necessary at this time.
+Currently it is necessary to build the Scr library first manually (using Makefiles) before you
+build Y itself. Y should probably be built before you build the test programs but that is not
+strictly necessary.
 
 It is likely that Y and its supporting libraries can be built with clang++ as well. This might
 only entail minor modifications to the Makefiles.
@@ -93,7 +77,7 @@ Code::Blocks project files are also provided for users who prefer using an IDE o
 project files assume you are using the g++ compiler.
 
 Note that the Code::Blocks project files are not used as much as the Makefiles so they may be in
-need of some maintenance. In particular you may need to add/remove some files from the project
+need of some maintenance. In particular, you may need to add/remove some files from the project
 definitions.
 
 To build Y with Code::Blocks load src/Y.workspace into Code::Blocks and build the Debug
@@ -106,8 +90,8 @@ Windows tends to be less frequent than on Linux, the Windows build is reasonably
 and should always be working.
 
 To build Y with Visual Studio load `Y.sln`. This solution file contains references to all
-required projects (including Spica, Scr, and the test programs). Thus building this solution
-will build everything.
+required projects (including Scr and the test programs). Thus building this solution will build
+everything.
 
 ### Open Watcom
 
@@ -126,8 +110,8 @@ To build Y with Open Watcom follow this procedure.
   appropriate platform specific version of Y. Note that you might have to adjust the INCLUDE
   environment variable if you switch between OS/2 and Win32 development.
 
-You will need to build the supporting Spica and Scr libraries using Open Watcom as well. Look
-for owbuild folders in those code bases; the build system is organized in a similar way.
+You will need to build the supporting Scr library using Open Watcom as well. Look for owbuild
+folders in those code bases; the build system is organized in a similar way.
 
 You may find project files for the Open Watcom IDE (*.wpj and *.tgt). If they exist at all these
 files are likely to be very outdated.
@@ -149,9 +133,6 @@ Y's internals are documented using the [Doxygen](http://www.doxygen.org/) system
 suitable version of Doxygen installed you can run the tool in the `src` folder. This will create
 an `internal` folder under the `doc` folder where the HTML formatted documentation can be found.
 
-The Spica and Scr projects are documented separately but have a similar organization. See those
-projects for more information.
-
 
 Testing
 -------
@@ -162,11 +143,11 @@ systems. It is also extremely minimal. Enhancing Y's unit tests is a work in pro
 
 Note that the unit test program makes use of a simple unit test framework for C++ called UTM
 (Unit Test Manager). This framework generates XML reports of test results and is intended to be
-used with a continuous integration server. UTM is a subproject of Spica; see the Spica project
-for more information.
+used with a continuous integration server.
 
-The Spica and Scr projects have their own testing system. See those projects for more
-information.
+There are also some test/demonstration programs for the Scr library in `scr/check_simple` and
+`scr\check_manager`. These programs illustrate how Scr can be used, but do not attempt to
+exhaustively test the library. More work is needed in this area.
 
 
 Analysis
