@@ -5,7 +5,7 @@ project Y is
    for Main use ("y.adb");
 
    package Documentation is
-      for Documentation_Dir use "api";
+      for Documentation_Dir use "doc/api";
    end Documentation;
 
 end Y;
