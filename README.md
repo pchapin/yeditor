@@ -80,8 +80,9 @@ Note that the Code::Blocks project files are not used as much as the Makefiles s
 need of some maintenance. In particular, you may need to add/remove some files from the project
 definitions.
 
-To build Y with Code::Blocks load src/Y.workspace into Code::Blocks and build the Debug
-and Release configurations. This workspace includes the Spica and Scr projects as well.
+To build Y with Code::Blocks load src/Y.workspace into Code::Blocks and build the Debug and
+Release configurations. This workspace contains references to all required projects (including
+Scr and the test programs). Thus building this workspace will build everything.
 
 ### Visual C++
 
@@ -138,8 +139,9 @@ Testing
 -------
 
 Y has a unit test program in the `src\check` folder. It is automatically built by the Visual
-Studio solution but it is (at the time of this writing) not well supported by the other build
-systems. It is also extremely minimal. Enhancing Y's unit tests is a work in progress.
+Studio solution and the CodeBlocks workspace, but it is (at the time of this writing) not well
+supported by the other build systems. It is also extremely minimal. Enhancing Y's unit tests is
+a work in progress.
 
 Note that the unit test program makes use of a simple unit test framework for C++ called UTM
 (Unit Test Manager). This framework generates XML reports of test results and is intended to be
