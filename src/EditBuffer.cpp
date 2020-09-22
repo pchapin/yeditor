@@ -57,11 +57,11 @@ EditBuffer::EditBuffer( ) :
  * \throws std::bad_alloc if insufficient memory available.
  */
 EditBuffer::EditBuffer( const char *const str ) :
-    workspace( NULL ),
+    workspace( nullptr ),
     capacity ( 0 ),
     size     ( 0 )
 {
-    if( str == NULL ) {
+    if( str == nullptr ) {
         capacity  = initial_capacity;
         workspace = new char[capacity];
         size      = 0;
