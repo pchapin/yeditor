@@ -16,16 +16,19 @@
 #include "support.hpp"
 #include "yfile.hpp"
 
-// These are the keywords that appear in filelist.yfy.
-static const char *key_words[] = {
-    "ACTIVE"     , "BLOCK"      , "BLOCK_LINE" ,
-    "COLOR"      , "CURSOR_COL" , "CURSOR_LINE",
-    "DELETED"    , "INSERT"     , "NAME"       ,
-    "TAB_SETTING", "WINDOW_COLUMN" , "WINDOW_LINE",
-    0
-};
+namespace {
 
-// This list contains file descriptors as placed in filelist.yfy.
+    //! These are the keywords that appear in filelist.yfy.
+    const char *key_words[] = {
+        "ACTIVE"     , "BLOCK"         , "BLOCK_LINE" ,
+        "COLOR"      , "CURSOR_COLUMN" , "CURSOR_LINE",
+        "DELETED"    , "INSERT"        , "NAME"       ,
+        "TAB_SETTING", "WINDOW_COLUMN" , "WINDOW_LINE",
+        0
+    };
+
+}
+
 List<FileDescriptor> descriptor_list;
 
 //! Constructor sets defaults for a file loaded into the editor for the first time.
@@ -55,7 +58,7 @@ void FileDescriptor::sanity_check( )
     if( tab_setting <= 0 ) tab_setting = 2;
     if( window_line <  0 ) window_line = 0;
 
-    // We also need to verify that the cursor is in the window.
+    // TODO: We also need to verify that the cursor is in the window.
 }
 
 
@@ -230,7 +233,7 @@ void write_descriptor( std::FILE *output, const FileDescriptor &the_descriptor )
     std::fprintf(output, "BLOCK=%s\n", (the_descriptor.block_flag == true) ? "true" : "false");
     std::fprintf(output, "BLOCK_LINE=%ld\n", the_descriptor.block_line);
     std::fprintf(output, "COLOR=%d\n", the_descriptor.color_attribute);
-    std::fprintf(output, "CURSOR_COL=%u\n", the_descriptor.cursor_column);
+    std::fprintf(output, "CURSOR_COLUMN=%u\n", the_descriptor.cursor_column);
     std::fprintf(output, "CURSOR_LINE=%ld\n", the_descriptor.cursor_line);
     std::fprintf(output, "DELETED=%s\n", (the_descriptor.deleted_flag == true) ? "true" : "false");
     std::fprintf(output, "INSERT=%s\n", (the_descriptor.insert_flag == true) ? "true" : "false");

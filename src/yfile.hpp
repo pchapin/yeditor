@@ -14,6 +14,7 @@ class YEditFile;
 
 void read_yfile( );
 
+//! Describes information about a file that is saved between invocations of Y.
 class FileDescriptor {
 
     /*!
@@ -63,7 +64,7 @@ public:
     void sanity_check();
 };
 
-// This list contains file descriptors as placed in filelist.yfy.
+//! This list contains file descriptors as placed in filelist.yfy.
 extern List<FileDescriptor> descriptor_list;
 
 /*!
