@@ -1,6 +1,6 @@
 /*! \file    UnitTestManager.hpp
     \brief   Interface to the unit test manager abstract object.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
+    \author  Peter C. Chapin <chapinp@acm.org>
 */
 
 #include <iostream>

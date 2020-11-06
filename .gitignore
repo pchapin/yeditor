@@ -38,6 +38,9 @@ doc/y20.out
 doc/y20.pdf
 doc/y20.toc
 
+# Text editor user-specific configuration files.
+src/Y.sublime-workspace
+
 # Executables
 src/Y
 src/check/check
