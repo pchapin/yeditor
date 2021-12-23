@@ -6,6 +6,7 @@
 #ifndef WORDSOURCE_HPP
 #define WORDSOURCE_HPP
 
+#include <cstddef>
 #include <cstdio>
 
 #include "EditBuffer.hpp"
@@ -65,22 +66,22 @@ public:
 
 private:
     EditBuffer string_buffer; //!< The text in question.
-    size_t     length;        //!< The number of characters in string_buffer.
-    size_t     offset;        //!< Current get() location.
+    std::size_t     length;        //!< The number of characters in string_buffer.
+    std::size_t     offset;        //!< Current get() location.
 
-    virtual int  get( ) override;
-    virtual void unget( int ch ) override;
+    virtual int  get( );
+    virtual void unget( int ch );
 };
 
 
 //! Objects of this class take words from the keyboard.
 class KeyboardWord : public WordSource {
 public:
-    virtual bool get_word( EditBuffer &word ) override;
+    virtual bool get_word( EditBuffer &word );
 
 private:
-    virtual int  get( ) override;
-    virtual void unget( int ch ) override;
+    virtual int  get( );
+    virtual void unget( int ch );
 };
 
 
@@ -93,8 +94,8 @@ public:
 private:
     std::FILE *input_file;
 
-    virtual int  get( ) override;
-    virtual void unget( int ch ) override;
+    virtual int  get( );
+    virtual void unget( int ch );
 };
 
 

@@ -1,6 +1,6 @@
 ############################################################################
 # FILE   : makefile
-# AUTHOR : Peter C. Chapin <PChapin@vtc.vsc.edu>
+# AUTHOR : Peter C. Chapin <chapinp@acm.org>
 #
 # This is the makefile for the scr library.
 ############################################################################

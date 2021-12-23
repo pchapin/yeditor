@@ -33,8 +33,8 @@ public:
     EditBuffer( const char * );
     EditBuffer( const EditBuffer & );
     EditBuffer &operator=( const EditBuffer & );
-    EditBuffer( EditBuffer && );
-    EditBuffer &operator=( EditBuffer && );
+    //EditBuffer( EditBuffer && );
+    //EditBuffer &operator=( EditBuffer && );
    ~EditBuffer( );
 
     // Access.

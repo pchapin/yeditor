@@ -21,16 +21,13 @@ Introduction
 Greetings!
 
 This is the code base for the Y text editor, version 2.0. Although currently unfinished, it is
-my intention to release the source and documentation of Y under the terms of the GPL. Please
-note that I disclaim all warranties implied or otherwise. All the necessary, precise legal
-language will be added later.
+my intention to release the source and documentation of Y under the terms of the some
+appropriate open source license. Please note that I disclaim all warranties implied or
+otherwise. All the necessary, precise legal language will be added later.
 
 Y is a simple, but effective cross platform editor. The supported platforms are Win32 consoles
 and Linux terminals (with some testing also on Cygwin). Some level of support also once existed
-for OS/2 text mode and DOS 16 bit targets. However, that support relies on the Open Watcom
-compiler which, unfortunately, is too far behind the latest C++ standard to compile Y at this
-time. However, it is my hope that Open Watcom will be updated at some point allowing these other
-targets to be used again.
+for OS/2 text mode and DOS 16 bit targets. However, that support is largely untested.
 
 I invite you to play around with Y. Compile it, use it, and let me know what you think. If you
 find or fix a problem, send me email or, better yet, open an issue on GitHub or create a pull
@@ -97,26 +94,27 @@ everything.
 ### Open Watcom
 
 Open Watcom is a cross platform compiler that supports Windows, OS/2, DOS, and Linux. In theory
-it can be used to build Y for all of these systems regardless of your development platform.
-Unfortunately Open Watcom does not currently (January 2020) support C++ 2011 to any significant
-degree. Thus it can't be used to build Y at this time. However the project files for Open Watcom
-are retained in the hope that some future version of that compiler will be able to compile Y
-again. Watcom was once the primary compiler for Y development and continued support for it, at
-least on paper, should be retained out of respect if nothing else.
+it can be used to build Y for all of these systems regardless of your development platform. At
+the current time some of the source files make use of features that are not supported by Open
+Watcom (as of December 2021). Thus it can't be used to build Y at this time. However the
+project files for Open Watcom are retained. There is work being done on removing the newer
+features that Open Watcom can't handle so that Y can once again be built by that compiler. It
+is also hoped that Open Watcom will evolve in the future to support a larger fraction of the
+newer C++ standards. When that happens, those newer features could once again be used in Y.
 
 To build Y with Open Watcom follow this procedure.
 
 + In the `src\owbuild` folder, change into the folder dos16, os232, linux, or win32 depending on
   which platform(s) you want to target. Issue a `wmake` command in that folder to build the
   appropriate platform specific version of Y. Note that you might have to adjust the INCLUDE
-  environment variable if you switch between OS/2 and Win32 development.
+  environment variable depending on if your target platform is different than your build
+  platform.
 
 You will need to build the supporting Scr library using Open Watcom as well. Look for owbuild
 folders in those code bases; the build system is organized in a similar way.
 
 You may find project files for the Open Watcom IDE (*.wpj and *.tgt). If they exist at all these
 files are likely to be very outdated.
-
 
 Building the Documentation
 --------------------------

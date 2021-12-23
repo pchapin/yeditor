@@ -1,11 +1,11 @@
 ############################################################################
 # FILE   : master.mif
-# AUTHOR : Peter C. Chapin <PChapin@vtc.vsc.edu>
+# AUTHOR : Peter C. Chapin <chapinp@acm.org>
 #
 # Master file list for the scr project.
 ############################################################################
 
-cpp_options = -q -w4 -xs -fo=$*.obj -I../.. -I../../../Spica/Cpp
+cpp_options = -q -w4 -xs -fo=$*.obj -I../.. -I../../../../Spica/Cpp
 
 # Object file list.
 OBJS = &

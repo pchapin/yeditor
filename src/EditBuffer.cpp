@@ -119,7 +119,7 @@ EditBuffer &EditBuffer::operator=( const EditBuffer &existing )
     return( *this );
 }
 
-
+#ifdef NEVER
 //! Move constructor
 EditBuffer::EditBuffer( EditBuffer &&existing) :
     workspace( existing.workspace ),
@@ -147,6 +147,7 @@ EditBuffer &EditBuffer::operator=( EditBuffer &&existing )
     }
     return( *this );
 }
+#endif
 
 
 //-----------------------------------

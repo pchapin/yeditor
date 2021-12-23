@@ -11,7 +11,7 @@
 
 bool new_line_command( )
 {
-    YEditFile &the_file     = FileList::active_file( );
+    YEditFile &the_file      = FileList::active_file( );
     bool        return_value = true;
 
     // Do the actual work.
@@ -28,7 +28,7 @@ bool new_line_command( )
     the_file.CP( ).jump_to_column( 0 );
 
     // Insert spaces to indent as long as things are working.
-    ptrdiff_t count = line_offset;
+    std::ptrdiff_t count = line_offset;
     while( count-- && return_value == true ) {
 
         if( the_file.insert_mode( ) == YEditFile::INSERT )
