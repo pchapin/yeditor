@@ -138,7 +138,7 @@ bool search_and_replace_command( )
             // Compute the desired column number of window's upper left corner.
             int box_column = point.cursor_column( ) - point.window_column( ) + 2;
             box_column =
-                ( box_column + std::strlen( buffer ) + 6 > static_cast< size_t >( scr::number_of_columns( ) - 2 ) ) ?
+                ( box_column + std::strlen( buffer ) + 6 > static_cast< std::size_t >( scr::number_of_columns( ) - 2 ) ) ?
                     scr::number_of_columns() - 2 - std::strlen(buffer) - 6 : box_column;
 
             scr::MessageWindow prompt;
@@ -259,12 +259,12 @@ bool set_tab_command( )
 bool skip_left_command( )
 {
     YEditFile &the_file = FileList::active_file( );  // Assume active file does not change.
-    int old_column       = the_file.CP( ).cursor_column( );    // Original cursor column.
-    int column           = old_column;                 // New cursor column position.
-    size_t length        = the_file.CP_line_length( );
+    int old_column       = the_file.CP( ).cursor_column( );  // Original cursor column.
+    int column           = old_column;                       // New cursor column position.
+    std::size_t length   = the_file.CP_line_length( );
 
     // If cursor is at or off the end of the line, just advance to end.
-    if( static_cast< size_t >( column ) > length ) {
+    if( static_cast< std::size_t >( column ) > length ) {
         the_file.end( );
     }
     else {
@@ -282,10 +282,10 @@ bool skip_right_command( )
     YEditFile &the_file = FileList::active_file( );     // Assume active file does not change.
     int old_column       = the_file.CP( ).cursor_column( );  // Original cursor column position.
     int column           = old_column;                  // New column position.
-    size_t length        = the_file.CP_line_length( );  // Length of line.
+    std::size_t length   = the_file.CP_line_length( );  // Length of line.
 
     // Do nothing if cursor off end of line.
-    if( static_cast< size_t >( column ) < length ) {
+    if( static_cast< std::size_t >( column ) < length ) {
         column = word_right( *the_file.get_line( ), column );
 
         // Position the cursor on the next word.

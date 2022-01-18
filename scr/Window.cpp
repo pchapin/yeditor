@@ -46,36 +46,11 @@ namespace scr {
      * background to nullptr. This ensures no problem when an undefined window is destroyed.
      */
     SimpleWindow::SimpleWindow( ) :
-        is_hidden( false ),
-        is_defined( false )
+        is_hidden ( false ),
+        is_defined( false ),
+        hidden    ( nullptr ),
+        save_data ( nullptr )
     { }
-
-
-    //! Move constructor
-    SimpleWindow::SimpleWindow( SimpleWindow &&existing )
-    {
-        // Move the storage areas.
-        save_data = std::move( existing.save_data );
-        hidden = std::move( existing.hidden );
-
-        // Copy other members.
-        total_row = existing.total_row;
-        total_column = existing.total_column;
-        total_width = existing.total_width;
-        total_height = existing.total_height;
-        window_row = existing.window_row;
-        window_column = existing.window_column;
-        window_width = existing.window_width;
-        window_height = existing.window_height;
-        window_color = existing.window_color;
-        window_border_type = existing.window_border_type;
-        window_border_color = existing.window_border_color;
-        is_defined = existing.is_defined;
-        is_hidden = existing.is_hidden;
-
-        // Turn the lights out on the other object.
-        existing.is_defined = false;
-    }
 
 
     //! Destructor
@@ -87,6 +62,8 @@ namespace scr {
     {
         if( !is_defined ) return;
         hide( );
+        delete [] hidden;
+        delete [] save_data;
     }
 
 
@@ -122,11 +99,9 @@ namespace scr {
         // Try to allocate memory for background and image.
         std::size_t size = 2 * width * height;
 
-        // Allocate memory carefully for exception safety.
-        std::unique_ptr<char[]> new_save( new char[size] );
-        std::unique_ptr<char[]> new_hidden( new char[size] );
-        save_data = std::move( new_save );
-        hidden = std::move( new_hidden );
+        // Allocate memory.
+        save_data = new char[size];
+        hidden = new char[size];
 
         // Set members to initial values.
         total_row = window_row = row;
@@ -138,7 +113,7 @@ namespace scr {
         window_border_color = ( border_color == WINDOW_COLOR ) ? window_color : border_color;
 
         // Draw the window on the screen.
-        read( total_row, total_column, total_width, total_height, save_data.get( ) );
+        read( total_row, total_column, total_width, total_height, save_data );
         scr::clear( total_row, total_column, total_width, total_height, window_color );
         if( window_border_type != NO_BORDER ) {
             window_row++;
@@ -199,8 +174,8 @@ namespace scr {
         if( !is_defined ) return;
 
         if( !is_hidden ) {
-            read( total_row, total_column, total_width, total_height, hidden.get( ) );
-            write( total_row, total_column, total_width, total_height, save_data.get( ) );
+            read( total_row, total_column, total_width, total_height, hidden );
+            write( total_row, total_column, total_width, total_height, save_data );
             is_hidden = true;
         }
     }
@@ -216,8 +191,8 @@ namespace scr {
         if( !is_defined ) return;
 
         if( is_hidden ) {
-            read( total_row, total_column, total_width, total_height, save_data.get( ) );
-            write( total_row, total_column, total_width, total_height, hidden.get( ) );
+            read( total_row, total_column, total_width, total_height, save_data );
+            write( total_row, total_column, total_width, total_height, hidden );
             is_hidden = false;
         }
     }

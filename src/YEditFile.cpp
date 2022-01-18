@@ -278,7 +278,7 @@ void YEditFile::display( )
             // Used to hold a line of text before going to the screen. This is effectively the
             // maximum width display Y20 can handle.
 
-            size_t length = std::strlen( line ) + 1;
+            std::size_t length = std::strlen( line ) + 1;
             length = ( length > 1024 ) ? 1024 : length;
 
             std::memcpy( line_buffer, line, length );

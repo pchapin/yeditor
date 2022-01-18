@@ -38,6 +38,7 @@ file parameter_stack.obj
 file SearchEditFile.obj
 file special.obj
 file support.obj
+file Timer.obj
 file WordSource.obj
 file WPEditFile.obj
 file y.obj

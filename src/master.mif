@@ -5,7 +5,7 @@
 # Master file list for the Y project.
 ############################################################################
 
-cpp_options = -q -w4 -xs -fo=$*.obj -d2 -I../.. -I../../../../Spica -I../../../scr
+cpp_options = -q -w4 -xs -fo=$*.obj -d2 -I../.. -I../../../scr
 
 # Object file list.
 OBJS = &
@@ -49,6 +49,7 @@ OBJS = &
     SearchEditFile.obj    &
     special.obj           &
     support.obj           &
+    Timer.obj             &
     WordSource.obj        &
     WPEditFile.obj        &
     y.obj                 &

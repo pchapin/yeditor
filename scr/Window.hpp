@@ -38,8 +38,12 @@ namespace scr {
         BoxType window_border_type;  //!< Border type.
         int window_border_color;     //!< Color attribute of border.
 
-        std::unique_ptr<char[]> hidden;     //!< Window image when a window is hidden.
-        std::unique_ptr<char[]> save_data;  //!< Saved background material.
+        char *hidden;       //!< Window image when a window is hidden.
+        char *save_data;    //!< Saved background material.
+
+        // Disable copying of SimpleWindow objects.
+        SimpleWindow( const SimpleWindow &existing );
+        SimpleWindow &operator=( const SimpleWindow &existing );
 
     protected:
         bool is_defined;    //!< True when open( ) has been used without error.
@@ -47,9 +51,6 @@ namespace scr {
 
     public:
         SimpleWindow( );
-        SimpleWindow( const SimpleWindow &existing ) = delete;
-        SimpleWindow &operator=( const SimpleWindow &existing ) = delete;
-        SimpleWindow( SimpleWindow &&existing );
        ~SimpleWindow( );
 
         bool open(

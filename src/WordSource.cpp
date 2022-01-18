@@ -5,7 +5,7 @@
 
 #include <cctype>
 #include <cstring>
-#include <sstream>
+#include <strstream>
 
 #include "EditBuffer.hpp"
 #include "keyboard.hpp"
@@ -751,9 +751,11 @@ bool KeyboardWord::get_word( EditBuffer &word )
     // If this is a quoted keystroke, compose a special macro right here. Do NOT search the
     // keyboard mapping table.
     if( ch & 0x8000 ) {
-        std::ostringstream formatter;
-        formatter << '"' << static_cast<char>( ch ) << "\" ADD_TEXT";
+        std::ostrstream formatter;
+        formatter << '"' << static_cast<char>( ch ) << "\" ADD_TEXT" << std::ends;
         words = formatter.str( );
+        // TODO: How does Open Watcom deallocate the buffer inside the ostrstream object?
+        //formatter.freeze( false );
     }
 
     else {

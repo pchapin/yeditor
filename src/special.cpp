@@ -49,9 +49,9 @@ static int brace_count( const std::string &line )
 {
     int count = 0;
 
-    for( auto letter : line ) {
-        if( letter == '{' ) count++;
-        if( letter == '}' ) count--;
+    for( int i = 0; i < line.length( ); ++i ) {
+        if( line[i] == '{' ) count++;
+        if( line[i] == '}' ) count--;
     }
     return count;
 }

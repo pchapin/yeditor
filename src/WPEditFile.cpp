@@ -141,7 +141,7 @@ static bool process_paragraph( EditList &list, long first, long last )
         // TODO: Clean this mess up!
         std::string string_buffer = temp.get( )->to_string( );
         char *buffer = new char[string_buffer.length( ) + 1];
-        strcpy( buffer, string_buffer.c_str( ) );
+        std::strcpy( buffer, string_buffer.c_str( ) );
         char *word = std::strtok( buffer, " " );
 
         // Loop over all words in the line from the temporary list.
