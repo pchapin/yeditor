@@ -25,6 +25,9 @@ obj
 *.bc2
 *.o
 
+# Sublime configuration files.
+Y.sublime-workspace
+
 # depend generated files.
 *.out
 
