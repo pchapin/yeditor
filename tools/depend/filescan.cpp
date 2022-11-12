@@ -11,13 +11,11 @@
 #include <fstream>
 #include <iostream>
 
-#include "ansiscr.hpp"
 #include "filename.hpp"
 #include "filescan.hpp"
 #include "linescan.hpp"
 
 using namespace std;
-using namespace scr::ansi;
 
 static int nesting_level = 0;
 
@@ -44,11 +42,9 @@ static void print(char *name)
             _stricmp( end_pointer, ".cpp" ) == 0 ) flag = true;
     #endif
 
-    // Print the name with special effect if necessary.
-    if( flag ) bold_on( );
+    // Print the name.
     for( int i = 0; i < nesting_level; i++ ) cout << "  " << flush;
     cout << "Scanning " << name << "..." << flush;
-    if( flag ) reset_screen( );
     cout << endl;
 
     return;
@@ -86,14 +82,12 @@ void handle_file( char *name )
     input_file.open( file_name );
     if( !input_file ) {
 
-        // Print error message with special effect. Notice that we have to indent an amount of
-        // nesting_level + 1 since we want the error message to appear where the name should go
-        // and we haven't incremented the nesting_level to that point yet.
+        // Print error message. Notice that we have to indent an amount of nesting_level + 1
+        // since we want the error message to appear where the name should go and we haven't
+        // incremented the nesting_level to that point yet.
         //
-        set_color( F_YELLOW );
         for( int i = 0; i < nesting_level + 1; i++ ) cout << "  " << flush;
         cout << "!!! Can't open " << file_name << " for input. Skipping..." << flush;
-        reset_screen( );
         cout << endl;
     }
 

@@ -23,7 +23,6 @@ not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Bo
 #include <cstdlib>
 #include <cstring>
 
-#include "ansiscr.hpp"
 #include "filename.hpp"
 #include "filescan.hpp"
 #include "get_switch.hpp"
