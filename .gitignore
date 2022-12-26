@@ -40,6 +40,7 @@ doc/y20.log
 doc/y20.out
 doc/y20.pdf
 doc/y20.toc
+doc/y20.synctex.gz
 
 # Text editor user-specific configuration files.
 src/Y.sublime-workspace
@@ -48,6 +49,3 @@ src/Y.sublime-workspace
 src/Y
 src/check/check
 tools/depend/depend
-
-# Ada Version
-api

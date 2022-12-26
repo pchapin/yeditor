@@ -3,7 +3,7 @@
 #
 
 CXX=g++
-CXXFLAGS=-Wall -std=c++11 -c -O -I.. -I../../scr
+CXXFLAGS=-Wall -std=c++98 -c -O -I.. -I../../scr
 LINK=g++
 LINKFLAGS=-lncurses
 SOURCES=check.cpp UnitTestManager.cpp check_EditBuffer.cpp check_EditList.cpp

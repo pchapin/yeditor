@@ -3,7 +3,7 @@
 #
 
 CXX=g++
-CXXFLAGS=-std=c++11 -c -O -I..
+CXXFLAGS=-std=c++98 -c -Wall -O -I..
 LINK=g++
 LINKFLAGS=-lncurses
 SOURCES=check.cpp

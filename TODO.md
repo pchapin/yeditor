@@ -10,9 +10,6 @@ additional items.
 
 The items below are in no particular order.
 
-+ Write a Y style guide to help future Y developers understand the style used in Y's source
-  code.
-
 + Update the comments in the source files to Doxygen style. [In progress]
 
 + Remove C library I/O functions and replace them with IOStreams facilities instead.

@@ -26,17 +26,18 @@ appropriate open source license. Please note that I disclaim all warranties impl
 otherwise. All the necessary, precise legal language will be added later.
 
 Y is a simple, but effective cross platform editor. The supported platforms are Win32 consoles
-and Linux terminals (with some testing also on Cygwin). Some level of support also once existed
-for OS/2 text mode and DOS 16 bit targets. However, that support is largely untested.
+and Linux terminals (with some testing also on Cygwin and macOS). Some level of support also
+once existed for OS/2 text mode and DOS 16 bit targets. However, that support is largely
+untested, and maybe considerably broken.
 
 I invite you to play around with Y. Compile it, use it, and let me know what you think. If you
 find or fix a problem, send me email or, better yet, open an issue on GitHub or create a pull
-request. I can be reached at chapinp@acm.org.
+request. I can be reached at chapinp@proton.me.
 
 There is some sketchy documentation about Y in the doc directory. Some of that document is
 outdated and is in serious need of editing. Fixing the documentation is a work in progress.
 
-Peter C. Chapin
+Peter Chapin
 
 
 Prerequisites
@@ -56,16 +57,14 @@ Compiling
 
 ### g++
 
-G++ targetting Unix-like systems is the primary compiler and platform for Y at this time.
-Makefiles are provided that build each component of the system. In general you can just enter a
-folder and type `make` to build whatever entity is contained in that folder.
+G++ targetting Unix-like systems is the primary compiler and platform for Y at this time. Note
+that on macOS, `g++` is an alias for `clang++`. Makefiles are provided that build each component
+of the system. In general you can just enter a folder and type `make` to build whatever entity
+is contained in that folder.
 
 Currently it is necessary to build the Scr library first manually (using Makefiles) before you
 build Y itself. Y should probably be built before you build the test programs but that is not
 strictly necessary.
-
-It is likely that Y and its supporting libraries can be built with clang++ as well. This might
-only entail minor modifications to the Makefiles.
 
 ### Code::Blocks
 
@@ -83,7 +82,7 @@ Scr and the test programs). Thus building this workspace will build everything.
 
 ### Visual C++
 
-Solution and project files for Visual Studio 2017 are also provided. Although development on
+Solution and project files for Visual Studio 2022 are also provided. Although development on
 Windows tends to be less frequent than on Linux, the Windows build is reasonably well maintained
 and should always be working.
 
@@ -95,12 +94,8 @@ everything.
 
 Open Watcom is a cross platform compiler that supports Windows, OS/2, DOS, and Linux. In theory
 it can be used to build Y for all of these systems regardless of your development platform. At
-the current time some of the source files make use of features that are not supported by Open
-Watcom (as of December 2021). Thus it can't be used to build Y at this time. However the
-project files for Open Watcom are retained. There is work being done on removing the newer
-features that Open Watcom can't handle so that Y can once again be built by that compiler. It
-is also hoped that Open Watcom will evolve in the future to support a larger fraction of the
-newer C++ standards. When that happens, those newer features could once again be used in Y.
+the current time Y development is limited to C++98, which Open Watcom largely supports. Newer
+C++ features can only be used to the extent that Open Watcom supports them.
 
 To build Y with Open Watcom follow this procedure.
 
