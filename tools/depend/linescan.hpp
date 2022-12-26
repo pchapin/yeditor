@@ -1,8 +1,7 @@
 /*! \file    linescan.hpp
-    \brief   Declaration of functions that scan lines looking for #include.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Declaration of functions that scan lines looking for #include.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ */
 
 #ifndef LINESCAN_HPP
 #define LINESCAN_HPP

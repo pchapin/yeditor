@@ -1,10 +1,10 @@
 /*! \file    adjdate.cpp
-    \brief   Function that cleans up the __DATE__ macro.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-This file contains a function which adjusts the format of __DATE__. It puts a comma after the
-day of the month and purges leading zeros or spaces from the day of the month.
-*/
+ *  \brief   Function that cleans up the __DATE__ macro.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ *
+ * This file contains a function which adjusts the format of __DATE__. It puts a comma after the
+ * day of the month and purges leading zeros or spaces from the day of the month.
+ */
 
 #include <cstring>
 #include "misc.hpp"

@@ -1,8 +1,7 @@
 /*! \file    splits.cpp
-    \brief   String splitting functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   String splitting functions.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ */
 
 #include "environ.hpp"
 

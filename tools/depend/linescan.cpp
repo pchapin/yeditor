@@ -1,8 +1,8 @@
 /*! \file    linescan.hpp
-    \brief   Definition of line scanning functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
+ *  \brief   Definition of line scanning functions.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ */
 
-*/
 #include "environ.hpp"
 
 #include <ctype.h>
@@ -13,31 +13,9 @@
 #include "linescan.hpp"
 #include "output.hpp"
 
-#if eOPSYS == ePOSIX
-
-/*---------------------------------------------------------------------------
-The following function converts a string to lowercase.
----------------------------------------------------------------------------*/
-
-static char *_strlwr(char *line)
-{
-    char *start = line;
-
-    while( *line ) {
-        *line = tolower( *line );
-        line++;
-    }
-    return start;
-}
-
-#endif
-
-/*----------------------------------------------------------------------------
-This function skips leading white space on the string pointed at by 'line'.
-It then checks for the presence of "#include". If it finds it, the function
-returns the address of the first non-white space character after the
-"#include". Otherwise, the function returns NULL.
-----------------------------------------------------------------------------*/
+// This function skips leading white space on the string pointed at by 'line'. It then checks
+// for the presence of "#include". If it finds it, the function returns the address of the first
+// non-white space character after the "#include". Otherwise, the function returns NULL.
 
 static char *skip_include( char *line )
 {
@@ -57,10 +35,7 @@ static char *skip_include( char *line )
     return return_value;
 }
 
-/*----------------------------------------------------------------------------
-This function orchestrates the action of the program for each line from
-each file.
-----------------------------------------------------------------------------*/
+// This function orchestrates the action of the program for each line from each file.
 
 void handle_line( char *line )
 {

@@ -1,8 +1,7 @@
 /*! \file    filename.hpp
-    \brief   Implementation of the filename handling functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of the filename handling functions.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ */
 
 #include "environ.hpp"
 
@@ -34,10 +33,8 @@ static list<string> directory_list;
 /*           Function Definitions           */
 /*==========================================*/
 
-/*----------------------------------------------------------------------------
-The following function returns true if the given string does not end with a
-directory delimiter character. Otherwise it returns false.
-----------------------------------------------------------------------------*/
+// The following function returns true if the given string does not end with a directory
+// delimiter character. Otherwise it returns false.
 
 bool no_trail( char *buffer )
 {
@@ -53,14 +50,11 @@ bool no_trail( char *buffer )
     return false;
 }
 
-/*----------------------------------------------------------------------------
-The following function takes a semicolon delimited list of directory names
-and puts the names into the String_List named directory_list above. This
-function does not append the directories to the list. If there were already
-names in the list, they are erased first. This function also inserts a null
-name as the first entry. This function modifies the string given to it as
-an argument.
-----------------------------------------------------------------------------*/
+// The following function takes a semicolon delimited list of directory names and puts the names
+// into the String_List named directory_list above. This function does not append the
+// directories to the list. If there were already names in the list, they are erased first. This
+// function also inserts a null name as the first entry. This function modifies the string given
+// to it as an argument.
 
 void set_directory_list( const char *new_directory_list )
 {
@@ -85,13 +79,10 @@ void set_directory_list( const char *new_directory_list )
     return;
 }
 
-/*----------------------------------------------------------------------------
-The following function takes the name given as a parameter and returns the
-full path of an existing file with that name. The only directory paths used
-in the test are the ones in the directory list. If no file exists with the
-given name, the orignal string is returned. If the given name starts with a
-backslash, the directory list is not used.
-----------------------------------------------------------------------------*/
+// The following function takes the name given as a parameter and returns the full path of an
+// existing file with that name. The only directory paths used in the test are the ones in the
+// directory list. If no file exists with the given name, the orignal string is returned. If the
+// given name starts with a backslash, the directory list is not used.
 
 char *match_name( char *name )
   {

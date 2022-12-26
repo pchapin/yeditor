@@ -1,8 +1,7 @@
 /*! \file    output.cpp
-    \brief   Output handling functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Output handling functions.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ */
 
 #include <cstring>
 #include <ctime>
@@ -30,10 +29,8 @@ static const char   *preamble =         // Printed at top of dependencies.
 /*           Function Definitions           */
 /*==========================================*/
 
-/*----------------------------------------------------------------------------
-The following function opens the file that will contain the dependency
-list. The file will be suitable for cut and paste into a makefile.
-----------------------------------------------------------------------------*/
+// The following function opens the file that will contain the dependency list. The file will be
+// suitable for cut and paste into a makefile.
 
 bool open( char *name )
 {
@@ -45,12 +42,9 @@ bool open( char *name )
     return true;
 }
 
-/*----------------------------------------------------------------------------
-The following function is called whenever a new primary source file is
-scanned. It prints the start of the dependency list. In particular, the
-object file name and the source file name itself. This function also
-initializes the dependency list to an empty state.
-----------------------------------------------------------------------------*/
+// The following function is called whenever a new primary source file is scanned. It prints the
+// start of the dependency list. In particular, the object file name and the source file name
+// itself. This function also initializes the dependency list to an empty state.
 
 void start( char *name )
 {
@@ -85,11 +79,8 @@ void start( char *name )
     name_list = new list<string>;
 }
 
-/*----------------------------------------------------------------------------
-This function returns YES if the given filename is already in the
-dependency list. Checking for this allows the program to skip redundant
-file reads.
-----------------------------------------------------------------------------*/
+// This function returns YES if the given filename is already in the dependency list. Checking
+// for this allows the program to skip redundant file reads.
 
 bool already_scanned( char *name )
 {
@@ -107,11 +98,9 @@ bool already_scanned( char *name )
     return false;
 }
 
-/*----------------------------------------------------------------------------
-The following function adds the given name (assumed to be complete) to the
-list of dependent files. It first searchs the list to see if the name is
-already on it. Names are not added to the list twice.
-----------------------------------------------------------------------------*/
+// The following function adds the given name (assumed to be complete) to the list of dependent
+// files. It first searchs the list to see if the name is already on it. Names are not added to
+// the list twice.
 
 void emit( char *name )
 {
@@ -126,11 +115,9 @@ void emit( char *name )
     return;
 }
 
-/*----------------------------------------------------------------------------
-The following function writes the current dependency list to the output
-file. This writing is postponed to this time (rather than being done in
-emit()) so that multiple copies of the same file are not written.
-----------------------------------------------------------------------------*/
+// The following function writes the current dependency list to the output file. This writing is
+// postponed to this time (rather than being done in emit()) so that multiple copies of the same
+// file are not written.
 
 void flush( char continuation )
 {

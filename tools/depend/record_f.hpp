@@ -1,8 +1,7 @@
 /*! \file    record_f.hpp
-    \brief   Record file handling class.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Record file handling class.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ */
 
 #ifndef RECORD_F_HPP
 #define RECORD_F_HPP

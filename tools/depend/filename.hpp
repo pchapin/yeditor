@@ -1,8 +1,7 @@
 /*! \file    filename.hpp
-    \brief   Declaration of file name handling functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Declaration of file name handling functions.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ */
 
 #ifndef FILENAME_HPP
 #define FILENAME_HPP

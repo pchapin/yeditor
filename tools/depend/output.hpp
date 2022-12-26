@@ -1,8 +1,7 @@
 /*! \file    output.hpp
-    \brief   Output handling functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Output handling functions.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ */
 
 #ifndef OUTPUT_HPP
 #define OUTPUT_HPP

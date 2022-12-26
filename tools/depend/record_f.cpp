@@ -1,8 +1,7 @@
 /*! \file    record_f.cpp
-    \brief   Record file handling class.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Record file handling class.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ */
 
 #include "environ.hpp"
 
@@ -11,17 +10,13 @@
 #include "misc.hpp"
 #include "record_f.hpp"
 
-/*----------------------------------------------------------------------------
-The constructor opens the file and allocates memory for a working buffer. The
-search method specified tell the object where the record file might be
-found. Currently only DEFAULT is supported; record files must be in the
-default directory.
-
-The comment character is the character used to mark the beginning of an
-end-of-line style comment in the record file. All text after the first
-occurance of this character is ignored. It can be '\0' if there are to be no
-comments in the record file.
-----------------------------------------------------------------------------*/
+// The constructor opens the file and allocates memory for a working buffer. The search method
+// specified tell the object where the record file might be found. Currently only DEFAULT is
+// supported; record files must be in the default directory.
+//
+// The comment character is the character used to mark the beginning of an end-of-line style
+// comment in the record file. All text after the first occurance of this character is ignored.
+// It can be '\0' if there are to be no comments in the record file.
 
 RecordFile::RecordFile(
   const char *file_name,     // File name. Can contain paths, etc.
@@ -52,9 +47,7 @@ RecordFile::RecordFile(
     }
 }
 
-/*----------------------------------------------------------------------------
-The destructor closes the file and frees the buffer.
-----------------------------------------------------------------------------*/
+// The destructor closes the file and frees the buffer.
 
 RecordFile::~RecordFile( )
 {
@@ -62,13 +55,11 @@ RecordFile::~RecordFile( )
     return;
 }
 
-/*----------------------------------------------------------------------------
-The following function returns an array of character pointers. Each pointer in
-the array points to a field from the next line of the record file. To determin
-the number of fields, see the next function. Comments in the record file and
-trailing white space (regardless of the delimiter characters) are already
-stripped. The function returns NULL if there is nothing else in the file.
-----------------------------------------------------------------------------*/
+// The following function returns an array of character pointers. Each pointer in the array
+// points to a field from the next line of the record file. To determin the number of fields,
+// see the next function. Comments in the record file and trailing white space (regardless of
+// the delimiter characters) are already stripped. The function returns NULL if there is nothing
+// else in the file.
 
 char **RecordFile::get_line( )
 {
@@ -99,10 +90,7 @@ char **RecordFile::get_line( )
     return return_value;
 }
 
-/*----------------------------------------------------------------------------
-The following function returns the number of fields in the last line read from
-the file.
-----------------------------------------------------------------------------*/
+// The following function returns the number of fields in the last line read from the file.
 
 int RecordFile::get_length( )
 {

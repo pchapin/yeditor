@@ -1,8 +1,7 @@
 /*! \file    filescan.hpp
-    \brief   Implementation of file scanning functions.
-    \author  Peter C. Chapin <PChapin@vtc.vsc.edu>
-
-*/
+ *  \brief   Implementation of file scanning functions.
+ *  \author  Peter Chapin <chapinp@proton.me>
+ */
 
 #include "environ.hpp"
 
@@ -19,28 +18,13 @@ using namespace std;
 
 static int nesting_level = 0;
 
-/*----------------------------------------------------------------------------
-The following function prints the name of the file which is currently being
-scanned. To make things interesting, it uses bold for primary source files.
-----------------------------------------------------------------------------*/
 
-static void print(char *name)
+// The following function prints the name of the file which is currently being scanned using
+// appropriate indentation.
+
+static void print( char *name )
 {
-    assert(nesting_level > 0);
-
-    bool flag = false;
-
-    // Set flag to true if this file is a primary source file.
-    char *end_pointer = strchr( name, '\0' );
-    while( end_pointer != name && *end_pointer != '.' ) end_pointer--;
-    #if eOPSYS == ePOSIX
-        if( strcmp( end_pointer, ".c"   ) == 0 ||
-            strcmp( end_pointer, ".cpp" ) == 0 ||
-            strcmp( end_pointer, ".C"   ) == 0 ) flag = true;
-    #else
-        if( _stricmp( end_pointer, ".c"   ) == 0 ||
-            _stricmp( end_pointer, ".cpp" ) == 0 ) flag = true;
-    #endif
+    assert( nesting_level > 0 );
 
     // Print the name.
     for( int i = 0; i < nesting_level; i++ ) cout << "  " << flush;
@@ -50,12 +34,10 @@ static void print(char *name)
     return;
 }
 
-/*----------------------------------------------------------------------------
-The following function reads all the lines out of the specified input file
-and calls handle_line() to deal with each. This function is called inside
-of handle_line() to deal with include files which #include other files. In
-other words, this function is indirectly recursive.
-----------------------------------------------------------------------------*/
+// The following function reads all the lines out of the specified input file and calls
+// handle_line() to deal with each. This function is called inside of handle_line() to deal with
+// include files which #include other files. In other words, this function is indirectly
+// recursive.
 
 void handle_file( char *name )
 {
