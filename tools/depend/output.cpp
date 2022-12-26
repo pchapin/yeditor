@@ -97,8 +97,11 @@ bool already_scanned( char *name )
     if( name_list == NULL ) return false;
 
     // Search the current list of filenames. Return true if already on list.
-    for( const string &current_name : *name_list ) {
-        if( current_name == name ) return true;
+    for( list<string>::const_iterator current_name = name_list->begin();
+         current_name != name_list->end();
+         ++current_name ) {
+
+        if( *current_name == name ) return true;
     }
 
     return false;
@@ -135,11 +138,13 @@ void flush( char continuation )
     if( name_list == NULL ) return;
 
     // Scan over list printing the names as they are found.
-    for( const string &name : *name_list ) {
+    for( list<string>::const_iterator name = name_list->begin();
+         name != name_list->end();
+         ++name ) {
 
         // Output name and advance counter.
-        output_file << name << " ";
-        column_count += name.length( ) + 1;
+        output_file << *name << " ";
+        column_count += name->length( ) + 1;
 
         // Adjust column count, wrapping line if necessary.
         if( column_count > 95 ) {

@@ -120,7 +120,9 @@ char *match_name( char *name )
 
     // Loop through all the directory names to see if an existing file name can be found.
     bool match_found = false;
-    for( const string &current_directory : directory_list ) {
+    for( list<string>::const_iterator current_directory = directory_list.begin();
+         current_directory != directory_list.end();
+         ++current_directory ) {
 
       #if eOPSYS == ePOSIX
         struct stat file_info;
@@ -132,7 +134,7 @@ char *match_name( char *name )
         // Copy directory prefix into buffer. Append a directory delimiter only if there's
         // something there and only if there isn't a trailing directory delimiter allready.
         //
-        strcpy(buffer, current_directory.c_str( ) );
+        strcpy(buffer, current_directory->c_str( ) );
       #if eOPSYS == ePOSIX
         if( strlen( buffer ) != 0 && no_trail( buffer ) ) strcat( buffer, "/" );
       #else

@@ -3,9 +3,9 @@
 #
 
 CXX=g++
-CXXFLAGS=-Wall -c -O -std=c++11
+CXXFLAGS=-Wall -c -O -std=c++98
 LINK=ar
-LINKFLAGS=rc
+LINKFLAGS=-r -c
 SOURCES=ansiscr.cpp       \
 	CommandWindow.cpp \
 	debug.cpp         \
@@ -30,7 +30,7 @@ LIBRARY=libScr.a
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 $(LIBRARY):	$(OBJECTS)
-	$(LINK) $(LINKFLAGS) -o $@ $(OBJECTS)
+	$(LINK) $(LINKFLAGS) $@ $(OBJECTS)
 
 # File Dependencies
 ###################

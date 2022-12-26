@@ -3,7 +3,7 @@
 #
 
 CXX=g++
-CXXFLAGS=-std=c++11 -c -O -I../../../Spica/Cpp
+CXXFLAGS=-std=c++98 -c -O -I../../../Spica/Cpp
 LINK=g++
 LINKFLAGS=
 SOURCES=adjdate.cpp   \
