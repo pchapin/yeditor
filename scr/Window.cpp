@@ -48,8 +48,8 @@ namespace scr {
     SimpleWindow::SimpleWindow( ) :
         is_hidden ( false ),
         is_defined( false ),
-        hidden    ( nullptr ),
-        save_data ( nullptr )
+        hidden    ( NULL  ),
+        save_data ( NULL  )
     { }
 
 
@@ -259,8 +259,8 @@ namespace scr {
     {
         if( !is_defined ) return;
         hide( );
-        save_data = nullptr;
-        hidden = nullptr;
+        save_data = NULL;
+        hidden = NULL;
         is_hidden = false;
         is_defined = false;
     }
