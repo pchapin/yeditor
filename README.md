@@ -48,8 +48,9 @@ repository (in the `scr` folder). However, it is fairly independent of Y and cou
 be used in other projects. The Scr library can be compiled separately or, if you are using
 Visual Studio or Code::Blocks, it is also automatically built during the build of Y itself.
 
-The Y code base also contains some general purpose tools. Currently the only tool provided with
-Y is `depend`. This tool computes dependency lists for Makefiles.
+A tool named `depend` is used to compute Makfile dependencies. It is located in my
+[tools](https://github.com/pchapin/tools) repository. It is not strictly necessary to use this
+tool, but the configuration files used by `depend` are in the Y repository.
 
 
 Compiling
