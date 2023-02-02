@@ -43,11 +43,11 @@ Peter Chapin
 Prerequisites
 -------------
 
-Y depends on a cross platform screen handling library called [Scr]
-(https://github.com/pchapin/scr). Clone the Scr library in a sibling folder of where you cloned
-this repository. The various build control files assume this organization. The Scr library can
-be compiled separately or, if you are using Visual Studio or Code::Blocks, it is also
-automatically built during the build of Y itself.
+Y depends on a cross platform screen handling library called [Scr](https://github.com/pchapin/scr). 
+Clone the Scr library in a sibling folder of where you cloned this repository. The various build
+control files assume this organization. The Scr library can be compiled separately or, if you
+are using Visual Studio or Code::Blocks, it is also automatically built during the build of Y
+itself.
 
 A tool named `depend` is used to compute Makfile dependencies. It is located in my
 [tools](https://github.com/pchapin/tools) repository. It is not strictly necessary to use this
