@@ -3,14 +3,14 @@
 #
 
 CXX=g++
-CXXFLAGS=-Wall -std=c++98 -c -O -I.. -I../../scr
+CXXFLAGS=-Wall -std=c++98 -c -O -I.. -I../../../Scr
 LINK=g++
 LINKFLAGS=-lncurses
 SOURCES=check.cpp UnitTestManager.cpp check_EditBuffer.cpp check_EditList.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 OBJECTSTESTED=../EditBuffer.o
 EXECUTABLE=check
-LIBSCR=../../scr/libScr.a
+LIBSCR=../../../Scr/libScr.a
 
 %.o:	%.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@

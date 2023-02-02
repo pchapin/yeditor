@@ -16,7 +16,7 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add library="../scr/bin/Debug/libscr.a" />
+					<Add library="../../Scr/bin/Debug/libScr.a" />
 					<Add library="../../Spica/Cpp/bin/Debug/libSpicaCpp.a" />
 				</Linker>
 			</Target>
@@ -31,15 +31,15 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../scr/bin/Release/libscr.a" />
+					<Add library="../../Scr/bin/Release/libScr.a" />
 					<Add library="../../Spica/Cpp/bin/Release/libSpicaCpp.a" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++11" />
 			<Add option="-Wall" />
-			<Add directory="../scr" />
+			<Add option="-std=c++11" />
+			<Add directory="../../Scr" />
 			<Add directory="../../Spica/Cpp" />
 		</Compiler>
 		<Linker>
@@ -119,9 +119,6 @@
 		<Unit filename="y.cpp" />
 		<Unit filename="yfile.cpp" />
 		<Unit filename="yfile.hpp" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

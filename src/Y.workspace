@@ -2,9 +2,9 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
 		<Project filename="Y.cbp">
-			<Depends filename="../scr/scr.cbp" />
+			<Depends filename="../../Scr/scr.cbp" />
 		</Project>
-		<Project filename="../scr/scr.cbp" />
+		<Project filename="../../Scr/scr.cbp" />
 		<Project filename="check/check.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

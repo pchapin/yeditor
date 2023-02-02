@@ -29,8 +29,8 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++11" />
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 			<Add directory=".." />
 			<Add directory="../../../Spica/Cpp" />
@@ -43,9 +43,6 @@
 		<Unit filename="check.hpp" />
 		<Unit filename="check_EditBuffer.cpp" />
 		<Unit filename="check_EditList.cpp" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
