@@ -1,6 +1,6 @@
 /*! \file    EditFile.cpp
  *  \brief   Implementation of class EditFile
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <climits>

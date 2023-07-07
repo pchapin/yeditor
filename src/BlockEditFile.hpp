@@ -1,6 +1,6 @@
 /*! \file    BlockEditFile.hpp
  *  \brief   Interface to class BlockEditFile
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter C. Chapin <spicacalitkelseymountain.org>
  */
 
 #ifndef BLOCKEDITFILE_HPP

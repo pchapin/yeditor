@@ -1,6 +1,6 @@
 /*! \file    command.hpp
  *  \brief   Prototypes of all the command functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  *
  * This file contains the prototypes of all the command functions. One and only one of these
  * functions is associated with each macro word.

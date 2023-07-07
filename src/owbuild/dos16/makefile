@@ -1,6 +1,6 @@
 ############################################################################
 # FILE   : makefile
-# AUTHOR : Peter C. Chapin <chapinp@acm.org>
+# AUTHOR : Peter Chapin <spicacality@kelseymountain.org>
 #
 # This is the makefile for the Y project.
 ############################################################################

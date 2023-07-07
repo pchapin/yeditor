@@ -1,6 +1,6 @@
 /*! \file    help.cpp
  *  \brief   Text of the help screens.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  *
  * The help text is out of date; it needs a major overhaul.
  *

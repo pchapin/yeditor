@@ -1,6 +1,6 @@
 /*! \file    SearchEditFile.cpp
  *  \brief   Implementation of class SearchEditFile.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <cstring>

@@ -1,6 +1,6 @@
 /*! \file    command_r.cpp
  *  \brief   Implementation of the 'r' command functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <cstdio>

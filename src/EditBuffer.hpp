@@ -1,6 +1,6 @@
 /*! \file    EditBuffer.hpp
  *  \brief   Interface to class EditBuffer
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef EDITBUFFER_HPP

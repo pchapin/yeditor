@@ -1,6 +1,6 @@
 /*! \file    keyboard.cpp
  *  \brief   Implementation of the keyboard handler.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <cstring>

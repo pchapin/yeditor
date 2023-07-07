@@ -1,6 +1,6 @@
 /*! \file    global.cpp
  *  \brief   Definitions of global objects.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include "environ.hpp"

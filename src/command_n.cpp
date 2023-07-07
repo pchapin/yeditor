@@ -1,6 +1,6 @@
 /*! \file    command_n.cpp
  *  \brief   Implementation of the 'n' command functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <cstddef>

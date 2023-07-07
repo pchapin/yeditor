@@ -1,6 +1,6 @@
 /*! \file    command_s.cpp
  *  \brief   Implementation of the 's' command functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <climits>

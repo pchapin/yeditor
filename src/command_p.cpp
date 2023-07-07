@@ -1,6 +1,6 @@
 /*! \file    command_p.cpp
  *  \brief   Implementation of the 'p' command functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include "clipboard.hpp"

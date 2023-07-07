@@ -1,6 +1,6 @@
 /*! \file    support.hpp
  *  \brief   Declarations of various supporting functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef SUPPORT_HPP

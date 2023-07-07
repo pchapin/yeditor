@@ -1,6 +1,6 @@
 /*! \file    YEditFile.cpp
  *  \brief   Implementation of class YEditFile.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  *
  * This file contains the implementation of class YEditFile. Objects of this class are EditFiles
  * that have been elaborated using inheritance to have all the features required by Y. As most

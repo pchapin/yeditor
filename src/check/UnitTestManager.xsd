@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xs:schema targetNamespace="http://vortex.cis.vtc.edu/xml/UnitTestManager_0.0"
+<xs:schema targetNamespace="http://www.kelseymountain.org/xml/UnitTestManager_0.0"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns="http://vortex.cis.vtc.edu/xml/UnitTestManager_0.0" elementFormDefault="qualified"
+  xmlns="http://www.kelseymountain.org/xml/UnitTestManager_0.0" elementFormDefault="qualified"
   xml:lang="en-US">
 
   <xs:element name="TestOutput">

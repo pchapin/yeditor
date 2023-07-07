@@ -1,6 +1,6 @@
 /*! \file    mylist.hpp
  *  \brief   A general purpose list template.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef MYLIST_HPP

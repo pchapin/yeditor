@@ -1,6 +1,6 @@
 /*! \file    macro_stack.hpp
  *  \brief   Interface to the macro stack.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef MACRO_STACK_HPP

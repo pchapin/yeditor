@@ -1,6 +1,6 @@
 /*! \file    check_EditBuffer.cpp
  *  \brief   EditBuffer unit tests.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <cstring>

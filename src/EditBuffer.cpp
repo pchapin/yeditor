@@ -1,6 +1,6 @@
 /*! \file    EditBuffer.cpp
  *  \brief   Implementation of class EditBuffer
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <algorithm>

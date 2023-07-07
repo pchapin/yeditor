@@ -1,6 +1,6 @@
 /*! \file    FileNameMatcher.hpp
  *  \brief   Interface to file name matching functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef FILENAMEMATCHER_HPP

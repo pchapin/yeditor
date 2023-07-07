@@ -1,6 +1,6 @@
 /*! \file    WPEditFile.cpp
  *  \brief   Implementation of class WPEditFile.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  *
  * IMPLEMENTATION NOTES
  *

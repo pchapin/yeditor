@@ -1,6 +1,6 @@
 /*! \file    command_k.cpp
  *  \brief   Implementation of the 'k' command functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include "command.hpp"

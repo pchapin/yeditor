@@ -1,6 +1,6 @@
 /*! \file    command_c.cpp
  *  \brief   Implementation of the 'c' command functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <cstdlib>

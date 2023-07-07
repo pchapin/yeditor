@@ -1,6 +1,6 @@
 /*! \file    LineEditFile.hpp
  *  \brief   Interface to clss LineEditFile.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef LINEEDITFILE_HPP

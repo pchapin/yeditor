@@ -1,6 +1,6 @@
 /*! \file    parameter_stack.cpp
  *  \brief   Implementation of the parameter stack.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <cctype>

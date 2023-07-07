@@ -1,6 +1,6 @@
 /*! \file    CursorEditFile.hpp
  *  \brief   Interface to class CursorEditFile
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef CURSOREDITFILE_HPP

@@ -1,6 +1,6 @@
 /*! \file    DiskEditFile.hpp
  *  \brief   Interface to class DiskEditFile
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef DISKEDITFILE_HPP

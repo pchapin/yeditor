@@ -1,6 +1,6 @@
 /*! \file    WPEditFile.hpp
  *  \brief   Interface to class WPEditFile.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef WPEDITFILE_HPP

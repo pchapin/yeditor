@@ -3,11 +3,9 @@
 #
 
 CXX=g++
-CXXFLAGS=-Wall -std=c++98 -c -O -I../../Scr
+CXXFLAGS=-Wall -std=c++20 -c -O -I../../Scr
 LINK=g++
 LINKFLAGS=-lncurses
-## It shouldn't be necessary to use Boost here since my application does not require it.
-#LINKFLAGS=-L/usr/lib/i386-linux-gnu -L$(BOOST_HOME)/stage/lib -lboost_regex -lncurses -lpthread
 
 SOURCES=BlockEditFile.cpp     \
 	CharacterEditFile.cpp \

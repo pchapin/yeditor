@@ -1,6 +1,6 @@
 /*! \file    check.hpp
  *  \brief   Declarations of various unit test functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef CHECK_HPP

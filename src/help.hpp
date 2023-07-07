@@ -1,6 +1,6 @@
 /*! \file    help.hpp
  *  \brief   Declarations of the help text arrays.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  *
  * This file contains the declarations of the help screens. These screens are located in
  * help.cpp, but are used in one of the command files (where the command associated with the

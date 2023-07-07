@@ -1,6 +1,6 @@
 /*! \file    command_table.cpp
  *  \brief   Dispatch table for the commands.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  *
  * This file contains declarations of the macro word dispatch table. The entries in this table
  * associate a macro command (as from get_word()) with a command function. The command functions

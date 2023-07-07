@@ -1,6 +1,6 @@
 /*! \file    command_t.cpp
  *  \brief   Implementation of the 't' command functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include "command.hpp"

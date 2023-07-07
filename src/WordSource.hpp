@@ -1,6 +1,6 @@
 /*! \file    WordSource.hpp
  *  \brief   Interface to the WordSource classes.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef WORDSOURCE_HPP

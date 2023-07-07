@@ -1,6 +1,6 @@
 /*! \file    YEditFile.hpp
  *  \brief   Interface to class YEditFile.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef YEDITFILE_HPP

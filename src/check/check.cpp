@@ -1,6 +1,6 @@
 /*! \file    check.cpp
  *  \brief   Main program for Y's unit tests.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <cstdlib>

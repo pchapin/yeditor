@@ -1,7 +1,7 @@
 /*! \file    UnitTestManager.hpp
-    \brief   Interface to the unit test manager abstract object.
-    \author  Peter C. Chapin <chapinp@acm.org>
-*/
+ *  \brief   Interface to the unit test manager abstract object.
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
+ */
 
 #include <iostream>
 #include <stdexcept>

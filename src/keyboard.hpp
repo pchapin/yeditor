@@ -1,6 +1,6 @@
 /*! \file    keyboard.hpp
  *  \brief   Interface to the keyboard handler.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #ifndef KEYBOARD_HPP

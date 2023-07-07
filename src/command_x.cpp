@@ -1,6 +1,6 @@
 /*! \file    command_x.cpp
  *  \brief   Implementation of the experimental command functions.
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  */
 
 #include <cctype>

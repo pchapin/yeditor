@@ -1,6 +1,6 @@
 /*! \file    FilePosition.hpp
  *  \brief   Interface to class FilePosition
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter Chapin <spicacality@kelseymountain.org>
  *
  * This file contains the interface to class FilePosition. Objects of this class record and
  * manipulate the description of where in the file "we are." They are interested not only in the

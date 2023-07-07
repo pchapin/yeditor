@@ -1,6 +1,6 @@
 /*! \file    BlockEditFile.cpp
  *  \brief   Implementation of class BlockEditFile
- *  \author  Peter C. Chapin <chapinp@acm.org>
+ *  \author  Peter C. Chapin <spicacalitkelseymountain.org>
  *
  * IMPLEMENTATION NOTES
  *
