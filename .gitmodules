@@ -1,0 +1,6 @@
+[submodule "src/SpicaCpp"]
+	path = src/SpicaCpp
+	url = https://github.com/pchapin/spicacpp.git
+[submodule "src/Scr"]
+	path = src/Scr
+	url = https://github.com/pchapin/scr.git

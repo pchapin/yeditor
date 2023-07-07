@@ -645,8 +645,6 @@ static KeyboardAssociation keyboard_map[] = {
     KeyboardAssociation( scr::K_ALT8   , "\"Command Unknown\" error_message" ),
     KeyboardAssociation( scr::K_ALT9   , "\"Command Unknown\" error_message" ),
     KeyboardAssociation( scr::K_ALT0   , "\"Command Unknown\" error_message" ),
-    KeyboardAssociation( scr::K_ALTDASH, "\"Command Unknown\" error_message" ),
-    KeyboardAssociation( scr::K_ALTEQU , "\"Command Unknown\" error_message" ),
     KeyboardAssociation( -1, "" )
 };
 

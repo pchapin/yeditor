@@ -20,19 +20,22 @@ Introduction
 
 Greetings!
 
-This is the code base for the Y text editor, version 2.0. Although currently unfinished, it is
-my intention to release the source and documentation of Y under the terms of the some
-appropriate open source license. Please note that I disclaim all warranties implied or
-otherwise. All the necessary, precise legal language will be added later.
+This is the codebase for the Y text editor, version 2.0. Although currently unfinished, it is my
+intention to release the source and documentation of Y under the terms of the some appropriate
+open source license. Please note that I disclaim all warranties implied or otherwise. All the
+necessary, precise legal language will be added later.
 
 Y is a simple, but effective cross platform editor. The supported platforms are Win32 consoles
-and Linux terminals (with some testing also on Cygwin and macOS). Some level of support also
-once existed for OS/2 text mode and DOS 16 bit targets. However, that support is largely
-untested, and maybe considerably broken.
+and Linux terminals (with some testing also on Cygwin and macOS).
+
+Some level of support also once existed for OS/2 text mode and DOS 16 bit targets. However, that
+support is largely untested, and maybe considerably broken. Those legacy platforms also require
+that Y be built with the Open Watcom compiler, which is no longer a supported compilation
+platform.
 
 I invite you to play around with Y. Compile it, use it, and let me know what you think. If you
 find or fix a problem, send me email or, better yet, open an issue on GitHub or create a pull
-request. I can be reached at chapinp@proton.me.
+request. I can be reached at spicacality@kelseymountain.org.
 
 There is some sketchy documentation about Y in the doc directory. Some of that document is
 outdated and is in serious need of editing. Fixing the documentation is a work in progress.
@@ -43,11 +46,13 @@ Peter Chapin
 Prerequisites
 -------------
 
-Y depends on a cross platform screen handling library called [Scr](https://github.com/pchapin/scr). 
-Clone the Scr library in a sibling folder of where you cloned this repository. The various build
-control files assume this organization. The Scr library can be compiled separately or, if you
-are using Visual Studio or Code::Blocks, it is also automatically built during the build of Y
-itself.
+Y depends on a cross platform screen handling library called
+[Scr](https://github.com/pchapin/scr). Scr is cloned as a submodule. The various build control
+files assume this organization. The Scr library is an independent project and can be compiled
+separately and used in other programs.
+
+Y also depends on a library of reusable algorithms, data structures, and other components called
+[SpicaCpp](https://github.com/pchapin/spicacpp). SpicaCpp is also cloned as a submodule.
 
 A tool named `depend` is used to compute Makfile dependencies. It is located in my
 [tools](https://github.com/pchapin/tools) repository. It is not strictly necessary to use this
@@ -62,11 +67,17 @@ Compiling
 G++ targetting Unix-like systems is the primary compiler and platform for Y at this time. Note
 that on macOS, `g++` is an alias for `clang++`. Makefiles are provided that build each component
 of the system. In general you can just enter a folder and type `make` to build whatever entity
-is contained in that folder.
+is contained in that folder. Running `make` in the top-level `src` folder will build everything.
 
-Currently it is necessary to build the Scr library first manually (using Makefiles) before you
-build Y itself. Y should probably be built before you build the test programs but that is not
-strictly necessary.
+### Visual Studio
+
+Solution and project files for Visual Studio 2022 are also provided. Although development on
+Windows tends to be less frequent than on Linux, the Windows build is reasonably well maintained
+and should always be working.
+
+To build Y with Visual Studio load `Y.sln`. This solution file contains references to all
+required projects (including Scr and the test programs). Thus building this solution will build
+everything.
 
 ### Code::Blocks
 
@@ -82,22 +93,19 @@ To build Y with Code::Blocks load src/Y.workspace into Code::Blocks and build th
 Release configurations. This workspace contains references to all required projects (including
 Scr and the test programs). Thus building this workspace will build everything.
 
-### Visual C++
-
-Solution and project files for Visual Studio 2022 are also provided. Although development on
-Windows tends to be less frequent than on Linux, the Windows build is reasonably well maintained
-and should always be working.
-
-To build Y with Visual Studio load `Y.sln`. This solution file contains references to all
-required projects (including Scr and the test programs). Thus building this solution will build
-everything.
+Note that Y uses C++ 2020. The version of g++ that is bundled with Code::Blocks 20.03 (the
+latest version at the time of this writing) has only marginal support for C++ 2020. Y may not
+build using that bundled compiler.
 
 ### Open Watcom
 
 Open Watcom is a cross platform compiler that supports Windows, OS/2, DOS, and Linux. In theory
-it can be used to build Y for all of these systems regardless of your development platform. At
-the current time Y development is limited to C++98, which Open Watcom largely supports. Newer
-C++ features can only be used to the extent that Open Watcom supports them.
+it can be used to build Y for all of these systems regardless of your development platform. Y
+was originally developed using the Watcom compiler for MS-DOS systems!
+
+*Unfortunately Open Watcom only just barely supports C++ 1998, so it can no longer compile the Y
+codebase. The Open Watcom build control files are being retained in the hope that one day Open
+Watcom will once again be able to compile Y.*
 
 To build Y with Open Watcom follow this procedure.
 

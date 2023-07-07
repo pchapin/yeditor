@@ -3,20 +3,21 @@
 #
 
 CXX=g++
-CXXFLAGS=-Wall -std=c++20 -c -O -I.. -I../../../Scr
+CXXFLAGS=-Wall -std=c++20 -c -O -I.. -I../Scr -I../SpicaCpp
 LINK=g++
 LINKFLAGS=-lncurses
-SOURCES=check.cpp UnitTestManager.cpp check_EditBuffer.cpp check_EditList.cpp
+SOURCES=check.cpp check_EditBuffer.cpp check_EditList.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 OBJECTSTESTED=../EditBuffer.o
 EXECUTABLE=check
-LIBSCR=../../../Scr/libScr.a
+LIBSCR=../Scr/libScr.a
+LIBSPICACPP=../SpicaCpp/libSpicaCpp.a
 
 %.o:	%.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-$(EXECUTABLE):	$(OBJECTS) $(OBJECTSTESTED) $(LIBSCR)
-	$(LINK) $(OBJECTS) $(OBJECTSTESTED) $(LIBSCR) $(LINKFLAGS) -o $@
+$(EXECUTABLE):	$(OBJECTS) $(OBJECTSTESTED) $(LIBSCR) $(LIBSPICACPP)
+	$(LINK) $(OBJECTS) $(OBJECTSTESTED) $(LIBSCR) $(LIBSPICACPP) $(LINKFLAGS) -o $@
 
 
 # File Dependencies
@@ -25,13 +26,11 @@ $(EXECUTABLE):	$(OBJECTS) $(OBJECTSTESTED) $(LIBSCR)
 # Module dependencies -- Produced with 'depend' on Wed Jan 22 20:38:34 2020
 
 
-check.o:	check.cpp check.hpp UnitTestManager.hpp 
+check.o:	check.cpp check.hpp ../SpicaCpp/UnitTestManager.hpp 
 
-UnitTestManager.o:	UnitTestManager.cpp UnitTestManager.hpp 
+check_EditBuffer.o:	check_EditBuffer.cpp ../EditBuffer.hpp ../SpicaCpp/UnitTestManager.hpp 
 
-check_EditBuffer.o:	check_EditBuffer.cpp ../EditBuffer.hpp UnitTestManager.hpp 
-
-check_EditList.o:	check_EditList.cpp ../EditList.hpp ../mylist.hpp UnitTestManager.hpp 
+check_EditList.o:	check_EditList.cpp ../EditList.hpp ../mylist.hpp ../SpicaCpp/UnitTestManager.hpp 
 
 
 # Additional Rules
