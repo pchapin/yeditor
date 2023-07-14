@@ -6,9 +6,11 @@ CXX=g++
 CXXFLAGS=-Wall -std=c++20 -c -O -I.. -I../Scr -I../SpicaCpp
 LINK=g++
 LINKFLAGS=-lncurses
-SOURCES=check.cpp check_EditBuffer.cpp check_EditList.cpp
+SOURCES=check.cpp        \
+	EditBuffer_tests.cpp \
+	EditList_tests.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
-OBJECTSTESTED=../EditBuffer.o
+OBJECTSTESTED=../EditBuffer.o ../EditList.o
 EXECUTABLE=check
 LIBSCR=../Scr/libScr.a
 LIBSPICACPP=../SpicaCpp/libSpicaCpp.a

@@ -8,8 +8,10 @@
 #include <iostream>
 #include <fstream>
 
-#include "check.hpp"
+// From SpicaCpp.
 #include "UnitTestManager.hpp"
+
+#include "check.hpp"
 
 int main( int argc, char **argv )
 {
@@ -25,8 +27,9 @@ int main( int argc, char **argv )
         output = &output_file;
     }
 
-    UnitTestManager::register_test( EditBuffer_tests, "EditBuffer" );
-    UnitTestManager::register_test( EditList_tests, "EditList" );
-    UnitTestManager::execute_tests( *output, "Y Unit Tests" );
+    UnitTestManager::register_suite( EditBuffer_tests, "EditBuffer" );
+    UnitTestManager::register_suite( EditList_tests, "EditList" );
+
+    UnitTestManager::execute_suites( *output, "Y Unit Tests" );
     return UnitTestManager::test_status( );
 }
