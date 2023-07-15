@@ -85,7 +85,9 @@ bool filter_command( )
     int ch;
 
     std::printf( "%s\n", command.c_str( ) );
-    std::system( command.c_str( ) );
+    int exit_status = std::system( command.c_str( ) );
+    std::printf( "\n********************************* " );
+    std::printf( "\n Command exited with status: %d", exit_status );
     std::printf( "\n***** Do Replacement? [y]/n ***** " );
 
     // Get the user's response and eat the rest of the line.

@@ -97,17 +97,22 @@ void read_yfile( )
     char       line[linebuf_size + 2];
     // Used for reading lines out of filelist.yfy. Note the static limit.
 
-    FileDescriptor *new_descriptor = NULL;
+    FileDescriptor *new_descriptor = nullptr;
     // Points at a descriptor under construction.
 
     // Attempt to open filelist.yfy. If we can't we're done already.
     std::FILE *yfile;
-    if( ( yfile = std::fopen( "filelist.yfy", "r" ) ) == NULL ) return;
+    if( ( yfile = std::fopen( "filelist.yfy", "r" ) ) == nullptr ) return;
 
     // See if filelist.yfy is of a compatible version.
     int major = 0;
     int minor = 0;
-    std::fgets( line, linebuf_size + 2, yfile );
+    // First check if we can even read one line!
+    if( std::fgets( line, linebuf_size + 2, yfile ) == nullptr ) {
+        std::fclose( yfile );
+        return;
+    }
+    // Now, try to scan the version number out of the file.
     std::sscanf( line, "Y Version %d.%d", &major, &minor );
     if( major != 1 || minor != 90 ) {  // Version 1.90 is temporary!
         std::fclose( yfile );
@@ -115,7 +120,7 @@ void read_yfile( )
     }
 
     // For each line in filelist.yfy...
-    while( std::fgets( line, linebuf_size + 2, yfile ) != 0 ) {
+    while( std::fgets( line, linebuf_size + 2, yfile ) != nullptr ) {
         char *p;
 
         // Trim the '\n' if there is one.
@@ -130,59 +135,59 @@ void read_yfile( )
         //
         switch( get_keyword( line, &p ) ) {
         case 0:   // ACTIVE
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 if( my_stricmp( p, "true" ) == 0 ) new_descriptor->active_flag = true;
                 else if( my_stricmp(p, "false" ) == 0 ) new_descriptor->active_flag = false;
             }
             break;
 
         case 1:   // BLOCK
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 if( my_stricmp( p, "true" ) == 0 ) new_descriptor->block_flag = true;
                 else if( my_stricmp( p, "false" ) == 0 ) new_descriptor->block_flag = false;
             }
             break;
 
         case 2:   // BLOCK_LINE
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 new_descriptor->block_line = std::atoi( p );
             }
             break;
 
         case 3:   // COLOR
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 new_descriptor->color_attribute = std::atoi( p );
             }
             break;
 
         case 4:   // CURSOR_COL
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 new_descriptor->cursor_column = std::atoi( p );
             }
             break;
 
         case 5:   // CURSOR_LINE
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 new_descriptor->cursor_line = std::atoi( p );
             }
             break;
 
         case 6:   // DELETED
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 if( my_stricmp( p, "true" ) == 0 ) new_descriptor->deleted_flag = true;
                 else if( my_stricmp( p, "false" ) == 0 ) new_descriptor->deleted_flag = false;
             }
             break;
 
         case 7:   // INSERT
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 if( my_stricmp( p, "true" ) == 0 ) new_descriptor->insert_flag = true;
                 else if( my_stricmp( p, "false" ) == 0 ) new_descriptor->insert_flag = false;
             }
             break;
 
         case 8:   // NAME
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 new_descriptor->sanity_check( );
                 descriptor_list.insert( *new_descriptor );
                 delete new_descriptor;
@@ -191,19 +196,19 @@ void read_yfile( )
             break;
 
         case 9:   // TAB_SETTING
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 new_descriptor->tab_setting = std::atoi( p );
             }
             break;
 
         case 10:  // WINDOW_COLUMN
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 new_descriptor->window_column = std::atoi( p );
             }
             break;
 
         case 11:  // WINDOW_LINE
-            if( new_descriptor != NULL ) {
+            if( new_descriptor != nullptr ) {
                 new_descriptor->window_line = std::atoi( p );
             }
             break;
@@ -212,7 +217,7 @@ void read_yfile( )
     }
 
     // Make sure the last descriptor in the file is handled.
-    if( new_descriptor != NULL ) {
+    if( new_descriptor != nullptr ) {
         new_descriptor->sanity_check( );
         descriptor_list.insert( *new_descriptor );
         delete new_descriptor;

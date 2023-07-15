@@ -49,9 +49,9 @@ static int brace_count( const std::string &line )
 {
     int count = 0;
 
-    for( int i = 0; i < line.length( ); ++i ) {
-        if( line[i] == '{' ) count++;
-        if( line[i] == '}' ) count--;
+    for( char ch : line ) {
+        if( ch == '{' ) count++;
+        if( ch == '}' ) count--;
     }
     return count;
 }
@@ -283,7 +283,7 @@ bool C_YEditFile::extra_indent( )
 
     std::string previous_line = file_data.get( )->to_string( );
     std::string::size_type last = previous_line.find_last_not_of( " " );
-    if( last != -1 && previous_line[last] == '{' ) return true;
+    if( last != std::string::npos && previous_line[last] == '{' ) return true;
     return false;
 }
 
@@ -463,7 +463,7 @@ bool SCALA_YEditFile::extra_indent( )
 
     std::string previous_line = file_data.get( )->to_string( );
     std::string::size_type last = previous_line.find_last_not_of( " " );
-    if( last != -1 && previous_line[last] == '{' ) return true;
+    if( last != std::string::npos && previous_line[last] == '{' ) return true;
     return false;
 }
 

@@ -48,7 +48,9 @@ bool redirect_from_command( )
     int ch;
 
     std::printf( "%s\n", command.c_str( ) );
-    std::system( command.c_str( ) );
+    int exit_status = std::system( command.c_str( ) );
+    std::printf( "\n******************************* " );
+    std::printf( "\n Command exited with status: %d", exit_status );
     std::printf( "\n***** Do Insertion? [y]/n ***** " );
 
     // Get the user's response and eat the rest of the line.
@@ -120,7 +122,9 @@ bool redirect_to_command( )
 
     // Execute command.
     std::printf( "%s\n", command.c_str( ) );
-    std::system( command.c_str( ) );
+    int exit_status = std::system( command.c_str( ) );
+    std::printf( "\n*************************************** " );
+    std::printf( "\n Command exited with status: %d", exit_status );
     std::printf( "\n***** Strike ENTER to return to Y ***** " );
     while( std::getchar( ) != '\n' ) /* Null */ ;
 

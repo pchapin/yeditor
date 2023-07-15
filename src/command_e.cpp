@@ -99,7 +99,9 @@ bool external_command_command( )
     scr::off( );
 
     std::printf( "%s\n", command.c_str( ) );
-    std::system( command.c_str( ) );
+    int exit_status = std::system( command.c_str( ) );
+    std::printf( "\n*************************************** " );
+    std::printf( "\n Command exited with status: %d", exit_status );
     std::printf( "\n***** Strike ENTER to return to Y ***** " );
     while( std::getchar( ) != '\n' ) /* Null */ ;
 

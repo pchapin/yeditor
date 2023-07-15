@@ -5,7 +5,7 @@
 
 #include <cctype>
 #include <cstring>
-#include <strstream>
+#include <sstream>
 
 #include "EditBuffer.hpp"
 #include "keyboard.hpp"
@@ -248,27 +248,27 @@ FileWord::FileWord( const char *const file_name) :
     WordSource( ),
     input_file( std::fopen( file_name, "r" ) )
 {
-    if( input_file == NULL )
+    if( input_file == nullptr )
         error_message("Can't open macro file %s for reading", file_name);
 }
 
 
 FileWord::~FileWord( )
 {
-    if( input_file != NULL ) std::fclose( input_file );
+    if( input_file != nullptr ) std::fclose( input_file );
 }
 
 
 int FileWord::get( )
 {
-    if( input_file == NULL ) return EOF;
+    if( input_file == nullptr ) return EOF;
     return std::getc( input_file );
 }
 
 
 void FileWord::unget( const int ch )
 {
-    if( input_file != NULL ) std::ungetc( ch, input_file );
+    if( input_file != nullptr ) std::ungetc( ch, input_file );
 }
 
 
@@ -710,7 +710,7 @@ static const char *const key_names[] = {
     "K_ALTY",  "K_ALTZ",   "K_ALT1",      "K_ALT2",   "K_ALT3",   "K_ALT4",
     "K_ALT5",  "K_ALT6",   "K_ALT7",      "K_ALT8",   "K_ALT9",   "K_ALT0",
     "K_ALTDASH",  "K_ALTEQU",  "K_CTRL_PRTSC",
-    NULL
+    nullptr
 };
 
 //=========================================================================
@@ -719,11 +719,11 @@ void modify_key_association( const char *const key_name, const char *const new_m
 {
     // Search the key name array looking for a matching name.
     int index;
-    for( index = 0; key_names[index] != NULL; index++ )
+    for( index = 0; key_names[index] != nullptr; index++ )
         if( std::strcmp( key_name, key_names[index] ) == 0 ) break;
 
     // If we didn't find it, print an error message.
-    if( key_names[index] == NULL ) {
+    if( key_names[index] == nullptr ) {
         error_message( "The key name \"%s\" is unrecognized", key_name );
     }
     
@@ -749,7 +749,7 @@ bool KeyboardWord::get_word( EditBuffer &word )
     // If this is a quoted keystroke, compose a special macro right here. Do NOT search the
     // keyboard mapping table.
     if( ch & 0x8000 ) {
-        std::ostrstream formatter;
+        std::ostringstream formatter;
         formatter << '"' << static_cast<char>( ch ) << "\" ADD_TEXT" << std::ends;
         words = formatter.str( );
         // TODO: How does Open Watcom deallocate the buffer inside the ostrstream object?
