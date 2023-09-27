@@ -99,9 +99,6 @@
     <ClInclude Include="yfile.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Y.ico">
@@ -242,9 +239,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="yfile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
