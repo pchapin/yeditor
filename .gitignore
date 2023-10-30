@@ -48,4 +48,7 @@ src/Y.sublime-workspace
 # Executables
 src/Y
 src/check/check
-tools/depend/depend
+
+# macOS
+.DS_Store
+
